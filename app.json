@@ -28,6 +28,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2fd65afc-f0ad-414a-b81c-62291bbdf86d"
+      }
+    },
+    "owner": "tomppatomppa"
   }
 }
