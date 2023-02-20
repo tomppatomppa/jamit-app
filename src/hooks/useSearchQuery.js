@@ -26,7 +26,7 @@ const calculateRetangle = ({
 
   return search
 }
-
+let timerId = ''
 const useSearchQuery = (initialState) => {
   const [searchQuery, setSearchQuery] = useState(initialState)
   const { refetch, data, isLoading } = UseGetAllEvents(searchQuery)
@@ -34,7 +34,12 @@ const useSearchQuery = (initialState) => {
   const handleSetSearchQuery = (variables) => {
     const search = calculateRetangle(variables)
     setSearchQuery(search)
-    refetch()
+    if (timerId) {
+      clearTimeout(timerId)
+    }
+    timerId = setTimeout(() => {
+      refetch()
+    }, 200)
   }
   return { data, isLoading, handleSetSearchQuery }
 }
