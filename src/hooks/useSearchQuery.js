@@ -1,30 +1,39 @@
 import { useState } from 'react'
 import { UseGetAllEvents } from './getEvents'
 
+const calculateRetangle = ({
+  latitude,
+  longitude,
+  latitudeDelta,
+  longitudeDelta,
+}) => {
+  const bottomLeft = {
+    latitude: latitude - latitudeDelta / 2,
+    longitude: longitude - longitudeDelta / 2,
+  }
+  const topRight = {
+    latitude: latitude + latitudeDelta / 2,
+    longitude: longitude + longitudeDelta / 2,
+  }
+  //In JS, Numbers are stored as double-precision floating-point numbers according to the IEEE 754 standard.
+  //Use toString() method to avoid losing decimals
+  const search = {
+    xmin: bottomLeft.latitude.toString(),
+    ymin: bottomLeft.longitude.toString(),
+    xmax: topRight.latitude.toString(),
+    ymax: topRight.longitude.toString(),
+  }
+
+  return search
+}
+
 const useSearchQuery = (initialState) => {
   const [searchQuery, setSearchQuery] = useState(initialState)
   const { refetch, data, isLoading } = UseGetAllEvents(searchQuery)
 
   const handleSetSearchQuery = (variables) => {
-    const { latitude, longitude, latitudeDelta, longitudeDelta } = variables
-
-    const bottomLeft = {
-      latitude: latitude - latitudeDelta / 2,
-      longitude: longitude - longitudeDelta / 2,
-    }
-    const topRight = {
-      latitude: latitude + latitudeDelta / 2,
-      longitude: longitude + longitudeDelta / 2,
-    }
-
-    setSearchQuery({
-      search: {
-        xmin: bottomLeft.latitude.toString(),
-        ymin: bottomLeft.longitude.toString(),
-        xmax: topRight.latitude.toString(),
-        ymax: topRight.longitude.toString(),
-      },
-    })
+    const search = calculateRetangle(variables)
+    setSearchQuery(search)
     refetch()
   }
   return { data, isLoading, handleSetSearchQuery }

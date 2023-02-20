@@ -46,7 +46,7 @@ const customMapStyle = [
     ],
   },
 ]
-
+//TODO: get device current location as initialRegion
 const initialRegion = {
   latitude: 60.16427639500048,
   longitude: 24.944589799155526,
