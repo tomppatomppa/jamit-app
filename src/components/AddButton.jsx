@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   buttonContainer: {
-    width: 74,
     marginBottom: 12,
   },
 })
@@ -17,7 +16,7 @@ const styles = StyleSheet.create({
 const AddButton = () => {
   return (
     <View style={styles.buttonContainer}>
-      <Button color={theme.colors.primary} title="Add" />
+      <Button color={theme.colors.primary} title="logo Show list" />
     </View>
   )
 }

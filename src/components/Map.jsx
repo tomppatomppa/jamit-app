@@ -1,14 +1,6 @@
-import { StyleSheet } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import MapView from 'react-native-maps'
 import { Marker } from 'react-native-maps'
-
-const styles = StyleSheet.create({
-  map: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-  },
-})
 
 const customMapStyle = [
   {
@@ -55,30 +47,71 @@ const initialRegion = {
 }
 
 import useSearchQuery from '../hooks/useSearchQuery'
+import theme from '../theme'
+import Text from './Text'
+import TopBar from './TopBar'
 
 const Map = () => {
   const { data, isLoading, handleSetSearchQuery } = useSearchQuery()
 
   return (
-    <MapView
-      customMapStyle={customMapStyle}
-      initialRegion={initialRegion}
-      style={styles.map}
-      onRegionChangeComplete={handleSetSearchQuery}
-    >
-      {isLoading
-        ? ''
-        : data.map((event, index) => (
-            <Marker
-              key={index}
-              coordinate={{
-                latitude: event.location.coordinates[0],
-                longitude: event.location.coordinates[1],
-              }}
-            ></Marker>
-          ))}
-    </MapView>
+    <View style={styles.container}>
+      <TopBar />
+      <Pressable
+        onPress={() => console.log('Focus on loaction')}
+        style={styles.gpsIcon}
+      >
+        <Text>O</Text>
+      </Pressable>
+      <MapView
+        customMapStyle={customMapStyle}
+        initialRegion={initialRegion}
+        style={styles.map}
+        onRegionChangeComplete={handleSetSearchQuery}
+      >
+        {isLoading
+          ? ''
+          : data.map((event, index) => (
+              <Marker
+                key={index}
+                coordinate={{
+                  latitude: event.location.coordinates[0],
+                  longitude: event.location.coordinates[1],
+                }}
+              ></Marker>
+            ))}
+      </MapView>
+    </View>
   )
 }
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+    flexGrow: 1,
+    flexShrink: 1,
+    backgroundColor: '#e1e4e8',
+  },
+  map: {
+    height: '100%',
+  },
+  topBarContainer: {
+    height: 80,
+    backgroundColor: theme.colors.primary,
+  },
+  gpsIcon: {
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 10,
+    top: 90,
+    zIndex: 10,
+    width: 30,
+    height: 30,
+    backgroundColor: theme.colors.primary,
+    borderRadius: 60 / 2,
+  },
+})
 
 export default Map

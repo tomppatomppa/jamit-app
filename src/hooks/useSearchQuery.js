@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { UseGetAllEvents } from './getEvents'
 
-const calculateRetangle = ({
+const calculateRectangle = ({
   latitude,
   longitude,
   latitudeDelta,
@@ -17,22 +17,22 @@ const calculateRetangle = ({
   }
   //In JS, Numbers are stored as double-precision floating-point numbers according to the IEEE 754 standard.
   //Use toString() method to avoid losing decimals
-  const search = {
+  const recDimensions = {
     xmin: bottomLeft.latitude.toString(),
     ymin: bottomLeft.longitude.toString(),
     xmax: topRight.latitude.toString(),
     ymax: topRight.longitude.toString(),
   }
 
-  return search
+  return recDimensions
 }
-let timerId = ''
+let timerId
 const useSearchQuery = (initialState) => {
   const [searchQuery, setSearchQuery] = useState(initialState)
   const { refetch, data, isLoading } = UseGetAllEvents(searchQuery)
 
   const handleSetSearchQuery = (variables) => {
-    const search = calculateRetangle(variables)
+    const search = calculateRectangle(variables)
     setSearchQuery(search)
     if (timerId) {
       clearTimeout(timerId)
