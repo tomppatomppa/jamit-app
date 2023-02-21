@@ -1,12 +1,26 @@
+import { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
-import AddButton from './AddButton'
+import { Route, Routes } from 'react-router-native'
+import CreateEvent from './CreateEvent'
+
 import Map from './Map'
 
 const Main = () => {
+  const [pressedLocation, setPressedLocation] = useState({})
   return (
     <View style={styles.container}>
-      <Map />
-      <AddButton />
+      <Routes>
+        <Route
+          path="/"
+          element={<Map setPressedLocation={setPressedLocation} />}
+          exact
+        />
+        <Route
+          path="/create"
+          element={<CreateEvent pressedLocation={pressedLocation} />}
+          exact
+        />
+      </Routes>
     </View>
   )
 }

@@ -26,7 +26,7 @@ const calculateRectangle = ({
 
   return recDimensions
 }
-let timerId
+
 const useSearchQuery = (initialState) => {
   const [searchQuery, setSearchQuery] = useState(initialState)
   const { refetch, data, isLoading } = UseGetAllEvents(searchQuery)
@@ -34,14 +34,10 @@ const useSearchQuery = (initialState) => {
   const handleSetSearchQuery = (variables) => {
     const search = calculateRectangle(variables)
     setSearchQuery(search)
-    if (timerId) {
-      clearTimeout(timerId)
-    }
-    timerId = setTimeout(() => {
-      refetch()
-    }, 200)
+    refetch()
   }
-  return { data, isLoading, handleSetSearchQuery }
+
+  return { refetch, data, isLoading, handleSetSearchQuery }
 }
 
 export default useSearchQuery

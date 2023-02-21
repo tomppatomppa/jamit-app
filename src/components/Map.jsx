@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import MapView from 'react-native-maps'
 import { Marker } from 'react-native-maps'
 
@@ -38,32 +38,33 @@ const customMapStyle = [
     ],
   },
 ]
+
+import React from 'react'
+
 //TODO: get device current location as initialRegion
-const initialRegion = {
-  latitude: 60.16427639500048,
-  longitude: 24.944589799155526,
-  latitudeDelta: 0.0012,
-  longitudeDelta: 0.0112,
-}
 
 import useSearchQuery from '../hooks/useSearchQuery'
 import theme from '../theme'
-import Text from './Text'
-import TopBar from './TopBar'
 
-const Map = () => {
+import TopBar from './TopBar'
+import { useNavigate } from 'react-router-native'
+import { initialRegion } from '../utils/config'
+
+const Map = ({ setPressedLocation }) => {
   const { data, isLoading, handleSetSearchQuery } = useSearchQuery()
+  const navigate = useNavigate()
+
+  const handlePress = (e) => {
+    setPressedLocation(() => e.nativeEvent.coordinate)
+    navigate('/create')
+  }
 
   return (
     <View style={styles.container}>
       <TopBar />
-      <Pressable
-        onPress={() => console.log('Focus on loaction')}
-        style={styles.gpsIcon}
-      >
-        <Text>O</Text>
-      </Pressable>
       <MapView
+        onLongPress={handlePress}
+        showsUserLocation={true}
         customMapStyle={customMapStyle}
         initialRegion={initialRegion}
         style={styles.map}
@@ -99,18 +100,6 @@ const styles = StyleSheet.create({
   topBarContainer: {
     height: 80,
     backgroundColor: theme.colors.primary,
-  },
-  gpsIcon: {
-    position: 'absolute',
-    alignItems: 'center',
-    justifyContent: 'center',
-    right: 10,
-    top: 90,
-    zIndex: 10,
-    width: 30,
-    height: 30,
-    backgroundColor: theme.colors.primary,
-    borderRadius: 60 / 2,
   },
 })
 
