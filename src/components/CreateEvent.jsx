@@ -23,6 +23,7 @@ const CreateEvent = ({ pressedLocation }) => {
           },
         }
       )
+
       Alert.alert('Created event')
       navigate(-1)
     } catch (e) {

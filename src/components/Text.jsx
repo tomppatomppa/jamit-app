@@ -19,6 +19,9 @@ const styles = StyleSheet.create({
   colorSecondary: {
     color: theme.colors.secondary,
   },
+  fontSizeSmall: {
+    fontSize: theme.fontSizes.small,
+  },
   fontSizeSubheading: {
     fontSize: theme.fontSizes.subheading,
   },
@@ -33,6 +36,7 @@ const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
     color === 'textSecondary' && styles.colorTextSecondary,
     color === 'primary' && styles.colorPrimary,
     color === 'secondary' && styles.colorSecondary,
+    fontSize === 'small' && styles.fontSizeSmall,
     fontSize === 'subheading' && styles.fontSizeSubheading,
     fontWeight === 'bold' && styles.fontWeightBold,
 

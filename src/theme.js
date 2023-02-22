@@ -9,6 +9,7 @@ const theme = {
     warning: '#d73a4a',
   },
   fontSizes: {
+    small: 12,
     body: 14,
     subheading: 16,
   },

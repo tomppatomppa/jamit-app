@@ -39,7 +39,7 @@ const customMapStyle = [
   },
 ]
 
-import React from 'react'
+import React, { useState } from 'react'
 
 //TODO: get device current location as initialRegion
 
@@ -50,13 +50,30 @@ import TopBar from './TopBar'
 import { useNavigate } from 'react-router-native'
 import { initialRegion } from '../utils/config'
 
+import CalloutMarker from './CalloutMarker'
+
 const Map = ({ setPressedLocation }) => {
+  // eslint-disable-next-line no-unused-vars
+  const [selectedEvent, setSelectedEvent] = useState(null)
   const { data, isLoading, handleSetSearchQuery } = useSearchQuery()
   const navigate = useNavigate()
 
   const handlePress = (e) => {
     setPressedLocation(() => e.nativeEvent.coordinate)
     navigate('/create')
+  }
+
+  const getEventDetails = (e) => {
+    const { latitude, longitude } = e.nativeEvent.coordinate
+    const foundEvent = data.find(
+      (event) =>
+        event.location.coordinates[0] === latitude &&
+        event.location.coordinates[1] === longitude
+    )
+    if (foundEvent) {
+      setSelectedEvent(foundEvent)
+      console.log(foundEvent)
+    }
   }
 
   return (
@@ -74,12 +91,15 @@ const Map = ({ setPressedLocation }) => {
           ? ''
           : data.map((event, index) => (
               <Marker
+                onPress={getEventDetails}
                 key={index}
                 coordinate={{
                   latitude: event.location.coordinates[0],
                   longitude: event.location.coordinates[1],
                 }}
-              ></Marker>
+              >
+                <CalloutMarker event={event} />
+              </Marker>
             ))}
       </MapView>
     </View>
@@ -100,6 +120,11 @@ const styles = StyleSheet.create({
   topBarContainer: {
     height: 80,
     backgroundColor: theme.colors.primary,
+  },
+  selected: {
+    width: 20,
+    position: 'absolute',
+    bottom: 0,
   },
 })
 
