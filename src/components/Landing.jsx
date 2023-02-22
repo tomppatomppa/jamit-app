@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   Button,
-  FlatList,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -9,39 +8,9 @@ import {
 } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import theme from '../theme'
-import MenuItem from './MenuItem'
+
 import Text from './Text'
 
-const items = [
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-  'name',
-]
-const ItemSeparator = () => <View style={styles.separator} />
-const RenderListItem = ({ item }) => <MenuItem item={item} />
 const Landing = () => {
   const navigate = useNavigate()
   return (
