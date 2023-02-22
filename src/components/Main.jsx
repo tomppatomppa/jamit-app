@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Route, Routes } from 'react-router-native'
 import CreateEvent from './CreateEvent'
+import Landing from './Landing'
 
 import Map from './Map'
 
@@ -10,8 +11,9 @@ const Main = () => {
   return (
     <View style={styles.container}>
       <Routes>
+        <Route path="/" element={<Landing />} exact />
         <Route
-          path="/"
+          path="/map"
           element={<Map setPressedLocation={setPressedLocation} />}
           exact
         />

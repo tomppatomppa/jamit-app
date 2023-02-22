@@ -6,7 +6,7 @@ import Tab from './Tab'
 const TopBar = () => {
   return (
     <View style={styles.container}>
-      <Tab title={'back'} />
+      <Tab navigateTo={'/'} title={'back'} />
 
       <Tab title={'jamit'} />
       <Tab title={'Kaupunki'} />

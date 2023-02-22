@@ -91,6 +91,7 @@ const Map = ({ setPressedLocation }) => {
     <View style={styles.container}>
       <TopBar />
       <MapView
+        onPress={handleCloseDrawer}
         onLongPress={handlePress}
         showsUserLocation={true}
         customMapStyle={customMapStyle}

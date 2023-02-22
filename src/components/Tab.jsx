@@ -1,13 +1,17 @@
 import React from 'react'
-import { View } from 'react-native'
+import { Pressable, View } from 'react-native'
+import { useNavigate } from 'react-router-native'
 
 import Text from './Text'
 
-const Tab = ({ title }) => {
+const Tab = ({ navigateTo, title }) => {
+  const navigate = useNavigate()
   return (
-    <View style={{ margin: 12 }}>
-      <Text color={'secondary'}>{title}</Text>
-    </View>
+    <Pressable onPress={() => navigate(navigateTo)}>
+      <View style={{ margin: 12 }}>
+        <Text color={'secondary'}>{title}</Text>
+      </View>
+    </Pressable>
   )
 }
 
