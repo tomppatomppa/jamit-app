@@ -29,7 +29,7 @@ const calculateRectangle = ({
 
 const useSearchQuery = (initialState) => {
   const [searchQuery, setSearchQuery] = useState(initialState)
-  const { refetch, data, isLoading } = UseGetAllEvents(searchQuery)
+  const { refetch, data, isLoading, isError } = UseGetAllEvents(searchQuery)
 
   const handleSetSearchQuery = (variables) => {
     const search = calculateRectangle(variables)
@@ -37,7 +37,7 @@ const useSearchQuery = (initialState) => {
     refetch()
   }
 
-  return { refetch, data, isLoading, handleSetSearchQuery }
+  return { refetch, data, isLoading, isError, handleSetSearchQuery }
 }
 
 export default useSearchQuery

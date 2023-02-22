@@ -51,12 +51,23 @@ import { useNavigate } from 'react-router-native'
 import { initialRegion } from '../utils/config'
 
 import CalloutMarker from './CalloutMarker'
+import Drawer from './Drawer'
+
+import EventContent from './EventContent'
 
 const Map = ({ setPressedLocation }) => {
   // eslint-disable-next-line no-unused-vars
   const [selectedEvent, setSelectedEvent] = useState(null)
-  const { data, isLoading, handleSetSearchQuery } = useSearchQuery()
+  const { data, handleSetSearchQuery } = useSearchQuery()
+  const [showDrawer, setShowDrawer] = useState(false)
   const navigate = useNavigate()
+
+  const handleOpenDrawer = () => {
+    setShowDrawer(true)
+  }
+  const handleCloseDrawer = () => {
+    setShowDrawer(false)
+  }
 
   const handlePress = (e) => {
     setPressedLocation(() => e.nativeEvent.coordinate)
@@ -87,21 +98,23 @@ const Map = ({ setPressedLocation }) => {
         style={styles.map}
         onRegionChangeComplete={handleSetSearchQuery}
       >
-        {isLoading
-          ? ''
-          : data.map((event, index) => (
-              <Marker
-                onPress={getEventDetails}
-                key={index}
-                coordinate={{
-                  latitude: event.location.coordinates[0],
-                  longitude: event.location.coordinates[1],
-                }}
-              >
-                <CalloutMarker event={event} />
-              </Marker>
-            ))}
+        {data?.map((event, index) => (
+          <Marker
+            onCalloutPress={handleOpenDrawer}
+            onPress={getEventDetails}
+            key={index}
+            coordinate={{
+              latitude: event.location.coordinates[0],
+              longitude: event.location.coordinates[1],
+            }}
+          >
+            <CalloutMarker event={event} />
+          </Marker>
+        ))}
       </MapView>
+      <Drawer showDrawer={showDrawer} handleCloseDrawer={handleCloseDrawer}>
+        <EventContent event={selectedEvent} />
+      </Drawer>
     </View>
   )
 }

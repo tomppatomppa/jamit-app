@@ -1,16 +1,12 @@
 import React from 'react'
-import { StyleSheet, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { Callout } from 'react-native-maps'
 import theme from '../theme'
 import Text from './Text'
 import { Entypo } from '@expo/vector-icons'
 const CalloutMarker = ({ event }) => {
   return (
-    <Callout
-      onPress={() => console.log(event.id)}
-      tooltip
-      style={styles.callout}
-    >
+    <Callout tooltip style={styles.callout}>
       <View style={styles.container}>
         <View style={styles.iconContainer}>
           <Entypo name="beamed-note" size={48} color="black" />
