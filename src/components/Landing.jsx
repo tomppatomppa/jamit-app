@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   Button,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -8,56 +9,70 @@ import {
 } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import theme from '../theme'
-
 import Text from './Text'
 
+const MenuItemTitles = [
+  'Jamit',
+  'Open Mic',
+  'Other',
+  'Other',
+  'Other',
+  'Other',
+  'Other',
+  'Other',
+]
+
 const Landing = () => {
-  const navigate = useNavigate()
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView stickyHeaderIndices={[0]} style={styles.scrollView}>
-        <Text
+        <View
           style={{
-            justifyContent: 'flex-end',
+            justifyContent: 'space-between',
+            flexDirection: 'row',
             alignItems: 'center',
-
             height: 80,
-            backgroundColor: 'black',
+            backgroundColor: 'green',
             padding: 10,
           }}
         >
-          Sticky Header
-        </Text>
-        <Button onPress={() => navigate('/map')} title="press"></Button>
-        <View style={{ flexDirection: 'row', height: 300, padding: 12 }}>
-          <View style={{ flexBasis: '50%', backgroundColor: 'yellow' }}>
-            <Text>asdasd</Text>
-          </View>
-          <View style={{ flexBasis: '50%', backgroundColor: 'green' }}>
-            <Text>asdasd</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Button title="menu">ads</Button>
+            <Text style={{ flex: 1 }}>Logo</Text>
+            <Button title="Login">ads</Button>
           </View>
         </View>
-        <View style={{ flexDirection: 'row', height: 300, padding: 12 }}>
-          <View style={{ flexBasis: '50%', backgroundColor: 'yellow' }}>
-            <Text>asdasd</Text>
-          </View>
-          <View style={{ flexBasis: '50%', backgroundColor: 'green' }}>
-            <Text>asdasd</Text>
-          </View>
+        <View>
+          <Text>This is Description</Text>
         </View>
-        <View style={{ flexDirection: 'row', height: 300, padding: 12 }}>
-          <View style={{ flexBasis: '50%', backgroundColor: 'yellow' }}>
-            <Text>asdasd</Text>
-          </View>
-          <View style={{ flexBasis: '50%', backgroundColor: 'green' }}>
-            <Text>asdasd</Text>
-          </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            padding: 12,
+          }}
+        >
+          {MenuItemTitles.map((item, index) => (
+            <MenuItem key={index} title={item} />
+          ))}
         </View>
       </ScrollView>
     </SafeAreaView>
   )
 }
-
+const MenuItem = ({ title }) => {
+  const navigate = useNavigate()
+  return (
+    <Pressable style={styles.menuItem} onPress={() => navigate('/map')}>
+      <View style={styles.menuItemImage}>
+        <Text>Image should go here</Text>
+      </View>
+      <View style={styles.menuItemTextContainer}>
+        <Text style={{ alignSelf: 'center', padding: 8 }}>{title}</Text>
+      </View>
+    </Pressable>
+  )
+}
 const styles = StyleSheet.create({
   separator: {
     height: 10,
@@ -85,9 +100,28 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     backgroundColor: 'pink',
+    width: '100%',
   },
   text: {
     fontSize: 42,
+  },
+  menuItem: {
+    flex: 1,
+    margin: 4,
+    borderTopLeftRadius: 60 / 2,
+    justifyContent: 'flex-end',
+    height: 200,
+    minWidth: 150,
+    backgroundColor: 'yellow',
+    alignItems: 'center',
+  },
+  menuItemImage: {
+    flex: 1,
+  },
+  menuItemTextContainer: {
+    borderColor: 'black',
+    borderTopWidth: 1,
+    width: '100%',
   },
 })
 export default Landing
