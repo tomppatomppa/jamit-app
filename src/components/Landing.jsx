@@ -31,7 +31,6 @@ const Landing = () => {
             justifyContent: 'space-between',
             flexDirection: 'row',
             alignItems: 'center',
-            height: 80,
             backgroundColor: 'green',
             padding: 10,
           }}
@@ -42,7 +41,7 @@ const Landing = () => {
             <Button title="Login">ads</Button>
           </View>
         </View>
-        <View>
+        <View style={{ height: 400, alignItems: 'center' }}>
           <Text>This is Description</Text>
         </View>
         <View

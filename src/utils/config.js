@@ -1,5 +1,5 @@
-//export const baseUrl = 'http://192.168.1.104:3000/api/events/'
-export const baseUrl = 'http://jamit-api.fly.dev/api/events/'
+export const baseUrl = 'https://jamit-api.fly.dev/api/events/'
+//export const baseUrl = 'http://jamit-api.fly.dev/api/login'
 export const event = {
   name: 'Add EVENT',
   shares: 0,

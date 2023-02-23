@@ -7,7 +7,6 @@ const TopBar = () => {
   return (
     <View style={styles.container}>
       <Tab navigateTo={'/'} title={'back'} />
-
       <Tab title={'jamit'} />
       <Tab title={'Kaupunki'} />
     </View>
@@ -17,7 +16,7 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'space-between',
     alignItems: 'flex-end',
     height: 80,
     backgroundColor: theme.colors.primary,
