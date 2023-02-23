@@ -43,7 +43,6 @@ import React, { useState } from 'react'
 
 //TODO: get device current location as initialRegion
 
-import useSearchQuery from '../hooks/useSearchQuery'
 import theme from '../theme'
 
 import TopBar from './TopBar'
@@ -54,11 +53,12 @@ import CalloutMarker from './CalloutMarker'
 import Drawer from './Drawer'
 
 import EventContent from './EventContent'
+import useEvents from '../hooks/useEvents'
 
 const Map = ({ setPressedLocation }) => {
   // eslint-disable-next-line no-unused-vars
   const [selectedEvent, setSelectedEvent] = useState(null)
-  const { data, handleSetSearchQuery } = useSearchQuery()
+  const { data, handleSetSearchQuery } = useEvents()
   const [showDrawer, setShowDrawer] = useState(false)
   const navigate = useNavigate()
 

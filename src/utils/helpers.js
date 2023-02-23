@@ -1,7 +1,4 @@
-import { useState } from 'react'
-import { UseGetAllEvents } from './getEvents'
-
-const calculateRectangle = ({
+export const calculateRectangle = ({
   latitude,
   longitude,
   latitudeDelta,
@@ -26,18 +23,3 @@ const calculateRectangle = ({
 
   return recDimensions
 }
-
-const useSearchQuery = (initialState) => {
-  const [searchQuery, setSearchQuery] = useState(initialState)
-  const { refetch, data, isLoading, isError } = UseGetAllEvents(searchQuery)
-
-  const handleSetSearchQuery = (variables) => {
-    const search = calculateRectangle(variables)
-    setSearchQuery(search)
-    // refetch()
-  }
-
-  return { refetch, data, isLoading, isError, handleSetSearchQuery }
-}
-
-export default useSearchQuery

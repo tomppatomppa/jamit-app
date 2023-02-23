@@ -7,6 +7,7 @@ import theme from '../../theme'
 import Text from '../Text'
 import * as yup from 'yup'
 import FormikTextInput from './FormikTextInput'
+import useLogin from '../../hooks/useLogin'
 
 const validationSchema = yup.object().shape({
   username: yup.string().required('Username is required'),
@@ -41,10 +42,13 @@ const LoginForm = ({ onSubmit, onCancel }) => {
   )
 }
 const Login = () => {
+  const send = useLogin()
   const navigate = useNavigate()
-  const onSubmit = (values) => {
-    console.log(values, 'LOGIN')
-    navigate(-1)
+
+  const onSubmit = (credentials) => {
+    send(credentials)
+
+    //navigate(-1)
   }
   const onCancel = () => {
     navigate(-1)
