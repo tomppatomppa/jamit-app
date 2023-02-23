@@ -14,15 +14,3 @@ export const createEvent = async (event) => {
   // const response = await axios.post(baseUrl, { event })
   // return response.data
 }
-export const loginUser = async ({ username, password }) => {
-  console.log(username, password)
-  try {
-    const response = await axios.post(`${baseUrl}/api/login`, {
-      username,
-      password,
-    })
-    return response.data
-  } catch (e) {
-    throw new Error(e.response.data.error)
-  }
-}
