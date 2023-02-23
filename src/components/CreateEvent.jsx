@@ -12,7 +12,7 @@ const CreateEvent = ({ pressedLocation }) => {
     const { longitude, latitude } = pressedLocation
 
     try {
-      const { data } = await axios.post(
+      await axios.post(
         baseUrl,
         {
           ...event,
@@ -25,7 +25,6 @@ const CreateEvent = ({ pressedLocation }) => {
           },
         }
       )
-      console.log(data)
       Alert.alert('Created event')
       navigate(-1)
     } catch (e) {

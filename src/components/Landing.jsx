@@ -23,6 +23,7 @@ const MenuItemTitles = [
 ]
 
 const Landing = () => {
+  const navigate = useNavigate()
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView stickyHeaderIndices={[0]} style={styles.scrollView}>
@@ -30,7 +31,8 @@ const Landing = () => {
           style={{
             justifyContent: 'space-between',
             flexDirection: 'row',
-            alignItems: 'center',
+            alignItems: 'flex-end',
+            height: 80,
             backgroundColor: 'green',
             padding: 10,
           }}
@@ -38,7 +40,9 @@ const Landing = () => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Button title="menu">ads</Button>
             <Text style={{ flex: 1 }}>Logo</Text>
-            <Button title="Login">ads</Button>
+            <Button onPress={() => navigate('/login')} title="Login">
+              ads
+            </Button>
           </View>
         </View>
         <View style={{ height: 400, alignItems: 'center' }}>
