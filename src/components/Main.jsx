@@ -8,6 +8,7 @@ import Login from './login/Login'
 import Map from './Map'
 import CurrentUserContext from '../contexts/CurrentUserContext'
 import useAuthStorage from '../hooks/useAuthStorage'
+import RegisterUser from './login/RegisterUser'
 
 const Main = () => {
   const authStorage = useAuthStorage()
@@ -21,8 +22,8 @@ const Main = () => {
         setCurrentUser(userFromStorage)
       }
     }
-    if (currentUser === null) loginUser()
-  }, [currentUser])
+    loginUser()
+  }, [])
 
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
@@ -30,6 +31,7 @@ const Main = () => {
         <Routes>
           <Route path="/" element={<Landing />} exact />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<RegisterUser />} />
           <Route
             path="/map"
             element={<Map setPressedLocation={setPressedLocation} />}
@@ -47,11 +49,9 @@ const Main = () => {
 }
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
     flexGrow: 1,
-    flexShrink: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
   },
   buttonContainer: {
     width: 74,

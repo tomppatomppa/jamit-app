@@ -10,27 +10,24 @@ const useLogin = () => {
   const { setCurrentUser } = useContext(CurrentUserContext)
   const queryClient = new QueryClient()
   const authStorage = useAuthStorage()
-  const navigate = useNavigate()
 
   const loginUserMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: async (data) => {
       await authStorage.setCurrentUser(data)
       setCurrentUser({ ...data })
-
       queryClient.clear()
-      navigate(-1)
     },
     onError: (error) => {
       console.log(error)
     },
   })
 
-  const send = ({ username, password }) => {
+  const login = ({ username, password }) => {
     loginUserMutation.mutate({ username, password })
   }
 
-  return send
+  return login
 }
 
 export default useLogin

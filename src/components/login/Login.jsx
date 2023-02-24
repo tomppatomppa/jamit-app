@@ -10,14 +10,24 @@ import FormikTextInput from './FormikTextInput'
 import useLogin from '../../hooks/useLogin'
 
 const validationSchema = yup.object().shape({
-  username: yup.string().required('Username is required'),
+  username: yup
+    .string()
+    .email('Username has to be a valid email')
+    .required('Username is required'),
   password: yup.string().required('Password is required'),
 })
 const initialValues = {
   username: 'tomiwest@hotmail.com',
   password: 'secret',
 }
-const LoginForm = ({ onSubmit, onCancel, isSubmitting }) => {
+export const LoginForm = ({
+  createUser = false,
+  onSubmit,
+  onCancel,
+
+  children,
+}) => {
+  const navigate = useNavigate()
   return (
     <View style={styles.loginForm}>
       <FormikTextInput name={'username'} placeholder="Username" />
@@ -28,29 +38,34 @@ const LoginForm = ({ onSubmit, onCancel, isSubmitting }) => {
       />
       <View style={styles.buttonContainer}>
         <Pressable style={styles.cancelButton} onPress={onCancel}>
-          <Text color={'secondary'} fontWeight="bold">
+          <Text color={'primary'} fontWeight="bold">
             Cancel
           </Text>
         </Pressable>
         <Pressable style={styles.signInButton} onPress={onSubmit}>
           <Text color={'secondary'} fontWeight="bold">
-            {isSubmitting ? 'loading' : 'Sign In'}
+            {createUser ? 'Register' : 'Sign In'}
           </Text>
         </Pressable>
       </View>
-      <Pressable onPress={() => console.log('create new user')}>
-        <Text>New user?</Text>
+      <Pressable onPress={() => navigate('/register')}>
+        {createUser ? (
+          <Text>Register a new account</Text>
+        ) : (
+          <Text>New user?</Text>
+        )}
+        {children}
       </Pressable>
     </View>
   )
 }
 const Login = () => {
-  const send = useLogin()
+  const login = useLogin()
   const navigate = useNavigate()
 
   const onSubmit = (credentials) => {
     //TODO: error handling
-    send(credentials)
+    login(credentials)
   }
   const onCancel = () => {
     navigate(-1)
@@ -66,12 +81,8 @@ const Login = () => {
         }}
         onCancel={onCancel}
       >
-        {({ handleSubmit, isSubmitting }) => (
-          <LoginForm
-            isSubmitting={isSubmitting}
-            onSubmit={handleSubmit}
-            onCancel={onCancel}
-          />
+        {({ handleSubmit }) => (
+          <LoginForm onSubmit={handleSubmit} onCancel={onCancel} />
         )}
       </Formik>
     </View>
@@ -81,18 +92,14 @@ const Login = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: theme.colors.secondary,
   },
   loginForm: {
-    backgroundColor: 'gray',
-    height: '50%',
-    width: '77%',
-    padding: 24,
-    justifyContent: 'center',
+    width: 'auto',
+    flex: 1,
+    padding: 12,
+    marginTop: 72,
+    justifyContent: 'flex-start',
   },
   buttonContainer: {
     alignSelf: 'flex-end',
@@ -111,4 +118,5 @@ const styles = StyleSheet.create({
     padding: 8,
   },
 })
+
 export default Login
