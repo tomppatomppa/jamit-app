@@ -74,6 +74,7 @@ const Map = ({ setPressedLocation }) => {
   }
 
   const getEventDetails = (e) => {
+    handleCloseDrawer()
     const { latitude, longitude } = e.nativeEvent.coordinate
     const foundEvent = data.filter(
       (event) =>
