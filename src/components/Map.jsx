@@ -76,14 +76,13 @@ const Map = ({ setPressedLocation }) => {
 
   const getEventDetails = (e) => {
     const { latitude, longitude } = e.nativeEvent.coordinate
-    const foundEvent = data.find(
+    const foundEvent = data.filter(
       (event) =>
         event.location.coordinates[0] === latitude &&
         event.location.coordinates[1] === longitude
     )
     if (foundEvent) {
       setSelectedEvent(foundEvent)
-      console.log(foundEvent)
     }
   }
 
@@ -109,6 +108,7 @@ const Map = ({ setPressedLocation }) => {
               longitude: event.location.coordinates[1],
             }}
           >
+            {/* //TODO: dont render this unless its marker is selected */}
             <CalloutMarker event={event} />
           </Marker>
         ))}

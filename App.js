@@ -13,7 +13,7 @@ import AuthStorage from './src/utils/AuthStorage'
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onSuccess: (data) => {
-      console.log(data)
+      //console.log(data)
     },
     onError: (error, query) => {
       // 🎉 only show error toasts if we already have data in the cache
@@ -21,13 +21,13 @@ const queryClient = new QueryClient({
       if (query.state.data !== undefined) {
         console.log(`Something went wrong: ${error.message}`)
       }
-
-      console.log(error)
+      //console.log(error)
     },
   }),
   mutationCache: new MutationCache({
-    onError: (error) => {
-      console.log(error)
+    onError: (error, mutation) => {
+      console.log(mutation)
+      console.log(error.response.data.error)
     },
   }),
 })

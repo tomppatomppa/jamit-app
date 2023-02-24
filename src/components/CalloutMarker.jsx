@@ -4,7 +4,10 @@ import { Callout } from 'react-native-maps'
 import theme from '../theme'
 import Text from './Text'
 import { Entypo } from '@expo/vector-icons'
+
 const CalloutMarker = ({ event }) => {
+  //TODO: fetch from cache all events at the same location
+
   return (
     <Callout tooltip style={styles.callout}>
       <View style={styles.container}>
