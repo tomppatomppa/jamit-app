@@ -13,7 +13,7 @@ const CreateEvent = ({ pressedLocation }) => {
 
     try {
       await axios.post(
-        baseUrl,
+        `${baseUrl}/api/events`,
         {
           ...event,
           post_url: longitude + latitude,

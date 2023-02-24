@@ -8,7 +8,7 @@ import Text from '../Text'
 import * as yup from 'yup'
 import FormikTextInput from './FormikTextInput'
 import useLogin from '../../hooks/useLogin'
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
 const validationSchema = yup.object().shape({
   username: yup.string().required('Username is required'),
   password: yup.string().required('Password is required'),
@@ -49,6 +49,7 @@ const Login = () => {
   const navigate = useNavigate()
 
   const onSubmit = (credentials) => {
+    //TODO: error handling
     send(credentials)
   }
   const onCancel = () => {
@@ -60,7 +61,6 @@ const Login = () => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          await sleep(100)
           onSubmit(values)
           setSubmitting(false)
         }}

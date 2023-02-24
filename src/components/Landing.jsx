@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {
   Button,
   Pressable,
@@ -8,6 +8,8 @@ import {
   View,
 } from 'react-native'
 import { useNavigate } from 'react-router-native'
+import CurrentUserContext from '../contexts/CurrentUserContext'
+
 import theme from '../theme'
 import Text from './Text'
 
@@ -23,26 +25,14 @@ const MenuItemTitles = [
 ]
 
 const Landing = () => {
-  const navigate = useNavigate()
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView stickyHeaderIndices={[0]} style={styles.scrollView}>
-        <View
-          style={{
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-            alignItems: 'flex-end',
-            height: 80,
-            backgroundColor: 'green',
-            padding: 10,
-          }}
-        >
+        <View style={styles.stickyHeader}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Button title="menu">ads</Button>
             <Text style={{ flex: 1 }}>Logo</Text>
-            <Button onPress={() => navigate('/login')} title="Login">
-              ads
-            </Button>
+            <LoginButton />
           </View>
         </View>
         <View style={{ height: 400, alignItems: 'center' }}>
@@ -76,7 +66,26 @@ const MenuItem = ({ title }) => {
     </Pressable>
   )
 }
+const LoginButton = () => {
+  const navigate = useNavigate()
+  const { currentUser, setCurrentUser } = useContext(CurrentUserContext)
+
+  if (currentUser !== null) {
+    //TODO: Go to user settings page
+    return <Button onPress={() => setCurrentUser(null)} title="Logout" />
+  }
+  return <Button onPress={() => navigate('/login')} title="login" />
+}
+
 const styles = StyleSheet.create({
+  stickyHeader: {
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    height: 80,
+    backgroundColor: 'green',
+    padding: 10,
+  },
   separator: {
     height: 10,
   },

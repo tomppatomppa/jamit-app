@@ -6,26 +6,31 @@ import Landing from './Landing'
 import Login from './login/Login'
 
 import Map from './Map'
+import CurrentUserContext from '../contexts/CurrentUserContext'
 
 const Main = () => {
   const [pressedLocation, setPressedLocation] = useState({})
+  const [currentUser, setCurrentUser] = useState(null)
+  console.log(currentUser)
   return (
-    <View style={styles.container}>
-      <Routes>
-        <Route path="/" element={<Landing />} exact />
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/map"
-          element={<Map setPressedLocation={setPressedLocation} />}
-          exact
-        />
-        <Route
-          path="/create"
-          element={<CreateEvent pressedLocation={pressedLocation} />}
-          exact
-        />
-      </Routes>
-    </View>
+    <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <View style={styles.container}>
+        <Routes>
+          <Route path="/" element={<Landing />} exact />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/map"
+            element={<Map setPressedLocation={setPressedLocation} />}
+            exact
+          />
+          <Route
+            path="/create"
+            element={<CreateEvent pressedLocation={pressedLocation} />}
+            exact
+          />
+        </Routes>
+      </View>
+    </CurrentUserContext.Provider>
   )
 }
 const styles = StyleSheet.create({
