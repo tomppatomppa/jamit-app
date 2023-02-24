@@ -5,7 +5,7 @@ export const getEvents = async (variables) => {
   const response = await axios.get(baseUrl + '/api/events', {
     params: variables,
   })
-  console.log('refetch')
+
   return response.data
 }
 

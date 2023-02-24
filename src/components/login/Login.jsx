@@ -1,5 +1,5 @@
 import { Formik } from 'formik'
-import React from 'react'
+import React, { useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 
@@ -60,12 +60,20 @@ export const LoginForm = ({
   )
 }
 const Login = () => {
+  const [error, setError] = useState('')
   const login = useLogin()
   const navigate = useNavigate()
 
-  const onSubmit = (credentials) => {
-    //TODO: error handling
-    login(credentials)
+  const onSubmit = async (credentials) => {
+    try {
+      await login(credentials)
+      navigate(-1)
+    } catch (e) {
+      setError(JSON.stringify(e.response.data.error))
+      setTimeout(() => {
+        setError('')
+      }, 2000)
+    }
   }
   const onCancel = () => {
     navigate(-1)
@@ -82,7 +90,9 @@ const Login = () => {
         onCancel={onCancel}
       >
         {({ handleSubmit }) => (
-          <LoginForm onSubmit={handleSubmit} onCancel={onCancel} />
+          <LoginForm onSubmit={handleSubmit} onCancel={onCancel}>
+            <Text color={'warning'}>{error}</Text>
+          </LoginForm>
         )}
       </Formik>
     </View>
