@@ -1,5 +1,5 @@
 import { Formik } from 'formik'
-import React, { useState } from 'react'
+import React from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 
@@ -17,7 +17,7 @@ const validationSchema = yup.object().shape({
   password: yup.string().required('Password is required'),
 })
 const initialValues = {
-  username: '',
+  username: 'tomiwest@hotmail.com',
   password: 'secret',
 }
 export const LoginForm = ({
@@ -60,24 +60,16 @@ export const LoginForm = ({
   )
 }
 const Login = () => {
-  const [error, setError] = useState('')
-  const login = useLogin()
+  const { mutate } = useLogin()
   const navigate = useNavigate()
 
   const onSubmit = async (credentials) => {
-    try {
-      await login(credentials)
-      navigate(-1)
-    } catch (e) {
-      setError(JSON.stringify(e.response.data.error))
-      setTimeout(() => {
-        setError('')
-      }, 2000)
-    }
+    mutate(credentials)
   }
   const onCancel = () => {
     navigate(-1)
   }
+
   return (
     <View style={styles.container}>
       <Formik
@@ -91,7 +83,7 @@ const Login = () => {
       >
         {({ handleSubmit }) => (
           <LoginForm onSubmit={handleSubmit} onCancel={onCancel}>
-            <Text color={'warning'}>{error}</Text>
+            <Text color={'warning'}>{'This should be error message'}</Text>
           </LoginForm>
         )}
       </Formik>

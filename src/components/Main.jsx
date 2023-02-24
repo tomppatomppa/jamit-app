@@ -15,14 +15,14 @@ const Main = () => {
   const [pressedLocation, setPressedLocation] = useState({})
   const [currentUser, setCurrentUser] = useState(null)
 
-  useEffect(() => {
-    const loginUser = async () => {
-      const userFromStorage = await authStorage.getCurrentUser()
-      if (userFromStorage) {
-        setCurrentUser(userFromStorage)
-      }
+  const login = async () => {
+    const userFromStorage = await authStorage.getCurrentUser()
+    if (userFromStorage) {
+      setCurrentUser(userFromStorage)
     }
-    loginUser()
+  }
+  useEffect(() => {
+    login()
   }, [])
 
   return (

@@ -56,8 +56,7 @@ import EventContent from './EventContent'
 import useEvents from '../hooks/useEvents'
 
 const Map = ({ setPressedLocation }) => {
-  // eslint-disable-next-line no-unused-vars
-  const [selectedEvent, setSelectedEvent] = useState(null)
+  const [selectedEvent, setSelectedEvent] = useState([])
   const { data, handleSetSearchQuery } = useEvents()
   const [showDrawer, setShowDrawer] = useState(false)
   const navigate = useNavigate()

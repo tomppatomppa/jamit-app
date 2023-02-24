@@ -24,15 +24,13 @@ const initialValues = {
 const RegisterUser = () => {
   const [error, setError] = useState('')
   const register = useRegister()
-  const login = useLogin()
+  const { mutate } = useLogin()
   const navigate = useNavigate()
 
   const onSubmit = async (credentials) => {
-    //TODO: error handling
     try {
       await register(credentials)
-      login(credentials)
-      navigate('/')
+      mutate(credentials)
     } catch (e) {
       setError(JSON.stringify(e.response.data.error))
       setTimeout(() => {
@@ -40,9 +38,11 @@ const RegisterUser = () => {
       }, 2000)
     }
   }
+
   const onCancel = () => {
     navigate('/')
   }
+
   return (
     <View style={styles.container}>
       <Formik

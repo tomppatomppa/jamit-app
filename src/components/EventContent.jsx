@@ -1,35 +1,41 @@
 import React from 'react'
-import { ScrollView, StyleSheet, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import Text from './Text'
 
+const ItemSeparator = () => <View style={styles.separator} />
+const RenderRepositoryItem = ({ item }) => <ListItem item={item} />
+
 const EventContent = ({ event }) => {
-  //TODO: handle cases where mutliple events are in the same location
-  if (event.length > 1) {
-    return (
-      <View style={styles.container}>
-        <Text style={{ marginBottom: 12 }}>{'Multiple events'}</Text>
-        {event.map((e) => (
-          <Text key={e.id}>{e.name}</Text>
-        ))}
-      </View>
-    )
-  }
   return (
-    <View style={styles.container}>
-      <Text>{event[0].name}</Text>
-      <ScrollView>
-        <Text>{event[0].content}</Text>
-      </ScrollView>
+    <FlatList
+      data={event}
+      renderItem={RenderRepositoryItem}
+      ItemSeparatorComponent={ItemSeparator}
+    ></FlatList>
+  )
+}
+const ListItem = ({ item }) => {
+  return (
+    <View style={styles.listItem}>
+      <Text fontWeight={'bold'}>{item.name}</Text>
+      <Text>{item.content}</Text>
     </View>
   )
 }
-
 const styles = StyleSheet.create({
   container: {
     margin: 12,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  listItem: {
+    padding: 12,
+    borderWidth: 2,
+    borderColor: 'black',
+  },
+  separator: {
+    height: 10,
   },
 })
 export default EventContent

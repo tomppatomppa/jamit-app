@@ -4,16 +4,17 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import { useState } from 'react'
 import { NativeRouter } from 'react-router-native'
 import Main from './src/components/Main'
-import AuthStorageContext from './src/contexts/AuthStorageContext'
 
+import AuthStorageContext from './src/contexts/AuthStorageContext'
 import AuthStorage from './src/utils/AuthStorage'
 
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
-    onSuccess: (data) => {
-      //console.log(data)
+    onSuccess: (data, query) => {
+      console.log(query.queryKey)
     },
     onError: (error, query) => {
       // 🎉 only show error toasts if we already have data in the cache

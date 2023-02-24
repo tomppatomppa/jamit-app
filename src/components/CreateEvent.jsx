@@ -10,7 +10,7 @@ const CreateEvent = ({ pressedLocation }) => {
   const navigate = useNavigate()
   const handleCreateEvent = async () => {
     const { longitude, latitude } = pressedLocation
-
+    //TODO: use reactQuery
     try {
       await axios.post(
         `${baseUrl}/api/events`,
