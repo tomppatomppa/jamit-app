@@ -14,8 +14,8 @@ const validationSchema = yup.object().shape({
   password: yup.string().required('Password is required'),
 })
 const initialValues = {
-  username: '',
-  password: '',
+  username: 'tomiwest@hotmail.com',
+  password: 'secret',
 }
 const LoginForm = ({ onSubmit, onCancel, isSubmitting }) => {
   return (

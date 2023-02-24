@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import CurrentUserContext from '../contexts/CurrentUserContext'
+import useAuthStorage from '../hooks/useAuthStorage'
 
 import theme from '../theme'
 import Text from './Text'
@@ -69,10 +70,16 @@ const MenuItem = ({ title }) => {
 const LoginButton = () => {
   const navigate = useNavigate()
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext)
+  const authStorage = useAuthStorage()
+
+  const handleLogout = async () => {
+    await authStorage.removeCurrentUser()
+    setCurrentUser(null)
+  }
 
   if (currentUser !== null) {
     //TODO: Go to user settings page
-    return <Button onPress={() => setCurrentUser(null)} title="Logout" />
+    return <Button onPress={handleLogout} title="Logout" />
   }
   return <Button onPress={() => navigate('/login')} title="login" />
 }

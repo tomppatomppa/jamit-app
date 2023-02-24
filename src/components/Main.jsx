@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Route, Routes } from 'react-router-native'
 import CreateEvent from './CreateEvent'
@@ -7,11 +7,23 @@ import Login from './login/Login'
 
 import Map from './Map'
 import CurrentUserContext from '../contexts/CurrentUserContext'
+import useAuthStorage from '../hooks/useAuthStorage'
 
 const Main = () => {
+  const authStorage = useAuthStorage()
   const [pressedLocation, setPressedLocation] = useState({})
   const [currentUser, setCurrentUser] = useState(null)
-  console.log(currentUser)
+
+  useEffect(() => {
+    const loginUser = async () => {
+      const userFromStorage = await authStorage.getCurrentUser()
+      if (userFromStorage) {
+        setCurrentUser(userFromStorage)
+      }
+    }
+    if (currentUser === null) loginUser()
+  }, [currentUser])
+
   return (
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
       <View style={styles.container}>

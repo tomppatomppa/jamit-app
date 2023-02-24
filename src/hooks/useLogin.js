@@ -15,8 +15,9 @@ const useLogin = () => {
   const loginUserMutation = useMutation({
     mutationFn: loginUser,
     onSuccess: async (data) => {
-      await authStorage.setAccessToken(data.token)
-      setCurrentUser({ username: data.username })
+      await authStorage.setCurrentUser(data)
+      setCurrentUser({ ...data })
+
       queryClient.clear()
       navigate(-1)
     },
