@@ -7,7 +7,7 @@ import * as yup from 'yup'
 import useLogin from '../../../hooks/useLogin'
 
 import theme from '../../../theme'
-import FormikTextInput from '../../login/FormikTextInput'
+import FormikTextInput from '../../FormikTextInput'
 import Text from '../../Text'
 
 const validationSchema = yup.object().shape({

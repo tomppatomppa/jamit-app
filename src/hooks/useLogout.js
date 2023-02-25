@@ -18,12 +18,12 @@ const useLogout = () => {
       axios.delete(`${baseUrl}/api/login`, { ...headers }),
     onSettled: async () => {
       await authStorage.removeCurrentUser()
-      setCurrentUser(null)
       queryClient.clear()
       showToast({
         type: 'success',
-        text1: `Logged out`,
+        text1: `Logged out ${currentUser.username}`,
       })
+      setCurrentUser(null)
     },
   })
   const logout = () => {
