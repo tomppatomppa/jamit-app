@@ -3,11 +3,12 @@ import React from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 
-import theme from '../../theme'
-import Text from '../Text'
 import * as yup from 'yup'
-import FormikTextInput from './FormikTextInput'
-import useLogin from '../../hooks/useLogin'
+import useLogin from '../../../hooks/useLogin'
+
+import theme from '../../../theme'
+import FormikTextInput from '../../login/FormikTextInput'
+import Text from '../../Text'
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -52,7 +53,7 @@ export const LoginForm = ({ createUser = false, onSubmit, onCancel }) => {
     </View>
   )
 }
-const Login = () => {
+const UserLogin = () => {
   const { mutate } = useLogin()
   const navigate = useNavigate()
 
@@ -112,4 +113,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Login
+export default UserLogin

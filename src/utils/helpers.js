@@ -1,3 +1,5 @@
+import Toast from 'react-native-toast-message'
+
 export const calculateArea = ({
   latitude,
   longitude,
@@ -22,4 +24,16 @@ export const calculateArea = ({
   }
 
   return recDimensions
+}
+
+export const showToast = ({
+  type = 'error',
+  text1 = 'Something went wrong',
+  error,
+}) => {
+  Toast.show({
+    type: type,
+    text1: text1,
+    text2: error,
+  })
 }

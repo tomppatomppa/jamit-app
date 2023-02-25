@@ -3,12 +3,13 @@ import { StyleSheet, View } from 'react-native'
 import { Route, Routes } from 'react-router-native'
 import CreateEvent from './CreateEvent'
 import Landing from './Landing'
-import Login from './login/Login'
 
 import Map from './Map'
 import CurrentUserContext from '../contexts/CurrentUserContext'
 import useAuthStorage from '../hooks/useAuthStorage'
-import RegisterUser from './login/RegisterUser'
+
+import UserLogin from './features/users/UserLogin'
+import UserRegister from './features/users/UserRegister'
 
 const Main = () => {
   const authStorage = useAuthStorage()
@@ -29,8 +30,8 @@ const Main = () => {
       <View style={styles.container}>
         <Routes>
           <Route path="/" element={<Landing />} exact />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<RegisterUser />} />
+          <Route path="/login" element={<UserLogin />} />
+          <Route path="/register" element={<UserRegister />} />
           <Route path="/map" element={<Map />} exact />
           <Route path="/create" element={<CreateEvent />} exact />
         </Routes>

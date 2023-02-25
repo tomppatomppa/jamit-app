@@ -2,18 +2,16 @@ import { Formik } from 'formik'
 import React, { useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
-import useLogin from '../../hooks/useLogin'
-import theme from '../../theme'
 
 import * as yup from 'yup'
-
-import { LoginForm } from './Login'
-
-import Text from '../Text'
-import useRegister from '../../hooks/useRegister'
+import useLogin from '../../../hooks/useLogin'
+import useRegister from '../../../hooks/useRegister'
+import theme from '../../../theme'
+import Text from '../../Text'
+import { LoginForm } from './UserLogin'
 
 const validationSchema = yup.object().shape({
-  username: yup.string().required('Username is required'),
+  username: yup.string().email().required('Username is required'),
   password: yup.string().min(8).required('Password is required'),
 })
 const initialValues = {
@@ -21,14 +19,15 @@ const initialValues = {
   password: 'secret',
 }
 
-const RegisterUser = () => {
+const UserRegister = () => {
+  const navigate = useNavigate()
   const [error, setError] = useState('')
   const register = useRegister()
   const { mutate } = useLogin()
-  const navigate = useNavigate()
 
   const onSubmit = async (credentials) => {
     try {
+      console.log('register')
       await register(credentials)
       mutate(credentials)
     } catch (e) {
@@ -68,6 +67,7 @@ const RegisterUser = () => {
     </View>
   )
 }
+export default UserRegister
 
 const styles = StyleSheet.create({
   container: {
@@ -98,5 +98,3 @@ const styles = StyleSheet.create({
     padding: 8,
   },
 })
-
-export default RegisterUser

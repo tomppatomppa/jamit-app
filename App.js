@@ -11,18 +11,8 @@ import Main from './src/components/Main'
 import AuthStorageContext from './src/contexts/AuthStorageContext'
 import AuthStorage from './src/utils/AuthStorage'
 import Toast from 'react-native-toast-message'
+import { showToast } from './src/utils/helpers'
 
-export const showToast = ({
-  type = 'error',
-  text1 = 'Something went wrong',
-  error,
-}) => {
-  Toast.show({
-    type: type,
-    text1: text1,
-    text2: error,
-  })
-}
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onSuccess: (data, query) => {

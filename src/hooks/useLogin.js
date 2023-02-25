@@ -6,8 +6,7 @@ import CurrentUserContext from '../contexts/CurrentUserContext'
 import axios from 'axios'
 import { baseUrl } from '../utils/config'
 import { useNavigate } from 'react-router-native'
-
-import { showToast } from '../../App'
+import { showToast } from '../utils/helpers'
 
 const useLogin = () => {
   const navigate = useNavigate()

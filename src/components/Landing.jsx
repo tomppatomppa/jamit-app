@@ -9,14 +9,17 @@ import {
 } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import CurrentUserContext from '../contexts/CurrentUserContext'
-import useAuthStorage from '../hooks/useAuthStorage'
-import Toast from 'react-native-toast-message'
+
 import theme from '../theme'
+import { LoginButton, LogoutButton } from './features/users/UserButtons'
+
 import Text from './Text'
 
 const MenuItemTitles = ['Jamit', 'Open Mic', 'Other', 'Other']
 
 const Landing = () => {
+  const { currentUser } = useContext(CurrentUserContext)
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView stickyHeaderIndices={[0]} style={styles.scrollView}>
@@ -24,7 +27,7 @@ const Landing = () => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Button title="menu" />
             <Text style={{ flex: 1 }}>Logo</Text>
-            <LoginButton />
+            {currentUser ? <LogoutButton /> : <LoginButton />}
           </View>
         </View>
 
@@ -58,22 +61,6 @@ const MenuItem = ({ title }) => {
       </View>
     </Pressable>
   )
-}
-const LoginButton = () => {
-  const navigate = useNavigate()
-  const { currentUser, setCurrentUser } = useContext(CurrentUserContext)
-  const authStorage = useAuthStorage()
-
-  const handleLogout = async () => {
-    await authStorage.removeCurrentUser()
-    setCurrentUser(null)
-  }
-
-  if (currentUser !== null) {
-    //TODO: Go to user settings page
-    return <Button onPress={handleLogout} title="Logout" />
-  }
-  return <Button onPress={() => navigate('/login')} title="login" />
 }
 
 const styles = StyleSheet.create({
