@@ -1,18 +1,22 @@
-import { useState } from 'react'
-import { UseGetAllEvents } from '../reactQuery/queries'
-import { calculateRectangle } from '../utils/helpers'
+import { useQuery } from '@tanstack/react-query'
 
-const useEvents = (initialState) => {
-  const [searchQuery, setSearchQuery] = useState(initialState)
-  const { refetch, data, isLoading } = UseGetAllEvents(searchQuery)
+import axios from 'axios'
+import { baseUrl } from '../utils/config'
 
-  const handleSetSearchQuery = (variables) => {
-    const search = calculateRectangle(variables)
-    setSearchQuery(search)
-    refetch()
-  }
+const getEvents = async (filter) => {
+  const response = await axios.get(`${baseUrl}/api/events`, {
+    params: filter,
+  })
+  return response.data
+}
 
-  return { refetch, data, isLoading, handleSetSearchQuery }
+const useEvents = (filter) => {
+  const { isLoading, data } = useQuery({
+    queryKey: ['allEvents', filter],
+    queryFn: () => getEvents(filter),
+  })
+
+  return { data, isLoading }
 }
 
 export default useEvents

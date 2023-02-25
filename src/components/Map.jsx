@@ -38,7 +38,7 @@ const customMapStyle = [
     ],
   },
 ]
-
+import { calculateRectangle } from '../utils/helpers'
 import React, { useState } from 'react'
 
 //TODO: get device current location as initialRegion
@@ -56,8 +56,9 @@ import EventContent from './EventContent'
 import useEvents from '../hooks/useEvents'
 
 const Map = ({ setPressedLocation }) => {
+  const [filter, setFilter] = useState('')
+  const { data } = useEvents(filter)
   const [selectedEvent, setSelectedEvent] = useState([])
-  const { data, handleSetSearchQuery } = useEvents()
   const [showDrawer, setShowDrawer] = useState(false)
   const navigate = useNavigate()
 
@@ -85,7 +86,10 @@ const Map = ({ setPressedLocation }) => {
       setSelectedEvent(foundEvent)
     }
   }
-
+  const handleSetFilter = (e) => {
+    const area = calculateRectangle(e)
+    setFilter(area)
+  }
   return (
     <View style={styles.container}>
       <TopBar />
@@ -96,7 +100,7 @@ const Map = ({ setPressedLocation }) => {
         customMapStyle={customMapStyle}
         initialRegion={initialRegion}
         style={styles.map}
-        onRegionChangeComplete={handleSetSearchQuery}
+        onRegionChangeComplete={handleSetFilter}
       >
         {data?.map((event, index) => (
           <Marker
