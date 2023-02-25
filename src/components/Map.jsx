@@ -38,7 +38,7 @@ const customMapStyle = [
     ],
   },
 ]
-import { calculateRectangle } from '../utils/helpers'
+import { calculateArea } from '../utils/helpers'
 import React, { useState } from 'react'
 
 //TODO: get device current location as initialRegion
@@ -46,7 +46,7 @@ import React, { useState } from 'react'
 import theme from '../theme'
 
 import TopBar from './TopBar'
-import { useNavigate } from 'react-router-native'
+
 import { initialRegion } from '../utils/config'
 
 import CalloutMarker from './CalloutMarker'
@@ -55,12 +55,12 @@ import Drawer from './Drawer'
 import EventContent from './EventContent'
 import useEvents from '../hooks/useEvents'
 
-const Map = ({ setPressedLocation }) => {
+const Map = () => {
   const [filter, setFilter] = useState('')
   const { data } = useEvents(filter)
+
   const [selectedEvent, setSelectedEvent] = useState([])
   const [showDrawer, setShowDrawer] = useState(false)
-  const navigate = useNavigate()
 
   const handleOpenDrawer = () => {
     setShowDrawer(true)
@@ -69,12 +69,8 @@ const Map = ({ setPressedLocation }) => {
     setShowDrawer(false)
   }
 
-  const handlePress = (e) => {
-    setPressedLocation(() => e.nativeEvent.coordinate)
-    navigate('/create')
-  }
-
   const getEventDetails = (e) => {
+    console.log(e.nativeEvent)
     handleCloseDrawer()
     const { latitude, longitude } = e.nativeEvent.coordinate
     const foundEvent = data.filter(
@@ -87,7 +83,7 @@ const Map = ({ setPressedLocation }) => {
     }
   }
   const handleSetFilter = (e) => {
-    const area = calculateRectangle(e)
+    const area = calculateArea(e)
     setFilter(area)
   }
   return (
@@ -95,7 +91,9 @@ const Map = ({ setPressedLocation }) => {
       <TopBar />
       <MapView
         onPress={handleCloseDrawer}
-        onLongPress={handlePress}
+        moveOnMarkerPress={false}
+        onMarkerPress={getEventDetails}
+        onCalloutPress={handleOpenDrawer}
         showsUserLocation={true}
         customMapStyle={customMapStyle}
         initialRegion={initialRegion}
@@ -104,8 +102,6 @@ const Map = ({ setPressedLocation }) => {
       >
         {data?.map((event, index) => (
           <Marker
-            onCalloutPress={handleOpenDrawer}
-            onPress={getEventDetails}
             key={index}
             coordinate={{
               latitude: event.location.coordinates[0],
@@ -123,6 +119,7 @@ const Map = ({ setPressedLocation }) => {
     </View>
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     display: 'flex',

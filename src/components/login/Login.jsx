@@ -20,13 +20,7 @@ const initialValues = {
   username: 'tomiwest@hotmail.com',
   password: 'secret',
 }
-export const LoginForm = ({
-  createUser = false,
-  onSubmit,
-  onCancel,
-
-  children,
-}) => {
+export const LoginForm = ({ createUser = false, onSubmit, onCancel }) => {
   const navigate = useNavigate()
   return (
     <View style={styles.loginForm}>
@@ -54,7 +48,6 @@ export const LoginForm = ({
         ) : (
           <Text>New user?</Text>
         )}
-        {children}
       </Pressable>
     </View>
   )
@@ -82,9 +75,7 @@ const Login = () => {
         onCancel={onCancel}
       >
         {({ handleSubmit }) => (
-          <LoginForm onSubmit={handleSubmit} onCancel={onCancel}>
-            <Text color={'warning'}>{'This should be error message'}</Text>
-          </LoginForm>
+          <LoginForm onSubmit={handleSubmit} onCancel={onCancel} />
         )}
       </Formik>
     </View>

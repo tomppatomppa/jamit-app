@@ -1,4 +1,4 @@
-export const calculateRectangle = ({
+export const calculateArea = ({
   latitude,
   longitude,
   latitudeDelta,

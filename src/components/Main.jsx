@@ -12,7 +12,6 @@ import RegisterUser from './login/RegisterUser'
 
 const Main = () => {
   const authStorage = useAuthStorage()
-  const [pressedLocation, setPressedLocation] = useState({})
   const [currentUser, setCurrentUser] = useState(null)
 
   const login = async () => {
@@ -32,16 +31,8 @@ const Main = () => {
           <Route path="/" element={<Landing />} exact />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterUser />} />
-          <Route
-            path="/map"
-            element={<Map setPressedLocation={setPressedLocation} />}
-            exact
-          />
-          <Route
-            path="/create"
-            element={<CreateEvent pressedLocation={pressedLocation} />}
-            exact
-          />
+          <Route path="/map" element={<Map />} exact />
+          <Route path="/create" element={<CreateEvent />} exact />
         </Routes>
       </View>
     </CurrentUserContext.Provider>

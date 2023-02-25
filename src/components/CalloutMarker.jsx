@@ -7,7 +7,7 @@ import { Entypo } from '@expo/vector-icons'
 
 const CalloutMarker = ({ event }) => {
   //TODO: fetch from cache all events at the same location
-  console.log('callout')
+  console.log('event')
 
   return (
     <Callout tooltip style={styles.callout}>

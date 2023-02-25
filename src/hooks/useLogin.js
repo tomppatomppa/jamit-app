@@ -7,6 +7,8 @@ import axios from 'axios'
 import { baseUrl } from '../utils/config'
 import { useNavigate } from 'react-router-native'
 
+import { showToast } from '../../App'
+
 const useLogin = () => {
   const navigate = useNavigate()
   const queryClient = new QueryClient()
@@ -17,15 +19,17 @@ const useLogin = () => {
     ({ username, password }) =>
       axios.post(`${baseUrl}/api/login`, { username, password }),
     {
-      onSuccess: async (usernameAndToken) => {
+      onSuccess: async (response) => {
+        const usernameAndToken = response.data
         await authStorage.setCurrentUser(usernameAndToken)
         setCurrentUser({ ...usernameAndToken })
         queryClient.clear()
+        console.log(usernameAndToken.data)
+        showToast({
+          type: 'success',
+          text1: `Logged in as ${usernameAndToken.username}`,
+        })
         navigate('/')
-      },
-      onError: (error, variables) => {
-        console.log(error)
-        console.log(variables)
       },
     }
   )

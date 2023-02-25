@@ -10,7 +10,19 @@ import Main from './src/components/Main'
 
 import AuthStorageContext from './src/contexts/AuthStorageContext'
 import AuthStorage from './src/utils/AuthStorage'
+import Toast from 'react-native-toast-message'
 
+export const showToast = ({
+  type = 'error',
+  text1 = 'Something went wrong',
+  error,
+}) => {
+  Toast.show({
+    type: type,
+    text1: text1,
+    text2: error,
+  })
+}
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onSuccess: (data, query) => {
@@ -27,9 +39,8 @@ const queryClient = new QueryClient({
     },
   }),
   mutationCache: new MutationCache({
-    onError: (error, mutation) => {
-      console.log(mutation)
-      console.log(error.response.data.error)
+    onError: (error) => {
+      showToast({ error: error.response.data.error })
     },
   }),
 })
@@ -41,6 +52,7 @@ export default function App() {
       <QueryClientProvider client={queryClient}>
         <AuthStorageContext.Provider value={authStorage}>
           <Main />
+          <Toast />
         </AuthStorageContext.Provider>
       </QueryClientProvider>
     </NativeRouter>

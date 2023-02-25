@@ -10,20 +10,11 @@ import {
 import { useNavigate } from 'react-router-native'
 import CurrentUserContext from '../contexts/CurrentUserContext'
 import useAuthStorage from '../hooks/useAuthStorage'
-
+import Toast from 'react-native-toast-message'
 import theme from '../theme'
 import Text from './Text'
 
-const MenuItemTitles = [
-  'Jamit',
-  'Open Mic',
-  'Other',
-  'Other',
-  'Other',
-  'Other',
-  'Other',
-  'Other',
-]
+const MenuItemTitles = ['Jamit', 'Open Mic', 'Other', 'Other']
 
 const Landing = () => {
   return (
@@ -31,11 +22,12 @@ const Landing = () => {
       <ScrollView stickyHeaderIndices={[0]} style={styles.scrollView}>
         <View style={styles.stickyHeader}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Button title="menu">ads</Button>
+            <Button title="menu" />
             <Text style={{ flex: 1 }}>Logo</Text>
             <LoginButton />
           </View>
         </View>
+
         <View style={{ height: 400, alignItems: 'center' }}>
           <Text>This is Description</Text>
         </View>

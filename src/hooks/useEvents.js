@@ -14,6 +14,7 @@ const useEvents = (filter) => {
   const { isLoading, data } = useQuery({
     queryKey: ['allEvents', filter],
     queryFn: () => getEvents(filter),
+    retry: 3,
   })
 
   return { data, isLoading }
