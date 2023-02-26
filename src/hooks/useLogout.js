@@ -27,9 +27,8 @@ const useLogout = () => {
     },
   })
   const logout = () => {
-    const { token } = currentUser
     const headers = {
-      headers: `Authorization: Bearer ${token}`,
+      headers: `Authorization: Bearer ${currentUser?.token}`,
     }
     mutatation.mutate(headers)
   }

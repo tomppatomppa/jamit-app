@@ -11,10 +11,13 @@ import useAuthStorage from '../hooks/useAuthStorage'
 import UserLogin from './features/users/UserLogin'
 import UserRegister from './features/users/UserRegister'
 import CreateEvent from './features/event/CreateEvent'
+import UserSettings from './features/users/UserSettings'
+import useBackHandler from '../hooks/useBackHandler'
 
 const Main = () => {
   const authStorage = useAuthStorage()
   const [currentUser, setCurrentUser] = useState(null)
+  useBackHandler()
 
   const login = async () => {
     const userFromStorage = await authStorage.getCurrentUser()
@@ -33,6 +36,7 @@ const Main = () => {
           <Route path="/" element={<Landing />} exact />
           <Route path="/login" element={<UserLogin />} />
           <Route path="/register" element={<UserRegister />} />
+          <Route path="/settings" element={<UserSettings />} />
           <Route path="/map" element={<Map />} exact />
           <Route path="/create" element={<CreateEvent />} exact />
         </Routes>

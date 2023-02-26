@@ -3,13 +3,18 @@ import theme from '../../theme'
 import FormikTextInput from '../FormikTextInput'
 import Text from '../Text'
 
-export const LoginForm = ({ navigate, onSubmit, onCancel }) => {
+export const RegisterForm = ({ onSubmit, onCancel }) => {
   return (
     <View style={styles.loginForm}>
-      <FormikTextInput name={'username'} placeholder="Username" />
+      <FormikTextInput name={'email'} placeholder="Email" />
       <FormikTextInput
         name={'password'}
         placeholder="Password"
+        secureTextEntry={true}
+      />
+      <FormikTextInput
+        name={'passwordConfirm'}
+        placeholder="Confirm password"
         secureTextEntry={true}
       />
       <View style={styles.buttonContainer}>
@@ -20,13 +25,10 @@ export const LoginForm = ({ navigate, onSubmit, onCancel }) => {
         </Pressable>
         <Pressable style={styles.signInButton} onPress={onSubmit}>
           <Text color={'secondary'} fontWeight="bold">
-            {'Sign In'}
+            Register
           </Text>
         </Pressable>
       </View>
-      <Pressable onPress={() => navigate('/register')}>
-        <Text>New User?</Text>
-      </Pressable>
     </View>
   )
 }

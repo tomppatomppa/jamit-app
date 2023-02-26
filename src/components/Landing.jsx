@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-native'
 import CurrentUserContext from '../contexts/CurrentUserContext'
 
 import theme from '../theme'
-import { LoginButton, LogoutButton } from './features/users/UserButtons'
+import { LoginButton } from './features/users/UserButtons'
 
 import Text from './Text'
 
@@ -19,7 +19,7 @@ const MenuItemTitles = ['Jamit', 'Open Mic', 'Other', 'Other']
 
 const Landing = () => {
   const { currentUser } = useContext(CurrentUserContext)
-
+  const navigate = useNavigate()
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView stickyHeaderIndices={[0]} style={styles.scrollView}>
@@ -27,7 +27,11 @@ const Landing = () => {
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Button title="menu" />
             <Text style={{ flex: 1 }}>Logo</Text>
-            {currentUser ? <LogoutButton /> : <LoginButton />}
+            {currentUser ? (
+              <Button title="User" onPress={() => navigate('/settings')} />
+            ) : (
+              <LoginButton />
+            )}
           </View>
         </View>
 

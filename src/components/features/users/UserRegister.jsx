@@ -7,15 +7,24 @@ import * as yup from 'yup'
 import useLogin from '../../../hooks/useLogin'
 import useRegister from '../../../hooks/useRegister'
 import theme from '../../../theme'
-import { LoginForm } from '../../forms/LoginForm'
+
+import { RegisterForm } from '../../forms/RegisterForm'
 
 const validationSchema = yup.object().shape({
-  username: yup.string().email().required('Username is required'),
-  password: yup.string().min(8).required('Password is required'),
+  email: yup.string().email().required('Email is required'),
+  password: yup
+    .string()
+    .min(5, 'minimum length is 5 characters')
+    .max(50, 'maximum length is 50 characters')
+    .required('Password is required'),
+  passwordConfirm: yup
+    .string()
+    .required('Confirm Password is required')
+    .oneOf([yup.ref('password'), null], 'passwords do not match'),
 })
 const initialValues = {
-  username: '',
-  password: 'secret',
+  email: '',
+  password: '',
 }
 
 const UserRegister = () => {
@@ -50,7 +59,7 @@ const UserRegister = () => {
         onCancel={onCancel}
       >
         {({ handleSubmit, isSubmitting }) => (
-          <LoginForm
+          <RegisterForm
             isSubmitting={isSubmitting}
             onSubmit={handleSubmit}
             onCancel={onCancel}
