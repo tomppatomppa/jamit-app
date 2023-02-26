@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
-import theme from '../theme'
-import Tab from './Tab'
+import theme from '../../../theme'
+import Tab from '../../Tab'
 
 const TopBar = () => {
   return (

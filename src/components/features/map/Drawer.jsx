@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, StyleSheet, View } from 'react-native'
-import theme from '../theme'
+import theme from '../../../theme'
 
 const Drawer = ({ children, showDrawer, handleCloseDrawer }) => {
   if (!showDrawer) return

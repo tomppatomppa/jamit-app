@@ -38,22 +38,22 @@ const customMapStyle = [
     ],
   },
 ]
-import { calculateArea } from '../utils/helpers'
+import { calculateArea } from '../../../utils/helpers'
 import React, { useState } from 'react'
 
 //TODO: get device current location as initialRegion
 
-import theme from '../theme'
+import theme from '../../../theme'
 
 import TopBar from './TopBar'
 
-import { initialRegion } from '../utils/config'
+import { initialRegion } from '../../../utils/config'
 
 import CalloutMarker from './CalloutMarker'
 import Drawer from './Drawer'
 
 import EventContent from './EventContent'
-import useEvents from '../hooks/useEvents'
+import useEvents from '../../../hooks/useEvents'
 
 const Map = () => {
   const [filter, setFilter] = useState('')

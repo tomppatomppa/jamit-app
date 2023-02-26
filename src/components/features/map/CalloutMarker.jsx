@@ -1,8 +1,8 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Callout } from 'react-native-maps'
-import theme from '../theme'
-import Text from './Text'
+import theme from '../../../theme'
+import Text from '../../Text'
 import { Entypo } from '@expo/vector-icons'
 
 const CalloutMarker = ({ event }) => {

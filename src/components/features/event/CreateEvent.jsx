@@ -2,8 +2,8 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { Alert, Button, StyleSheet, Text, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
-import theme from '../theme'
-import { baseUrl, event, token } from '../utils/config'
+import theme from '../../../theme'
+import { baseUrl, event, token } from '../../../utils/config'
 
 const CreateEvent = ({ pressedLocation }) => {
   const [message, setMessage] = useState('')

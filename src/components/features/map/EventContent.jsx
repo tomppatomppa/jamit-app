@@ -1,19 +1,10 @@
 import React from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
-import Text from './Text'
+import Text from '../../Text'
 
 const ItemSeparator = () => <View style={styles.separator} />
-const RenderRepositoryItem = ({ item }) => <ListItem item={item} />
+const RenderEventItem = ({ item }) => <ListItem item={item} />
 
-const EventContent = ({ event }) => {
-  return (
-    <FlatList
-      data={event}
-      renderItem={RenderRepositoryItem}
-      ItemSeparatorComponent={ItemSeparator}
-    ></FlatList>
-  )
-}
 const ListItem = ({ item }) => {
   return (
     <View style={styles.listItem}>
@@ -22,6 +13,18 @@ const ListItem = ({ item }) => {
     </View>
   )
 }
+
+const EventContent = ({ event }) => {
+  return (
+    <FlatList
+      data={event}
+      renderItem={RenderEventItem}
+      ItemSeparatorComponent={ItemSeparator}
+    ></FlatList>
+  )
+}
+export default EventContent
+
 const styles = StyleSheet.create({
   container: {
     margin: 12,
@@ -38,4 +41,3 @@ const styles = StyleSheet.create({
     height: 10,
   },
 })
-export default EventContent

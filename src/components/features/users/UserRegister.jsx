@@ -1,5 +1,5 @@
 import { Formik } from 'formik'
-import React, { useState } from 'react'
+import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 
@@ -7,8 +7,7 @@ import * as yup from 'yup'
 import useLogin from '../../../hooks/useLogin'
 import useRegister from '../../../hooks/useRegister'
 import theme from '../../../theme'
-import Text from '../../Text'
-import { LoginForm } from './UserLogin'
+import { LoginForm } from '../../forms/LoginForm'
 
 const validationSchema = yup.object().shape({
   username: yup.string().email().required('Username is required'),
@@ -21,7 +20,7 @@ const initialValues = {
 
 const UserRegister = () => {
   const navigate = useNavigate()
-  const [error, setError] = useState('')
+
   const register = useRegister()
   const { mutate } = useLogin()
 
@@ -31,10 +30,7 @@ const UserRegister = () => {
       await register(credentials)
       mutate(credentials)
     } catch (e) {
-      setError(JSON.stringify(e.response.data.error))
-      setTimeout(() => {
-        setError('')
-      }, 2000)
+      console.log(e)
     }
   }
 
@@ -55,13 +51,10 @@ const UserRegister = () => {
       >
         {({ handleSubmit, isSubmitting }) => (
           <LoginForm
-            createUser={true}
             isSubmitting={isSubmitting}
             onSubmit={handleSubmit}
             onCancel={onCancel}
-          >
-            <Text color={'warning'}>{error}</Text>
-          </LoginForm>
+          />
         )}
       </Formik>
     </View>

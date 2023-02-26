@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Route, Routes } from 'react-router-native'
-import CreateEvent from './CreateEvent'
+
 import Landing from './Landing'
 
-import Map from './Map'
+import Map from './features/map/Map'
 import CurrentUserContext from '../contexts/CurrentUserContext'
 import useAuthStorage from '../hooks/useAuthStorage'
 
 import UserLogin from './features/users/UserLogin'
 import UserRegister from './features/users/UserRegister'
+import CreateEvent from './features/event/CreateEvent'
 
 const Main = () => {
   const authStorage = useAuthStorage()
