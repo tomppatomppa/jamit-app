@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query'
 import React from 'react'
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 import theme from '../../../theme'
@@ -20,7 +19,7 @@ const UserSettings = () => {
   return (
     <SafeAreaView style={styles.container}>
       {isError ? (
-        <Text>Could not get your data</Text>
+        <ErrorScreen />
       ) : (
         <ScrollView stickyHeaderIndices={[0]} style={styles.scrollView}>
           <View style={styles.stickyHeader}>
@@ -51,7 +50,14 @@ const UserSettings = () => {
     </SafeAreaView>
   )
 }
-
+const ErrorScreen = () => {
+  return (
+    <View>
+      <Text>Could not get your data</Text>
+      <LogoutButton />
+    </View>
+  )
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,

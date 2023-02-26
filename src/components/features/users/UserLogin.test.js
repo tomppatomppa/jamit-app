@@ -38,9 +38,7 @@ describe('LoginForm', () => {
       const navigate = jest.fn()
       const { getByText } = render(<UserLoginContainer navigate={navigate} />)
 
-      fireEvent.press(getByText('Register a new account'))
-
-      expect(getByText('Register a new account')).toBeTruthy()
+      fireEvent.press(getByText('New User?'))
 
       await waitFor(() => {
         expect(navigate).toHaveBeenCalledTimes(1)
