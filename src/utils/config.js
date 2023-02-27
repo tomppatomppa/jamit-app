@@ -1,5 +1,8 @@
+import Constants from 'expo-constants'
+// const { uri_dev } = Constants.manifest.extra //TODO: causes tests to fail
+
 //export const baseUrl = 'http://192.168.1.104:3000'
-export const baseUrl = 'https://jamit-api.fly.dev'
+export const baseUrl = 'http://192.168.1.104:3000'
 export const event = {
   name: 'Add EVENT',
   shares: 0,

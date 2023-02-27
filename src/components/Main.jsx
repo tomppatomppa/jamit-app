@@ -15,9 +15,9 @@ import UserSettings from './features/users/UserSettings'
 import useBackHandler from '../hooks/useBackHandler'
 
 const Main = () => {
+  useBackHandler()
   const authStorage = useAuthStorage()
   const [currentUser, setCurrentUser] = useState(null)
-  useBackHandler()
 
   const login = async () => {
     const userFromStorage = await authStorage.getCurrentUser()

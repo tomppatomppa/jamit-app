@@ -7,12 +7,12 @@ import {
 
 import { NativeRouter } from 'react-router-native'
 import Main from './src/components/Main'
-
+import Constants from 'expo-constants'
 import AuthStorageContext from './src/contexts/AuthStorageContext'
 import AuthStorage from './src/utils/AuthStorage'
 import Toast from 'react-native-toast-message'
 import { showToast } from './src/utils/helpers'
-
+const { uri, env } = Constants.manifest.extra
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onSuccess: (data, query) => {
@@ -35,7 +35,7 @@ const queryClient = new QueryClient({
   }),
 })
 const authStorage = new AuthStorage()
-
+console.log(uri, env)
 export default function App() {
   return (
     <NativeRouter>

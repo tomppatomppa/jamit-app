@@ -1,20 +1,19 @@
 import { Formik } from 'formik'
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
-
+import FormikTextInput from '../../FormikTextInput'
 import * as yup from 'yup'
-import useLogin from '../../../hooks/useLogin'
+
 import useRegister from '../../../hooks/useRegister'
 import theme from '../../../theme'
-
-import { RegisterForm } from '../../forms/RegisterForm'
+import Text from '../../Text'
 
 const validationSchema = yup.object().shape({
-  email: yup.string().email().required('Email is required'),
+  username: yup.string().email().required('Username is required'),
   password: yup
     .string()
-    .min(5, 'minimum length is 5 characters')
+    .min(8, 'minimum length is 8 characters')
     .max(50, 'maximum length is 50 characters')
     .required('Password is required'),
   passwordConfirm: yup
@@ -22,25 +21,50 @@ const validationSchema = yup.object().shape({
     .required('Confirm Password is required')
     .oneOf([yup.ref('password'), null], 'passwords do not match'),
 })
+
 const initialValues = {
-  email: '',
+  username: '',
   password: '',
+}
+
+const RegisterForm = ({ onSubmit, onCancel }) => {
+  return (
+    <View style={styles.loginForm}>
+      <FormikTextInput name={'username'} placeholder="Username" />
+      <FormikTextInput
+        name={'password'}
+        placeholder="Password"
+        secureTextEntry={true}
+      />
+      <FormikTextInput
+        name={'passwordConfirm'}
+        placeholder="Confirm password"
+        secureTextEntry={true}
+      />
+      <View style={styles.buttonContainer}>
+        <Pressable style={styles.cancelButton} onPress={onCancel}>
+          <Text color={'primary'} fontWeight="bold">
+            Cancel
+          </Text>
+        </Pressable>
+        <Pressable style={styles.signInButton} onPress={onSubmit}>
+          <Text color={'secondary'} fontWeight="bold">
+            Register
+          </Text>
+        </Pressable>
+      </View>
+    </View>
+  )
 }
 
 const UserRegister = () => {
   const navigate = useNavigate()
 
-  const register = useRegister()
-  const { mutate } = useLogin()
+  const { mutate } = useRegister()
 
   const onSubmit = async (credentials) => {
-    try {
-      console.log('register')
-      await register(credentials)
-      mutate(credentials)
-    } catch (e) {
-      console.log(e)
-    }
+    console.log(credentials)
+    mutate(credentials)
   }
 
   const onCancel = () => {
@@ -70,6 +94,31 @@ const UserRegister = () => {
   )
 }
 export default UserRegister
+
+//For testing
+export const UserRegisterContainer = ({ onSubmit, onCancel }) => {
+  return (
+    <View style={styles.container}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={async (values, { setSubmitting }) => {
+          onSubmit(values)
+          setSubmitting(false)
+        }}
+        onCancel={onCancel}
+      >
+        {({ handleSubmit, isSubmitting }) => (
+          <RegisterForm
+            isSubmitting={isSubmitting}
+            onSubmit={handleSubmit}
+            onCancel={onCancel}
+          />
+        )}
+      </Formik>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
