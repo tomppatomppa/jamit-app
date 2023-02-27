@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 import MapView from 'react-native-maps'
 import { Marker } from 'react-native-maps'
-
+import { Picker } from '@react-native-picker/picker'
 const customMapStyle = [
   {
     featureType: 'administrative',
@@ -44,7 +44,6 @@ import React, { useState } from 'react'
 //TODO: get device current location as initialRegion
 
 import theme from '../../../theme'
-
 import TopBar from './TopBar'
 
 import { initialRegion } from '../../../utils/config'
@@ -56,8 +55,9 @@ import EventContent from './EventContent'
 import useEvents from '../../../hooks/useEvents'
 
 const Map = () => {
-  const [filter, setFilter] = useState('')
-  const { data } = useEvents(filter)
+  const [selectedDate, setSelectedDate] = useState('')
+  const [filter, setFilter] = useState(calculateArea(initialRegion))
+  const { data } = useEvents(filter, selectedDate)
 
   const [selectedEvent, setSelectedEvent] = useState([])
   const [showDrawer, setShowDrawer] = useState(false)
@@ -70,7 +70,6 @@ const Map = () => {
   }
 
   const getEventDetails = (e) => {
-    console.log(e.nativeEvent)
     handleCloseDrawer()
     const { latitude, longitude } = e.nativeEvent.coordinate
     const foundEvent = data.filter(
@@ -89,6 +88,32 @@ const Map = () => {
   return (
     <View style={styles.container}>
       <TopBar />
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'flex-end',
+        }}
+      >
+        <Picker
+          prompt="Show events"
+          style={{
+            backgroundColor: theme.colors.secondary,
+            flex: 1,
+
+            justifyContent: 'flex-end',
+            alignItems: 'flex-end',
+          }}
+          selectedValue={selectedDate}
+          onValueChange={(itemValue) => setSelectedDate(itemValue)}
+        >
+          <Picker.Item label="today" value="today" />
+          <Picker.Item label="this week" value="week" />
+          <Picker.Item label="this month" value="month" />
+          <Picker.Item label="show all" value="" />
+        </Picker>
+      </View>
+
       <MapView
         onPress={handleCloseDrawer}
         moveOnMarkerPress={false}

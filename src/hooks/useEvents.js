@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import axios from 'axios'
 import { baseUrl } from '../utils/config'
+import { getDate } from '../utils/helpers'
 
 const getEvents = async (filter) => {
   const response = await axios.get(`${baseUrl}/api/events`, {
@@ -10,10 +11,12 @@ const getEvents = async (filter) => {
   return response.data
 }
 
-const useEvents = (filter) => {
+const useEvents = (filter, selectedDate) => {
+  const filterByDate = getDate(selectedDate)
+
   const { isLoading, data } = useQuery({
-    queryKey: ['allEvents', filter],
-    queryFn: () => getEvents(filter),
+    queryKey: ['allEvents', filter, filterByDate],
+    queryFn: () => getEvents({ ...filter, filterByDate }),
     retry: 3,
   })
 
