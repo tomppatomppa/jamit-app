@@ -1,0 +1,3 @@
+# jamit-app
+
+The Helsinki Jam Session app is a platform that collects and displays data about all the jam sessions happening around the city. This app gathers information about jam sessions from various sources and brings them together in one place, making it easier for music enthusiasts to find events they are interested in attending. With the Helsinki Jam Session app, users can easily browse through different events, view event details such as date, time, location, and genre, and plan their evenings accordingly. The app aims to create a vibrant community of music lovers in Helsinki and foster the growth of local musicians and bands.
