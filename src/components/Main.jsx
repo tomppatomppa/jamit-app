@@ -2,15 +2,13 @@ import { useEffect, useState } from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Route, Routes } from 'react-router-native'
 
-import Landing from './Landing'
-
-import Map from './features/map/Map'
 import CurrentUserContext from '../contexts/CurrentUserContext'
 import useAuthStorage from '../hooks/useAuthStorage'
 
+import Landing from './Landing'
+import Map from './features/map/Map'
 import UserLogin from './features/users/UserLogin'
 import UserRegister from './features/users/UserRegister'
-import CreateEvent from './features/event/CreateEvent'
 import UserSettings from './features/users/UserSettings'
 import useBackHandler from '../hooks/useBackHandler'
 
@@ -38,7 +36,6 @@ const Main = () => {
           <Route path="/register" element={<UserRegister />} />
           <Route path="/settings" element={<UserSettings />} />
           <Route path="/map" element={<Map />} exact />
-          <Route path="/create" element={<CreateEvent />} exact />
         </Routes>
       </View>
     </CurrentUserContext.Provider>

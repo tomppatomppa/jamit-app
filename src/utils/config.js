@@ -1,9 +1,9 @@
-// import Constants from 'expo-constants'
+import Constants from 'expo-constants'
 
-// const { uri } = Constants.manifest.extra
+const { env, uri, uri_dev } = Constants.manifest.extra
 // console.log(uri)
 //export const baseUrl = 'https://jamit-api.fly.dev'
-export const baseUrl = 'http://192.168.1.104:3000'
+export const baseUrl = env === 'production' ? uri : uri_dev
 export const event = {
   name: 'Add EVENT',
   shares: 0,
@@ -36,7 +36,7 @@ export const token =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRvbWl3ZXN0QGhvdG1haWwuY29tIiwiaWQiOjUxLCJpYXQiOjE2NzY3OTQ0MTZ9.KiZ4ryQNY5w61dGd897G4AePoHzw553yM9x2Rh-_ZtU'
 
 export const initialRegion = {
-  latitude: 60.16427639500048,
+  latitude: 60.16020639500048,
   longitude: 24.944589799155526,
   latitudeDelta: 0.0012,
   longitudeDelta: 0.0112,

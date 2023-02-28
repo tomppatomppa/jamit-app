@@ -8,6 +8,7 @@ import { DeleteButton, LogoutButton } from './UserButtons'
 
 const UserSettings = () => {
   const { data, isLoading, isError } = useMe()
+
   if (isLoading) {
     return (
       <View>

@@ -56,13 +56,13 @@ import useEvents from '../../../hooks/useEvents'
 const initialQuery = {
   ...calculateArea(initialRegion),
   after: '',
-  before: '',
+  before: 'today',
   limit: 50,
 }
 const Map = () => {
-  const [selectedDate, setSelectedDate] = useState('')
+  const [selectedDate, setSelectedDate] = useState('today')
   const [queryParams, setQueryParams] = useState(initialQuery)
-  const { data } = useEvents(queryParams)
+  const { data } = useEvents(queryParams) //TODO: not fetching data on initial load
 
   const [selectedEvent, setSelectedEvent] = useState([])
   const [showDrawer, setShowDrawer] = useState(false)
