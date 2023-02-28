@@ -1,17 +1,15 @@
 import { useEffect } from 'react'
 import { BackHandler } from 'react-native'
-import { useNavigate, useLocation } from 'react-router-native'
+import { useNavigate } from 'react-router-native'
 
 const useBackHandler = () => {
   const navigate = useNavigate()
-  const location = useLocation()
 
   useEffect(() => {
+    //TODO: handle close app when location "/"
     const backAction = () => {
-      if (location.pathname !== '/') {
-        navigate(-1)
-        return true
-      }
+      navigate(-1)
+      return true
     }
 
     const backHandler = BackHandler.addEventListener(

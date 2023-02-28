@@ -6,17 +6,18 @@ import { getDate } from '../utils/helpers'
 
 const getEvents = async (filter) => {
   const response = await axios.get(`${baseUrl}/api/events`, {
-    params: filter,
+    params: {
+      ...filter,
+      before: getDate(filter.before), //TODO: find a better way to do this
+    },
   })
   return response.data
 }
 
-const useEvents = (filter, selectedDate) => {
-  const filterByDate = getDate(selectedDate)
-
+const useEvents = (filter) => {
   const { isLoading, data } = useQuery({
-    queryKey: ['allEvents', filter, filterByDate],
-    queryFn: () => getEvents({ ...filter, filterByDate }),
+    queryKey: ['allEvents', filter],
+    queryFn: () => getEvents(filter),
     retry: 3,
   })
 

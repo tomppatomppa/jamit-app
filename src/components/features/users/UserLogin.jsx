@@ -1,14 +1,14 @@
 import { Formik } from 'formik'
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import * as yup from 'yup'
 
 import useLogin from '../../../hooks/useLogin'
 
 import theme from '../../../theme'
-
-import { LoginForm } from '../../forms/LoginForm'
+import FormikTextInput from '../../FormikTextInput'
+import Text from '../../Text'
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -22,7 +22,33 @@ const initialValues = {
   username: '',
   password: '',
 }
-
+const LoginForm = ({ navigate, onSubmit, onCancel }) => {
+  return (
+    <View style={styles.loginForm}>
+      <FormikTextInput name={'username'} placeholder="Username" />
+      <FormikTextInput
+        name={'password'}
+        placeholder="Password"
+        secureTextEntry={true}
+      />
+      <View style={styles.buttonContainer}>
+        <Pressable style={styles.cancelButton} onPress={onCancel}>
+          <Text color={'primary'} fontWeight="bold">
+            Cancel
+          </Text>
+        </Pressable>
+        <Pressable style={styles.signInButton} onPress={onSubmit}>
+          <Text color={'secondary'} fontWeight="bold">
+            {'Sign In'}
+          </Text>
+        </Pressable>
+      </View>
+      <Pressable onPress={() => navigate('/register')}>
+        <Text>New User?</Text>
+      </Pressable>
+    </View>
+  )
+}
 const UserLogin = () => {
   const { mutate } = useLogin()
   const navigate = useNavigate()

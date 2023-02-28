@@ -41,11 +41,10 @@ const customMapStyle = [
 import { calculateArea } from '../../../utils/helpers'
 import React, { useState } from 'react'
 
-//TODO: get device current location as initialRegion
-
 import theme from '../../../theme'
 import TopBar from './TopBar'
 
+//TODO: get device current location as initialRegion
 import { initialRegion } from '../../../utils/config'
 
 import CalloutMarker from './CalloutMarker'
@@ -54,10 +53,16 @@ import Drawer from './Drawer'
 import EventContent from './EventContent'
 import useEvents from '../../../hooks/useEvents'
 
+const initialQuery = {
+  ...calculateArea(initialRegion),
+  after: '',
+  before: '',
+  limit: 50,
+}
 const Map = () => {
   const [selectedDate, setSelectedDate] = useState('')
-  const [filter, setFilter] = useState(calculateArea(initialRegion))
-  const { data } = useEvents(filter, selectedDate)
+  const [queryParams, setQueryParams] = useState(initialQuery)
+  const { data } = useEvents(queryParams)
 
   const [selectedEvent, setSelectedEvent] = useState([])
   const [showDrawer, setShowDrawer] = useState(false)
@@ -68,7 +73,26 @@ const Map = () => {
   const handleCloseDrawer = () => {
     setShowDrawer(false)
   }
+  //TODO: fix setting the search query params
+  const handleSelect = (value) => {
+    setSelectedDate(value)
+    setQueryParams((prev) => {
+      return {
+        ...prev,
+        before: value,
+      }
+    })
+  }
+  const handleSetFilter = (values) => {
+    setQueryParams((prev) => {
+      return {
+        ...prev,
+        ...values,
+      }
+    })
+  }
 
+  //TODO: remove this
   const getEventDetails = (e) => {
     handleCloseDrawer()
     const { latitude, longitude } = e.nativeEvent.coordinate
@@ -81,36 +105,19 @@ const Map = () => {
       setSelectedEvent(foundEvent)
     }
   }
-  const handleSetFilter = (e) => {
-    const area = calculateArea(e)
-    setFilter(area)
-  }
+
   return (
     <View style={styles.container}>
       <TopBar />
-      <View
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-        }}
-      >
+      <View style={styles.containerPicker}>
         <Picker
           prompt="Show events"
-          style={{
-            backgroundColor: theme.colors.secondary,
-            flex: 1,
-
-            justifyContent: 'flex-end',
-            alignItems: 'flex-end',
-          }}
+          style={styles.picker}
           selectedValue={selectedDate}
-          onValueChange={(itemValue) => setSelectedDate(itemValue)}
+          onValueChange={handleSelect}
         >
           <Picker.Item label="today" value="today" />
           <Picker.Item label="this week" value="week" />
-          <Picker.Item label="this month" value="month" />
-          <Picker.Item label="show all" value="" />
         </Picker>
       </View>
 
@@ -123,7 +130,7 @@ const Map = () => {
         customMapStyle={customMapStyle}
         initialRegion={initialRegion}
         style={styles.map}
-        onRegionChangeComplete={handleSetFilter}
+        onRegionChangeComplete={(e) => handleSetFilter(calculateArea(e))}
       >
         {data?.map((event, index) => (
           <Marker
@@ -133,7 +140,6 @@ const Map = () => {
               longitude: event.location.coordinates[1],
             }}
           >
-            {/* //TODO: dont render this unless its marker is selected */}
             <CalloutMarker event={event} />
           </Marker>
         ))}
@@ -153,6 +159,15 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     flexShrink: 1,
     backgroundColor: '#e1e4e8',
+  },
+  containerPicker: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  picker: {
+    backgroundColor: theme.colors.secondary,
+    flex: 1,
   },
   map: {
     height: '100%',

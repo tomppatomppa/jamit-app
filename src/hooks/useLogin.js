@@ -1,9 +1,11 @@
+import axios from 'axios'
+
 import { QueryClient, useMutation } from '@tanstack/react-query'
 
 import { useContext } from 'react'
 import useAuthStorage from './useAuthStorage'
 import CurrentUserContext from '../contexts/CurrentUserContext'
-import axios from 'axios'
+
 import { baseUrl } from '../utils/config'
 import { useNavigate } from 'react-router-native'
 import { showToast } from '../utils/helpers'
@@ -23,7 +25,6 @@ const useLogin = () => {
         await authStorage.setCurrentUser(usernameAndToken)
         setCurrentUser({ ...usernameAndToken })
         queryClient.clear()
-        console.log(usernameAndToken.data)
         showToast({
           type: 'success',
           text1: `Logged in as ${usernameAndToken.username}`,
