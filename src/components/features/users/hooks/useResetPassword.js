@@ -12,7 +12,6 @@ const useResetPassword = () => {
       axios.put(`${baseUrl}/api/reset`, { token: code, password }),
     {
       onSuccess: async (response) => {
-        console.log(response)
         showToast({
           type: 'success',
           text1: 'Password reset!',

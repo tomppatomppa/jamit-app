@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useContext } from 'react'
-import CurrentUserContext from '../../../contexts/CurrentUserContext'
+import CurrentUserContext from '../../../../contexts/CurrentUserContext'
 
-import { baseUrl } from '../../../utils/config'
+import { baseUrl } from '../../../../utils/config'
 
 const getME = async (token) => {
   const response = await axios.get(`${baseUrl}/api/me`, {
