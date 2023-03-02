@@ -1,6 +1,6 @@
 import { Alert, Button, Pressable, StyleSheet } from 'react-native'
 import { useNavigate } from 'react-router-native'
-import useLogout from '../../../hooks/useLogout'
+import useLogout from './hooks/useLogout'
 import theme from '../../../theme'
 import Text from '../../Text'
 

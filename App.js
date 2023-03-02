@@ -29,6 +29,7 @@ const queryClient = new QueryClient({
     },
   }),
 })
+
 const authStorage = new AuthStorage()
 
 export default function App() {

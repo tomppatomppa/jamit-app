@@ -5,7 +5,6 @@ import { baseUrl } from '../utils/config'
 import { getDate } from '../utils/helpers'
 
 const getEvents = async (filter) => {
-  console.log(filter)
   const response = await axios.get(`${baseUrl}/api/events`, {
     params: {
       ...filter,
@@ -22,7 +21,7 @@ const useEvents = (filter) => {
     refetchOnMount: 'always',
     retry: 3,
   })
-  console.log(data)
+
   return { data, isLoading }
 }
 

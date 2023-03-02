@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-native'
 import FormikTextInput from '../../FormikTextInput'
 import * as yup from 'yup'
 
-import useRegister from '../../../hooks/useRegister'
+import useRegister from './hooks/useRegister'
 import theme from '../../../theme'
 import Text from '../../Text'
 

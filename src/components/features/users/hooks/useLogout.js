@@ -1,12 +1,12 @@
 import { QueryClient, useMutation } from '@tanstack/react-query'
 
 import { useContext } from 'react'
-import useAuthStorage from './useAuthStorage'
-import CurrentUserContext from '../contexts/CurrentUserContext'
+import useAuthStorage from '../../../../hooks/useAuthStorage'
+import CurrentUserContext from '../../../../contexts/CurrentUserContext'
 import axios from 'axios'
-import { baseUrl } from '../utils/config'
+import { baseUrl } from '../../../../utils/config'
 
-import { showToast } from '../utils/helpers'
+import { showToast } from '../../../../utils/helpers'
 
 const useLogout = () => {
   const queryClient = new QueryClient()

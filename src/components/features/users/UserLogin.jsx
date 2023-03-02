@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import * as yup from 'yup'
 
-import useLogin from '../../../hooks/useLogin'
+import useLogin from './hooks/useLogin'
 
 import theme from '../../../theme'
 import FormikTextInput from '../../FormikTextInput'
@@ -46,6 +46,9 @@ const LoginForm = ({ navigate, onSubmit, onCancel }) => {
       <Pressable onPress={() => navigate('/register')}>
         <Text>New User?</Text>
       </Pressable>
+      <Pressable onPress={() => navigate('/reset')}>
+        <Text>Forgot your password?</Text>
+      </Pressable>
     </View>
   )
 }
@@ -57,7 +60,7 @@ const UserLogin = () => {
     mutate(credentials)
   }
   const onCancel = () => {
-    navigate(-1)
+    navigate('/')
   }
 
   return (

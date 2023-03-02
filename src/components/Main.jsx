@@ -11,6 +11,7 @@ import UserLogin from './features/users/UserLogin'
 import UserRegister from './features/users/UserRegister'
 import UserSettings from './features/users/UserSettings'
 import useBackHandler from '../hooks/useBackHandler'
+import UserReset from './features/users/UserReset'
 
 const Main = () => {
   useBackHandler()
@@ -34,6 +35,7 @@ const Main = () => {
           <Route path="/" element={<Landing />} exact />
           <Route path="/login" element={<UserLogin />} />
           <Route path="/register" element={<UserRegister />} />
+          <Route path="/reset" element={<UserReset />} />
           <Route path="/settings" element={<UserSettings />} />
           <Route path="/map" element={<Map />} exact />
         </Routes>

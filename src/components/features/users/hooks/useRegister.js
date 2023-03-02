@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 
-import { baseUrl } from '../utils/config'
+import { baseUrl } from '../../../../utils/config'
 
 import useLogin from './useLogin'
 
