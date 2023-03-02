@@ -3,7 +3,8 @@ import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
 import theme from '../../../theme'
 import ReturnButton from '../../ReturnButton'
 import Text from '../../Text'
-import useMe from './useMe'
+import useMe from './hooks/useMe'
+
 import { DeleteButton, LogoutButton } from './UserButtons'
 
 const UserSettings = () => {
@@ -11,7 +12,7 @@ const UserSettings = () => {
 
   if (isLoading) {
     return (
-      <View>
+      <View style={styles.container}>
         <Text>loading....</Text>
       </View>
     )

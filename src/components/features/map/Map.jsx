@@ -56,7 +56,7 @@ import useEvents from '../../../hooks/useEvents'
 const initialQuery = {
   ...calculateArea(initialRegion),
   after: '',
-  before: 'today',
+  before: '',
   limit: 50,
 }
 const Map = () => {
@@ -144,8 +144,11 @@ const Map = () => {
           </Marker>
         ))}
       </MapView>
-      <Drawer showDrawer={showDrawer} handleCloseDrawer={handleCloseDrawer}>
-        <EventContent event={selectedEvent} />
+      <Drawer showDrawer={showDrawer}>
+        <EventContent
+          handleCloseDrawer={handleCloseDrawer}
+          event={selectedEvent}
+        />
       </Drawer>
     </View>
   )

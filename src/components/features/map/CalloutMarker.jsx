@@ -17,27 +17,18 @@ const CalloutMarker = ({ event }) => {
         </View>
         <View style={styles.infoContainer}>
           <Text fontSize={'subheading'}>{event.name}</Text>
-          <Text fontWeight={'bold'} numberOfLines={1} ellipsizeMode="tail">
-            {'22.02.2023 kl 16.00'}
-          </Text>
-          <Text fontSize={'small'} numberOfLines={1} ellipsizeMode="tail">
-            {'Vuorimiehenkatu 16 lh 41'}
-          </Text>
-          <Text fontSize={'small'} numberOfLines={1} ellipsizeMode="tail">
-            {'Helsinki'}
-          </Text>
-
-          <View
-            style={{
-              alignSelf: 'flex-end',
-              padding: 2,
-              backgroundColor: theme.colors.secondary,
-            }}
+          <Text
+            style={{ flexGrow: 1 }}
+            fontWeight={'bold'}
             numberOfLines={1}
             ellipsizeMode="tail"
           >
-            <Text>Read more...</Text>
-          </View>
+            {event.start_date}
+          </Text>
+          <Text style={{ flexGrow: 1 }} numberOfLines={3} ellipsizeMode="tail">
+            {event.content}
+          </Text>
+          <Text style={{ alignSelf: 'flex-end', margin: 6 }}>Read more...</Text>
         </View>
       </View>
     </Callout>
@@ -65,7 +56,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     paddingHorizontal: 6,
     alignItems: 'flex-start',
-    justifyContent: 'center',
+
     flexGrow: 1,
     width: '100%',
   },
