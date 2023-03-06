@@ -1,6 +1,6 @@
 import Toast from 'react-native-toast-message'
 
-export const calculateArea = ({
+export const createEnvelope = ({
   latitude,
   longitude,
   latitudeDelta,
@@ -16,14 +16,9 @@ export const calculateArea = ({
   }
   //In JS, Numbers are stored as double-precision floating-point numbers according to the IEEE 754 standard.
   //Use toString() method to avoid losing decimals
-  const recDimensions = {
-    xmin: bottomLeft.latitude.toString(),
-    ymin: bottomLeft.longitude.toString(),
-    xmax: topRight.latitude.toString(),
-    ymax: topRight.longitude.toString(),
-  }
+  const envelopeQuery = `${bottomLeft.latitude.toString()},${bottomLeft.longitude.toString()},${topRight.latitude.toString()},${topRight.longitude.toString()}`
 
-  return recDimensions
+  return envelopeQuery
 }
 
 export const showToast = ({
@@ -43,12 +38,11 @@ export const getDate = (date) => {
   end.setHours(23, 59, 59, 999)
   switch (date) {
     case 'today':
-      return getDateDaysFromNow(+3)
+      return getDateDaysFromNow(+1)
     case 'week':
       return getDateDaysFromNow(+8)
-    // case 'month':
-    //   end.setDate(+30)
-    //   return end.getTime()
+    case 'month':
+      return getDateDaysFromNow(+32)
     default:
       return ''
   }

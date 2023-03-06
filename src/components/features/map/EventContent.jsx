@@ -7,13 +7,12 @@ import { Ionicons } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Fontisto } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
+import usePlace from '../../../hooks/usePlace'
 
 const ItemSeparator = () => <View style={styles.separator} />
-const RenderEventItem = ({ item, handleCloseDrawer }) => (
-  <ListItem item={item} handleCloseDrawer={handleCloseDrawer} />
-)
+const RenderEventItem = ({ item }) => <ListItem item={item} />
 
-const ListItem = ({ item, handleCloseDrawer }) => {
+const ListItem = ({ item }) => {
   const time = new Date(item.start_date)
   return (
     <View style={styles.listItemContainer}>
@@ -38,7 +37,10 @@ const ListItem = ({ item, handleCloseDrawer }) => {
           {item.name}
         </Text>
         <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
-        <Pressable style={{ marginLeft: 12 }} onPress={handleCloseDrawer}>
+        <Pressable
+          style={{ marginLeft: 12 }}
+          onPress={() => console.log('hide event')}
+        >
           <AntDesign name="close" size={24} color="black" />
         </Pressable>
       </View>
@@ -48,9 +50,11 @@ const ListItem = ({ item, handleCloseDrawer }) => {
         }}
       >
         <View style={{ flex: 1 }}>
-          <Text>Baari - €€€</Text>
+          <Text>Date - {time.toUTCString().slice(0, 17)}</Text>
           <Text>Start Time - {`${time.getHours()}:${time.getMinutes()}`}</Text>
-          <Text>Open facebook - link</Text>
+          <Pressable onPress={() => console.log('click')}>
+            <Text>Open facebook - link</Text>
+          </Pressable>
         </View>
         <View
           style={{
@@ -67,7 +71,6 @@ const ListItem = ({ item, handleCloseDrawer }) => {
           />
         </View>
       </View>
-
       <Text
         fontSize={'subheading'}
         style={{ marginVertical: 6 }}
@@ -90,8 +93,7 @@ const ListItem = ({ item, handleCloseDrawer }) => {
         <Text fontWeight="bold" style={{ flex: 1 }}>
           {item.start_date}
         </Text>
-
-        <Pressable style={styles.interestedButton}>
+        <Pressable style={styles.buttonInterested}>
           <Text color={'secondary'}>Interested</Text>
         </Pressable>
       </View>
@@ -99,14 +101,31 @@ const ListItem = ({ item, handleCloseDrawer }) => {
   )
 }
 
-const EventContent = ({ event, handleCloseDrawer }) => {
+const EventContent = ({ id, handleCloseDrawer }) => {
+  const { place } = usePlace(id)
+
+  if (place?.events?.length === 0) {
+    return (
+      <View>
+        <Text fontWeight={'bold'}>{place.name}</Text>
+        <Text>No Jam sessions available</Text>
+      </View>
+    )
+  }
   return (
     <FlatList
+      stickyHeaderIndices={[0]}
+      ListHeaderComponent={
+        <View style={styles.stickyHeadercontainer}>
+          <Text>List header</Text>
+          <Pressable onPress={handleCloseDrawer}>
+            <AntDesign name="close" size={24} color="black" />
+          </Pressable>
+        </View>
+      }
       contentContainerStyle={{ paddingBottom: 150 }}
-      data={event}
-      renderItem={({ item }) => (
-        <RenderEventItem item={item} handleCloseDrawer={handleCloseDrawer} />
-      )}
+      data={place?.events}
+      renderItem={({ item }) => <RenderEventItem item={item} />}
       ItemSeparatorComponent={ItemSeparator}
       onEndReached={() => console.log('end')}
     />
@@ -121,6 +140,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  stickyHeadercontainer: {
+    height: 50,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.secondary,
+    borderTopEndRadius: 60 / 2,
+    borderTopLeftRadius: 60 / 2,
+    borderBottomWidth: 1,
+  },
   listItemContainer: {
     margin: 3,
     padding: 15,
@@ -131,9 +161,8 @@ const styles = StyleSheet.create({
   separator: {
     height: 10,
   },
-  interestedButton: {
+  buttonInterested: {
     backgroundColor: theme.colors.primary,
-
     borderRadius: 3,
     padding: 8,
     marginLeft: 12,

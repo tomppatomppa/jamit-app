@@ -38,7 +38,7 @@ const customMapStyle = [
     ],
   },
 ]
-import { calculateArea } from '../../../utils/helpers'
+import { createEnvelope } from '../../../utils/helpers'
 import React, { useState } from 'react'
 
 import theme from '../../../theme'
@@ -47,24 +47,20 @@ import TopBar from './TopBar'
 //TODO: get device current location as initialRegion
 import { initialRegion } from '../../../utils/config'
 
-import CalloutMarker from './CalloutMarker'
 import Drawer from './Drawer'
 
 import EventContent from './EventContent'
-import useEvents from '../../../hooks/useEvents'
 
-const initialQuery = {
-  ...calculateArea(initialRegion),
-  after: '',
-  before: '',
-  limit: 50,
-}
+import usePlaces from '../../../hooks/usePlaces'
+
+import Text from '../../Text'
+
 const Map = () => {
-  const [selectedDate, setSelectedDate] = useState('today')
-  const [queryParams, setQueryParams] = useState(initialQuery)
-  const { data } = useEvents(queryParams) //TODO: not fetching data on initial load
+  const [before, setBefore] = useState('')
+  const [envelope, setEnvelope] = useState(envelope)
+  const { places } = usePlaces({ envelope, before })
+  const [selectedPlaceId, setSelectedPlaceId] = useState(null)
 
-  const [selectedEvent, setSelectedEvent] = useState([])
   const [showDrawer, setShowDrawer] = useState(false)
 
   const handleOpenDrawer = () => {
@@ -73,81 +69,61 @@ const Map = () => {
   const handleCloseDrawer = () => {
     setShowDrawer(false)
   }
-  //TODO: fix setting the search query params
-  const handleSelect = (value) => {
-    setSelectedDate(value)
-    setQueryParams((prev) => {
-      return {
-        ...prev,
-        before: value,
-      }
-    })
-  }
-  const handleSetFilter = (values) => {
-    setQueryParams((prev) => {
-      return {
-        ...prev,
-        ...values,
-      }
-    })
+  const handleSetQuery = (e) => {
+    setEnvelope(createEnvelope(e))
   }
 
-  //TODO: remove this
-  const getEventDetails = (e) => {
-    handleCloseDrawer()
-    const { latitude, longitude } = e.nativeEvent.coordinate
-    const foundEvent = data.filter(
-      (event) =>
-        event.location.coordinates[0] === latitude &&
-        event.location.coordinates[1] === longitude
-    )
-    if (foundEvent) {
-      setSelectedEvent(foundEvent)
-    }
+  const handleMarkerPress = (e) => {
+    const markerId = e.nativeEvent.id
+    setSelectedPlaceId(markerId)
+    handleOpenDrawer()
   }
 
   return (
     <View style={styles.container}>
       <TopBar />
+      <Text>Places visible {places?.length}</Text>
+      <Text>filter before {before}</Text>
       <View style={styles.containerPicker}>
         <Picker
           prompt="Show events"
           style={styles.picker}
-          selectedValue={selectedDate}
-          onValueChange={handleSelect}
+          selectedValue={before}
+          onValueChange={setBefore}
         >
           <Picker.Item label="today" value="today" />
           <Picker.Item label="this week" value="week" />
+          <Picker.Item label="this month" value="month" />
+          <Picker.Item label="Any" value="" />
         </Picker>
       </View>
 
       <MapView
         onPress={handleCloseDrawer}
         moveOnMarkerPress={false}
-        onMarkerPress={getEventDetails}
+        onMarkerPress={handleMarkerPress}
         onCalloutPress={handleOpenDrawer}
         showsUserLocation={true}
         customMapStyle={customMapStyle}
         initialRegion={initialRegion}
         style={styles.map}
-        onRegionChangeComplete={(e) => handleSetFilter(calculateArea(e))}
+        onRegionChangeComplete={handleSetQuery}
       >
-        {data?.map((event, index) => (
+        {places?.map((event, index) => (
           <Marker
             key={index}
             coordinate={{
               latitude: event.location.coordinates[0],
               longitude: event.location.coordinates[1],
             }}
-          >
-            <CalloutMarker event={event} />
-          </Marker>
+            identifier={event.id.toString()}
+          ></Marker>
         ))}
       </MapView>
       <Drawer showDrawer={showDrawer}>
         <EventContent
+          id={selectedPlaceId}
           handleCloseDrawer={handleCloseDrawer}
-          event={selectedEvent}
         />
       </Drawer>
     </View>
