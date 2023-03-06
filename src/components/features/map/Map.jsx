@@ -94,7 +94,7 @@ const Map = () => {
           <Picker.Item label="today" value="today" />
           <Picker.Item label="this week" value="week" />
           <Picker.Item label="this month" value="month" />
-          <Picker.Item label="Any" value="" />
+          <Picker.Item label="Show all places" value="" />
         </Picker>
       </View>
 

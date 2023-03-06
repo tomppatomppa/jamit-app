@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FlatList, Pressable, StyleSheet, View } from 'react-native'
 import theme from '../../../theme'
 import Text from '../../Text'
@@ -8,6 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Fontisto } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
 import usePlace from '../../../hooks/usePlace'
+import useEvent from '../../../hooks/useEvent'
 
 const ItemSeparator = () => <View style={styles.separator} />
 const RenderEventItem = ({ item }) => <ListItem item={item} />
@@ -102,12 +103,14 @@ const ListItem = ({ item }) => {
 }
 
 const EventContent = ({ id, handleCloseDrawer }) => {
-  const { place } = usePlace(id)
+  const { data, fetchNextPage } = useEvent(id)
 
-  if (place?.events?.length === 0) {
+  const allEvents = data?.pages?.flatMap((page) => page.rows) ?? []
+
+  if (allEvents.length === 0) {
     return (
       <View>
-        <Text fontWeight={'bold'}>{place.name}</Text>
+        <Text fontWeight={'bold'}></Text>
         <Text>No Jam sessions available</Text>
       </View>
     )
@@ -124,10 +127,10 @@ const EventContent = ({ id, handleCloseDrawer }) => {
         </View>
       }
       contentContainerStyle={{ paddingBottom: 150 }}
-      data={place?.events}
+      data={allEvents}
       renderItem={({ item }) => <RenderEventItem item={item} />}
       ItemSeparatorComponent={ItemSeparator}
-      onEndReached={() => console.log('end')}
+      onEndReached={fetchNextPage}
     />
   )
 }
