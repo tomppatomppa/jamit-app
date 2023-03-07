@@ -1,9 +1,6 @@
-// import Constants from 'expo-constants'
-
-// const { env, uri, uri_dev } = Constants.manifest.extra
 //export const baseUrl = 'https://jamit-api.fly.dev'
 export const baseUrl = 'http://192.168.1.104:3000'
-//export const baseUrl = env === 'production' ? uri : uri_dev
+
 export const event = {
   name: 'Add EVENT',
   shares: 0,

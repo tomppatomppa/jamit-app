@@ -7,14 +7,16 @@ import { Ionicons } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import { Fontisto } from '@expo/vector-icons'
 import { AntDesign } from '@expo/vector-icons'
-import usePlace from '../../../hooks/usePlace'
+
 import useEvent from '../../../hooks/useEvent'
 
 const ItemSeparator = () => <View style={styles.separator} />
 const RenderEventItem = ({ item }) => <ListItem item={item} />
 
 const ListItem = ({ item }) => {
+  const [showText, setShowText] = useState(false)
   const time = new Date(item.start_date)
+
   return (
     <View style={styles.listItemContainer}>
       <View
@@ -79,8 +81,15 @@ const ListItem = ({ item }) => {
       >
         Description
       </Text>
-      <Text>{item.content}</Text>
-      <Text fontWeight="bold" style={{ flex: 1 }}>
+      <Text numberOfLines={showText ? 100 : 5} ellipsizeMode="tail">
+        {item.content}
+      </Text>
+      <Pressable onPress={() => setShowText(!showText)}>
+        <Text fontWeight={'bold'} title="show more">
+          lue lisää...
+        </Text>
+      </Pressable>
+      <Text fontWeight="bold" style={{ flex: 1, marginVertical: 12 }}>
         Source: {item.post_url}
       </Text>
       <View
@@ -131,6 +140,7 @@ const EventContent = ({ id, handleCloseDrawer }) => {
       renderItem={({ item }) => <RenderEventItem item={item} />}
       ItemSeparatorComponent={ItemSeparator}
       onEndReached={fetchNextPage}
+      refreshing={true}
     />
   )
 }

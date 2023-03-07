@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native'
 import MapView from 'react-native-maps'
 import { Marker } from 'react-native-maps'
 import { Picker } from '@react-native-picker/picker'
+
 const customMapStyle = [
   {
     featureType: 'administrative',
@@ -48,16 +49,13 @@ import TopBar from './TopBar'
 import { initialRegion } from '../../../utils/config'
 
 import Drawer from './Drawer'
-
 import EventContent from './EventContent'
-
 import usePlaces from '../../../hooks/usePlaces'
-
 import Text from '../../Text'
 
 const Map = () => {
   const [before, setBefore] = useState('')
-  const [envelope, setEnvelope] = useState(envelope)
+  const [envelope, setEnvelope] = useState(createEnvelope(initialRegion))
   const { places } = usePlaces({ envelope, before })
   const [selectedPlaceId, setSelectedPlaceId] = useState(null)
 
@@ -111,13 +109,14 @@ const Map = () => {
       >
         {places?.map((event, index) => (
           <Marker
+            title={event.name}
             key={index}
             coordinate={{
               latitude: event.location.coordinates[0],
               longitude: event.location.coordinates[1],
             }}
             identifier={event.id.toString()}
-          ></Marker>
+          />
         ))}
       </MapView>
       <Drawer showDrawer={showDrawer}>
