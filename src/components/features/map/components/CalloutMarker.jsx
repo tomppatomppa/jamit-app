@@ -1,14 +1,11 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Callout } from 'react-native-maps'
-import theme from '../../../theme'
-import Text from '../../Text'
+import theme from '../../../../theme'
+import Text from '../../../Text'
 import { Entypo } from '@expo/vector-icons'
 
 const CalloutMarker = ({ event }) => {
-  //TODO: fetch from cache all events at the same location
-  //TODO: Avoid unneccessary renders of CalloutMarker, how?
-
   return (
     <Callout tooltip style={styles.callout}>
       <View style={styles.container}>
@@ -40,7 +37,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-
     height: '100%',
     width: '100%',
     borderWidth: 1,

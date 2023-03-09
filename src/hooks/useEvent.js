@@ -1,14 +1,12 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
-
 import axios from 'axios'
-
-import { baseUrl } from '../utils/config'
+import { BASE_URL } from '../utils/constants'
 
 const getEvent = async ({ queryKey, pageParam = 0 }) => {
   const [, id] = queryKey
 
   const response = await axios.get(
-    `${baseUrl}/api/events?place_id=${id}&offset=${pageParam}`
+    `${BASE_URL}/api/events?place_id=${id}&offset=${pageParam}`
   )
   return response.data
 }

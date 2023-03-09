@@ -5,13 +5,14 @@ import { Route, Routes } from 'react-router-native'
 import CurrentUserContext from '../contexts/CurrentUserContext'
 import useAuthStorage from '../hooks/useAuthStorage'
 
-import Landing from './Landing'
 import Map from './features/map/Map'
-import UserLogin from './features/users/UserLogin'
-import UserRegister from './features/users/UserRegister'
+import Home from './Home'
+
 import UserSettings from './features/users/UserSettings'
 import useBackHandler from '../hooks/useBackHandler'
-import UserReset from './features/users/UserReset'
+import PasswordReset from './features/Authorization/PasswordReset'
+import Login from './features/Authorization/Login'
+import Register from './features/Authorization/Register'
 
 const Main = () => {
   useBackHandler()
@@ -32,10 +33,10 @@ const Main = () => {
     <CurrentUserContext.Provider value={{ currentUser, setCurrentUser }}>
       <View style={styles.container}>
         <Routes>
-          <Route path="/" element={<Landing />} exact />
-          <Route path="/login" element={<UserLogin />} />
-          <Route path="/register" element={<UserRegister />} />
-          <Route path="/reset" element={<UserReset />} />
+          <Route path="/" element={<Home />} exact />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/reset" element={<PasswordReset />} />
           <Route path="/settings" element={<UserSettings />} />
           <Route path="/map" element={<Map />} exact />
         </Routes>
@@ -43,6 +44,7 @@ const Main = () => {
     </CurrentUserContext.Provider>
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     display: 'flex',

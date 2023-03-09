@@ -3,10 +3,8 @@ import axios from 'axios'
 import { useContext } from 'react'
 import CurrentUserContext from '../../../../contexts/CurrentUserContext'
 
-import { baseUrl } from '../../../../utils/config'
-
-const getME = async (token) => {
-  const response = await axios.get(`${baseUrl}/api/me`, {
+const getME = async ({ token, credentialsProvider }) => {
+  const response = await axios.get(credentialsProvider, {
     headers: `Authorization: Bearer ${token}`,
   })
   return response.data
@@ -16,7 +14,7 @@ const useMe = () => {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['ME'],
-    queryFn: () => getME(currentUser?.token),
+    queryFn: () => getME(currentUser),
   })
   return { data, isLoading, isError }
 }

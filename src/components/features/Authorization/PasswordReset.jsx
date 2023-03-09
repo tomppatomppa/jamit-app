@@ -3,12 +3,14 @@ import React, { useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import * as yup from 'yup'
-import useRecover from './hooks/useRecover'
+import useRecover from '../users/hooks/useRecover'
 
 import theme from '../../../theme'
-import FormikTextInput from '../../FormikTextInput'
 import Text from '../../Text'
+
 import useResetPassword from './hooks/useResetPassword'
+import { PasswordResetForm } from './components/PasswordResetForm'
+import { PasswordRecoveryForm } from './components/PasswordRecoveryForm'
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -40,58 +42,7 @@ const initialValues = {
   username: '',
 }
 
-const PasswordResetForm = ({ onSubmit }) => {
-  return (
-    <View style={styles.loginForm}>
-      <Text fontSize={'subheading'}>Recovery</Text>
-      <Text>
-        Enter the code along with your new password in the app and you will be
-        prompted to create a new password.
-      </Text>
-      <FormikTextInput name={'code'} placeholder="Code" />
-      <FormikTextInput
-        name={'password'}
-        placeholder="Password"
-        secureTextEntry={true}
-      />
-      <FormikTextInput
-        name={'passwordConfirm'}
-        placeholder="Confirm password"
-        secureTextEntry={true}
-      />
-      <Pressable style={styles.codeButton} onPress={onSubmit}>
-        <Text color={'secondary'} fontWeight="bold">
-          Confirm
-        </Text>
-      </Pressable>
-    </View>
-  )
-}
-const PasswordRecoveryForm = ({ onSubmit, onCancel }) => {
-  return (
-    <View style={styles.loginForm}>
-      <Text>
-        To recover your account, enter your username/email address. We will send
-        a verification code to your registered email address.
-      </Text>
-
-      <FormikTextInput name={'username'} placeholder="Username" />
-      <View style={styles.buttonContainer}>
-        <Pressable style={styles.cancelButton} onPress={onCancel}>
-          <Text color={'primary'} fontWeight="bold">
-            Cancel
-          </Text>
-        </Pressable>
-        <Pressable style={styles.signInButton} onPress={onSubmit}>
-          <Text color={'secondary'} fontWeight="bold">
-            Send
-          </Text>
-        </Pressable>
-      </View>
-    </View>
-  )
-}
-const UserReset = () => {
+const PasswordReset = () => {
   const [show, setShow] = useState(false)
   const navigate = useNavigate()
   const { recover } = useRecover()
@@ -101,7 +52,6 @@ const UserReset = () => {
     recover(username)
   }
   const handleReset = (values) => {
-    console.log(values)
     reset(values)
   }
   const onCancel = () => {
@@ -189,4 +139,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default UserReset
+export default PasswordReset

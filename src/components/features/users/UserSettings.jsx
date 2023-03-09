@@ -17,7 +17,6 @@ const UserSettings = () => {
       </View>
     )
   }
-
   return (
     <SafeAreaView style={styles.container}>
       {isError ? (
@@ -31,7 +30,7 @@ const UserSettings = () => {
             </View>
           </View>
           <Text>Account is: {data.disabled ? 'Disabled' : 'Active'}</Text>
-          <Text>Email: {data.username}</Text>
+          <Text>Email: {data.username || data.email}</Text>
           <Text>Username: {data.username}</Text>
           <Text>{data.disabled}</Text>
           <Text>Account Id: {data.id}</Text>
@@ -39,7 +38,7 @@ const UserSettings = () => {
           <Text fontSize="subheading" fontWeight="bold">
             Roles
           </Text>
-          {data.roles.map((role, index) => (
+          {data?.roles?.map((role, index) => (
             <Text key={index}>{role}</Text>
           ))}
           <Text style={{}}>Account Created: {data.createdAt}</Text>

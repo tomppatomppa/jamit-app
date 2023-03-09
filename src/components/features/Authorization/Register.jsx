@@ -1,13 +1,14 @@
 import { Formik } from 'formik'
 import React from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
-import FormikTextInput from '../../FormikTextInput'
+
 import * as yup from 'yup'
 
 import useRegister from './hooks/useRegister'
 import theme from '../../../theme'
-import Text from '../../Text'
+
+import { RegisterForm } from './components/RegisterForm'
 
 const validationSchema = yup.object().shape({
   username: yup.string().email().required('Username is required'),
@@ -27,37 +28,7 @@ const initialValues = {
   password: '',
 }
 
-const RegisterForm = ({ onSubmit, onCancel }) => {
-  return (
-    <View style={styles.loginForm}>
-      <FormikTextInput name={'username'} placeholder="Username" />
-      <FormikTextInput
-        name={'password'}
-        placeholder="Password"
-        secureTextEntry={true}
-      />
-      <FormikTextInput
-        name={'passwordConfirm'}
-        placeholder="Confirm password"
-        secureTextEntry={true}
-      />
-      <View style={styles.buttonContainer}>
-        <Pressable style={styles.cancelButton} onPress={onCancel}>
-          <Text color={'primary'} fontWeight="bold">
-            Cancel
-          </Text>
-        </Pressable>
-        <Pressable style={styles.signInButton} onPress={onSubmit}>
-          <Text color={'secondary'} fontWeight="bold">
-            Register
-          </Text>
-        </Pressable>
-      </View>
-    </View>
-  )
-}
-
-const UserRegister = () => {
+const Register = () => {
   const navigate = useNavigate()
 
   const { mutate } = useRegister()
@@ -93,32 +64,7 @@ const UserRegister = () => {
     </View>
   )
 }
-export default UserRegister
-
-//For testing
-export const UserRegisterContainer = ({ onSubmit, onCancel }) => {
-  return (
-    <View style={styles.container}>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={async (values, { setSubmitting }) => {
-          onSubmit(values)
-          setSubmitting(false)
-        }}
-        onCancel={onCancel}
-      >
-        {({ handleSubmit, isSubmitting }) => (
-          <RegisterForm
-            isSubmitting={isSubmitting}
-            onSubmit={handleSubmit}
-            onCancel={onCancel}
-          />
-        )}
-      </Formik>
-    </View>
-  )
-}
+export default Register
 
 const styles = StyleSheet.create({
   container: {

@@ -4,9 +4,9 @@ import { useContext } from 'react'
 import useAuthStorage from '../../../../hooks/useAuthStorage'
 import CurrentUserContext from '../../../../contexts/CurrentUserContext'
 import axios from 'axios'
-import { baseUrl } from '../../../../utils/config'
 
 import { showToast } from '../../../../utils/helpers'
+import { BASE_URL } from '../../../../utils/constants'
 
 const useLogout = () => {
   const queryClient = new QueryClient()
@@ -15,7 +15,7 @@ const useLogout = () => {
 
   const mutatation = useMutation({
     mutationFn: (headers) =>
-      axios.delete(`${baseUrl}/api/login`, { ...headers }),
+      axios.delete(`${BASE_URL}/api/login`, { ...headers }),
     onSettled: async () => {
       await authStorage.removeCurrentUser()
       queryClient.clear()

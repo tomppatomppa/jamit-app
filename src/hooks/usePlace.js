@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 
 import axios from 'axios'
-import { baseUrl } from '../utils/config'
+import { BASE_URL } from '../utils/constants'
 
 const getPlace = async (id) => {
-  const { data } = await axios.get(`${baseUrl}/api/places/${id}`)
+  const { data } = await axios.get(`${BASE_URL}/api/places/${id}`)
   return data
 }
 

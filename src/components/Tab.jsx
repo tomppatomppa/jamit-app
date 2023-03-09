@@ -9,7 +9,7 @@ const Tab = ({ navigateTo, title }) => {
   return (
     <Pressable onPress={() => navigate(navigateTo)}>
       <View style={{ margin: 12 }}>
-        <Text color={'secondary'}>{title}</Text>
+        <Text>{title}</Text>
       </View>
     </Pressable>
   )

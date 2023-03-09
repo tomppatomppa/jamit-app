@@ -1,67 +1,92 @@
 import React, { useContext } from 'react'
 import {
   Button,
+  Image,
   Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   View,
 } from 'react-native'
-import { useNavigate } from 'react-router-native'
-import CurrentUserContext from '../contexts/CurrentUserContext'
-
 import theme from '../theme'
-import { LoginButton } from './features/users/UserButtons'
-
 import Text from './Text'
+import { FontAwesome } from '@expo/vector-icons'
 
-const MenuItemTitles = ['Jamit', 'Open Mic', 'Other', 'Other']
+import { useNavigate } from 'react-router-native'
 
-const Landing = () => {
+import CurrentUserContext from '../contexts/CurrentUserContext'
+import CustomButton from './CustomButton'
+
+const menuCategories = [
+  { title: 'Jamit', description: 'Löydä Jamit' },
+  { title: 'Open Mic', description: 'Löydä Open Mic' },
+]
+
+const Home = () => {
   const { currentUser } = useContext(CurrentUserContext)
   const navigate = useNavigate()
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView stickyHeaderIndices={[0]} style={styles.scrollView}>
         <View style={styles.stickyHeader}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Button title="menu" />
-            <Text style={{ flex: 1 }}>Logo</Text>
+            <CustomButton onPress={() => console.log('Menu')}>
+              <Text>Menu</Text>
+            </CustomButton>
+            <Text fontWeight={'bold'} style={{ flex: 1, marginLeft: 12 }}>
+              JAMIT
+            </Text>
             {currentUser ? (
               <Button title="User" onPress={() => navigate('/settings')} />
             ) : (
-              <LoginButton />
+              <CustomButton onPress={() => navigate('/login')}>
+                <Text>Login</Text>
+              </CustomButton>
             )}
           </View>
         </View>
-
-        <View style={{ height: 400, alignItems: 'center' }}>
-          <Text>This is Description</Text>
+        <View style={{ marginVertical: 20, alignItems: 'center' }}>
+          <Image
+            style={styles.backgroundImage}
+            source={require('../assets/images/HomeBackground.jpg')}
+          ></Image>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            flexWrap: 'wrap',
-            padding: 12,
-          }}
-        >
-          {MenuItemTitles.map((item, index) => (
-            <MenuItem key={index} title={item} />
-          ))}
+        <View style={{ padding: 12 }}>
+          <Text fontSize={'subheading'} fontWeight={'bold'}>
+            Tapahtumat
+          </Text>
+          <View
+            style={{
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+            }}
+          >
+            {menuCategories.map((item, index) => (
+              <MenuItem key={index} item={item} />
+            ))}
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
   )
 }
-const MenuItem = ({ title }) => {
+
+const MenuItem = ({ item }) => {
   const navigate = useNavigate()
   return (
     <Pressable style={styles.menuItem} onPress={() => navigate('/map')}>
+      <FontAwesome
+        style={{ marginTop: 20 }}
+        name="music"
+        size={48}
+        color="black"
+      />
       <View style={styles.menuItemImage}>
-        <Text>Image should go here</Text>
+        <Text>{item.description}</Text>
       </View>
       <View style={styles.menuItemTextContainer}>
-        <Text style={{ alignSelf: 'center', padding: 8 }}>{title}</Text>
+        <Text style={{ alignSelf: 'center', padding: 8 }}>{item.title}</Text>
       </View>
     </Pressable>
   )
@@ -73,12 +98,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     height: 80,
-    backgroundColor: 'green',
+    backgroundColor: theme.colors.primary,
     padding: 10,
   },
   separator: {
     height: 10,
   },
+  backgroundImage: { width: '90%', borderRadius: 10 },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -101,7 +127,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   scrollView: {
-    backgroundColor: 'pink',
+    backgroundColor: theme.colors.secondary,
     width: '100%',
   },
   text: {
@@ -110,14 +136,16 @@ const styles = StyleSheet.create({
   menuItem: {
     flex: 1,
     margin: 4,
-    borderTopLeftRadius: 60 / 2,
-    justifyContent: 'flex-end',
+    borderWidth: 1,
+
+    borderRadius: 60 / 2,
     height: 200,
     minWidth: 150,
-    backgroundColor: 'yellow',
+    backgroundColor: theme.colors.secondaryLight,
     alignItems: 'center',
   },
   menuItemImage: {
+    margin: 12,
     flex: 1,
   },
   menuItemTextContainer: {
@@ -126,4 +154,4 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 })
-export default Landing
+export default Home

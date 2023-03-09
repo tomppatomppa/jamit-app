@@ -1,12 +1,12 @@
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
 
-import { baseUrl } from '../../../../utils/config'
+import { BASE_URL } from '../../../../utils/constants'
 import { showToast } from '../../../../utils/helpers'
 
 const useRecover = () => {
   const { mutate } = useMutation(
-    ({ username }) => axios.post(`${baseUrl}/api/reset`, { username }),
+    ({ username }) => axios.post(`${BASE_URL}/api/reset`, { username }),
     {
       onSuccess: async (response) => {
         showToast({

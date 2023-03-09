@@ -1,14 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 
 import axios from 'axios'
-import { baseUrl } from '../utils/config'
-import { getDate } from '../utils/helpers'
+import { BASE_URL } from '../utils/constants'
 
-const getPlaces = async ({ envelope, before }) => {
-  const { data } = await axios.get(`${baseUrl}/api/places`, {
+const getPlaces = async ({ envelope }) => {
+  const { data } = await axios.get(`${BASE_URL}/api/places`, {
     params: {
       envelope: envelope,
-      before: getDate(before),
     },
   })
   return data

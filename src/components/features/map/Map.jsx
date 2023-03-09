@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 import MapView from 'react-native-maps'
-import { Marker } from 'react-native-maps'
-import { Picker } from '@react-native-picker/picker'
+import { PROVIDER_GOOGLE } from 'react-native-maps'
+// import { Picker } from '@react-native-picker/picker'
 
 const customMapStyle = [
   {
@@ -43,20 +43,25 @@ import { createEnvelope } from '../../../utils/helpers'
 import React, { useState } from 'react'
 
 import theme from '../../../theme'
-import TopBar from './TopBar'
+import TopBar from './components/TopBar'
 
-//TODO: get device current location as initialRegion
-import { initialRegion } from '../../../utils/config'
-
-import Drawer from './Drawer'
-import EventContent from './EventContent'
 import usePlaces from '../../../hooks/usePlaces'
 import Text from '../../Text'
 
+import CustomMarker from './components/CustomMarker'
+import Drawer from './components/Drawer'
+import EventList from './components/EventList'
+
+export const initialRegion = {
+  latitude: 60.16020639500048,
+  longitude: 24.944589799155526,
+  latitudeDelta: 0.0012,
+  longitudeDelta: 0.0112,
+}
+
 const Map = () => {
-  const [before, setBefore] = useState('')
   const [envelope, setEnvelope] = useState(createEnvelope(initialRegion))
-  const { places } = usePlaces({ envelope, before })
+  const { places } = usePlaces({ envelope })
   const [selectedPlaceId, setSelectedPlaceId] = useState(null)
 
   const [showDrawer, setShowDrawer] = useState(false)
@@ -81,22 +86,9 @@ const Map = () => {
     <View style={styles.container}>
       <TopBar />
       <Text>Places visible {places?.length}</Text>
-      <Text>filter before {before}</Text>
-      <View style={styles.containerPicker}>
-        <Picker
-          prompt="Show events"
-          style={styles.picker}
-          selectedValue={before}
-          onValueChange={setBefore}
-        >
-          <Picker.Item label="today" value="today" />
-          <Picker.Item label="this week" value="week" />
-          <Picker.Item label="this month" value="month" />
-          <Picker.Item label="Show all places" value="" />
-        </Picker>
-      </View>
-
+      <Text>Showing all locations</Text>
       <MapView
+        provider={PROVIDER_GOOGLE}
         onPress={handleCloseDrawer}
         moveOnMarkerPress={false}
         onMarkerPress={handleMarkerPress}
@@ -107,23 +99,12 @@ const Map = () => {
         style={styles.map}
         onRegionChangeComplete={handleSetQuery}
       >
-        {places?.map((event, index) => (
-          <Marker
-            title={event.name}
-            key={index}
-            coordinate={{
-              latitude: event.location.coordinates[0],
-              longitude: event.location.coordinates[1],
-            }}
-            identifier={event.id.toString()}
-          />
+        {places?.map((place, index) => (
+          <CustomMarker data={place} key={index} />
         ))}
       </MapView>
       <Drawer showDrawer={showDrawer}>
-        <EventContent
-          id={selectedPlaceId}
-          handleCloseDrawer={handleCloseDrawer}
-        />
+        <EventList id={selectedPlaceId} handleCloseDrawer={handleCloseDrawer} />
       </Drawer>
     </View>
   )

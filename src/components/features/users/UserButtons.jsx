@@ -1,13 +1,12 @@
 import { Alert, Button, Pressable, StyleSheet } from 'react-native'
 import { useNavigate } from 'react-router-native'
-import useLogout from './hooks/useLogout'
+
 import theme from '../../../theme'
 import Text from '../../Text'
+import useLogout from '../Authorization/hooks/useLogout'
 
-export const LoginButton = () => {
-  const navigate = useNavigate()
-
-  return <Button onPress={() => navigate('/login')} title="login" />
+export const CustomButton = ({ onPress, title, disabled = false }) => {
+  return <Button onPress={onPress} title={title} disabled={disabled} />
 }
 
 export const LogoutButton = () => {
