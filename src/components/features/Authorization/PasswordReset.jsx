@@ -1,6 +1,6 @@
 import { Formik } from 'formik'
 import React, { useState } from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import * as yup from 'yup'
 
@@ -11,6 +11,7 @@ import useResetPassword from './hooks/useResetPassword'
 import { PasswordResetForm } from './components/PasswordResetForm'
 import { PasswordRecoveryForm } from './components/PasswordRecoveryForm'
 import useRecover from './hooks/useRecover'
+import CustomButton from '../../CustomButton'
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -90,11 +91,11 @@ const PasswordReset = () => {
           )}
         </Formik>
       )}
-      <Pressable style={styles.codeButton} onPress={() => setShow(!show)}>
-        <Text color={'secondary'} fontWeight="bold">
+      <CustomButton onPress={() => setShow(!show)}>
+        <Text fontWeight="bold">
           {show ? "I don't have a code" : 'I Have a code'}
         </Text>
-      </Pressable>
+      </CustomButton>
     </View>
   )
 }

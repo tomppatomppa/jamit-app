@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import MapView from 'react-native-maps'
 import { PROVIDER_GOOGLE } from 'react-native-maps'
 // import { Picker } from '@react-native-picker/picker'
@@ -43,14 +43,17 @@ import { createEnvelope } from '../../../utils/helpers'
 import React, { useState } from 'react'
 
 import theme from '../../../theme'
-import TopBar from './components/TopBar'
 
 import usePlaces from '../../../hooks/usePlaces'
 import Text from '../../Text'
 
+import { Entypo } from '@expo/vector-icons'
+
 import CustomMarker from './components/CustomMarker'
 import Drawer from './components/Drawer'
 import EventList from './components/EventList'
+import Navbar from '../../Navbar'
+import { useNavigate } from 'react-router-native'
 
 export const initialRegion = {
   latitude: 60.16020639500048,
@@ -60,6 +63,7 @@ export const initialRegion = {
 }
 
 const Map = () => {
+  const navigate = useNavigate()
   const [envelope, setEnvelope] = useState(createEnvelope(initialRegion))
   const { places } = usePlaces({ envelope })
   const [selectedPlaceId, setSelectedPlaceId] = useState(null)
@@ -84,9 +88,9 @@ const Map = () => {
 
   return (
     <View style={styles.container}>
-      <TopBar />
-      <Text>Places visible {places?.length}</Text>
-      <Text>Showing all locations</Text>
+      <Navbar>
+        <Text>Jamit</Text>
+      </Navbar>
       <MapView
         provider={PROVIDER_GOOGLE}
         onPress={handleCloseDrawer}
@@ -103,6 +107,21 @@ const Map = () => {
           <CustomMarker data={place} key={index} />
         ))}
       </MapView>
+      <Pressable
+        onPress={() => navigate('/list')}
+        style={styles.buttonListview}
+      >
+        <View
+          style={{
+            alignSelf: 'center',
+            flexDirection: 'row',
+          }}
+        >
+          <Entypo name="list" size={20} color="black" />
+          <Text style={{ marginLeft: 5 }}>Listview</Text>
+        </View>
+      </Pressable>
+
       <Drawer showDrawer={showDrawer}>
         <EventList id={selectedPlaceId} handleCloseDrawer={handleCloseDrawer} />
       </Drawer>
@@ -139,6 +158,17 @@ const styles = StyleSheet.create({
     width: 20,
     position: 'absolute',
     bottom: 0,
+  },
+  buttonListview: {
+    position: 'absolute',
+    bottom: 100,
+    height: 40,
+    width: 200,
+    alignSelf: 'center',
+    justifyContent: 'center',
+    backgroundColor: theme.colors.primary,
+    borderWidth: 1,
+    borderRadius: 20,
   },
 })
 

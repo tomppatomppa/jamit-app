@@ -12,6 +12,7 @@ const useLogin = () => {
   const queryClient = new QueryClient()
   const authStorage = useAuthStorage()
   const { setCurrentUser } = useContext(CurrentUserContext)
+
   return useMutation(
     ({ username, password }) =>
       axios.post(`${BASE_URL}/api/login`, { username, password }),
@@ -21,7 +22,6 @@ const useLogin = () => {
         await authStorage.setCurrentUser(usernameAndToken)
         setCurrentUser({
           ...usernameAndToken,
-          credentialsProvider: `${BASE_URL}/api/me`,
         })
         queryClient.clear()
         showToast({

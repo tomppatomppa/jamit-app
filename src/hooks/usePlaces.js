@@ -3,24 +3,24 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { BASE_URL } from '../utils/constants'
 
-const getPlaces = async ({ envelope }) => {
+const getPlaces = async (queryParams) => {
   const { data } = await axios.get(`${BASE_URL}/api/places`, {
     params: {
-      envelope: envelope,
+      ...queryParams,
     },
   })
   return data
 }
 
 const usePlaces = (queryParams) => {
-  const { isLoading, data } = useQuery({
+  const { isLoading, data, isError } = useQuery({
     queryKey: ['allPlaces', queryParams],
     queryFn: () => getPlaces(queryParams),
     refetchOnMount: 'always',
     retry: 3,
   })
 
-  return { places: data, isLoading }
+  return { places: data, isLoading, isError }
 }
 
 export default usePlaces

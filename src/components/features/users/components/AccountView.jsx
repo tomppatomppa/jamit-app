@@ -21,7 +21,6 @@ export const AccountView = ({ data }) => {
       <Text style={{ alignSelf: 'center', marginBottom: 10, fontSize: 20 }}>
         ACCOUNT
       </Text>
-
       <View style={styles.divider}>
         <Text fontSize="small" fontWeight="bold">
           Email
@@ -34,7 +33,6 @@ export const AccountView = ({ data }) => {
             edit
           </Text>
         </Pressable>
-
         <Text fontSize="small" fontWeight="bold">
           Username
         </Text>
@@ -82,8 +80,7 @@ export const AccountView = ({ data }) => {
       <View>
         <DeleteAccountButton />
       </View>
-
-      <Text style={{}}>Account Created: {data.createdAt}</Text>
+      <Text>Account Created: {data.createdAt}</Text>
     </View>
   )
 }

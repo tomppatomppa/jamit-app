@@ -7,10 +7,8 @@ const CustomMarker = ({ data }) => {
 
   const setPinColor = () => {
     if (eventCount < 1) return 'red'
-    if (eventCount < 2) return 'yellow'
     return 'green'
   }
-
   return (
     <Marker
       style={{ opacity: opacity }}

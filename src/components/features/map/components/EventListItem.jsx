@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import theme from '../../../../theme'
 import Text from '../../../Text'
+
 import { EvilIcons } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
@@ -62,6 +63,7 @@ export const EventListItem = ({ item }) => {
         >
           <EvilIcons name="star" size={24} color="black" />
           <Ionicons
+            onPress={() => console.log('Add to bookmarks')}
             style={{ marginLeft: 24 }}
             name="bookmark-outline"
             size={24}

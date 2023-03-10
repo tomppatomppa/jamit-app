@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import {
+  ActivityIndicator,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -10,21 +11,21 @@ import theme from '../../../theme'
 
 import Text from '../../Text'
 import useMe from './hooks/useMe'
-import { Ionicons } from '@expo/vector-icons'
 
 import ErrorScreen from './components/ErrorScreen'
 import { AccountView } from './components/AccountView'
 import { ActivityView } from './components/ActivityView'
-import { useNavigate } from 'react-router-native'
+
+import Navbar from '../../Navbar'
 
 const UserSettings = () => {
-  const navigate = useNavigate()
   const [menuSelected, setMenuSelected] = useState('Account')
   const { data, isLoading, isError } = useMe()
 
   if (isLoading) {
     return (
       <View style={styles.container}>
+        <ActivityIndicator />
         <Text>loading....</Text>
       </View>
     )
@@ -34,37 +35,29 @@ const UserSettings = () => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView stickyHeaderIndices={[0]} style={styles.scrollView}>
-        <View style={styles.stickyHeader}>
-          <View style={styles.headerMenuContainer}>
+        <Navbar>
+          <View style={styles.headerMenu}>
             <Pressable
-              style={{ position: 'absolute', left: 0 }}
-              onPress={() => navigate('/')}
+              onPress={() => setMenuSelected('Activity')}
+              style={[
+                styles.headerItem,
+                menuSelected === 'Activity' && styles.selectedHeaderItem,
+              ]}
             >
-              <Ionicons name="chevron-back" size={24} color="black" />
+              <Text fontSize={'subheading'}>Activity</Text>
             </Pressable>
-            <View style={styles.headerMenu}>
-              <Pressable
-                onPress={() => setMenuSelected('Activity')}
-                style={[
-                  styles.headerItem,
-                  menuSelected === 'Activity' && styles.selectedHeaderItem,
-                ]}
-              >
-                <Text fontSize={'subheading'}>Activity</Text>
-              </Pressable>
-              <View style={styles.headerDivider} />
-              <Pressable
-                onPress={() => setMenuSelected('Account')}
-                style={[
-                  styles.headerItem,
-                  menuSelected === 'Account' && styles.selectedHeaderItem,
-                ]}
-              >
-                <Text fontSize={'subheading'}>Account</Text>
-              </Pressable>
-            </View>
+            <View style={styles.headerDivider} />
+            <Pressable
+              onPress={() => setMenuSelected('Account')}
+              style={[
+                styles.headerItem,
+                menuSelected === 'Account' && styles.selectedHeaderItem,
+              ]}
+            >
+              <Text fontSize={'subheading'}>Account</Text>
+            </Pressable>
           </View>
-        </View>
+        </Navbar>
         {menuSelected === 'Account' ? (
           <AccountView data={data} />
         ) : (
@@ -106,6 +99,7 @@ const styles = StyleSheet.create({
     maxWidth: 250,
     borderRadius: 10,
     overflow: 'hidden',
+    backgroundColor: theme.colors.secondaryLight,
   },
   headerItem: {
     flex: 1,

@@ -13,6 +13,7 @@ import useBackHandler from '../hooks/useBackHandler'
 import PasswordReset from './features/Authorization/PasswordReset'
 import Login from './features/Authorization/Login'
 import Register from './features/Authorization/Register'
+import PlaceListView from './features/map/PlaceListView'
 
 const Main = () => {
   useBackHandler()
@@ -39,6 +40,7 @@ const Main = () => {
           <Route path="/reset" element={<PasswordReset />} />
           <Route path="/settings" element={<UserSettings />} />
           <Route path="/map" element={<Map />} exact />
+          <Route path="/list" element={<PlaceListView />} exact />
         </Routes>
       </View>
     </CurrentUserContext.Provider>
