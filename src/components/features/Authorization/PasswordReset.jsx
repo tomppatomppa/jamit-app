@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import * as yup from 'yup'
-import useRecover from '../users/hooks/useRecover'
 
 import theme from '../../../theme'
 import Text from '../../Text'
@@ -11,6 +10,7 @@ import Text from '../../Text'
 import useResetPassword from './hooks/useResetPassword'
 import { PasswordResetForm } from './components/PasswordResetForm'
 import { PasswordRecoveryForm } from './components/PasswordRecoveryForm'
+import useRecover from './hooks/useRecover'
 
 const validationSchema = yup.object().shape({
   username: yup
@@ -43,8 +43,8 @@ const initialValues = {
 }
 
 const PasswordReset = () => {
-  const [show, setShow] = useState(false)
   const navigate = useNavigate()
+  const [show, setShow] = useState(false)
   const { recover } = useRecover()
   const { reset } = useResetPassword()
 

@@ -1,13 +1,25 @@
-import React from 'react'
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native'
+import React, { useState } from 'react'
+import {
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native'
 import theme from '../../../theme'
-import ReturnButton from '../../ReturnButton'
+
 import Text from '../../Text'
 import useMe from './hooks/useMe'
+import { Ionicons } from '@expo/vector-icons'
 
-import { DeleteButton, LogoutButton } from './UserButtons'
+import ErrorScreen from './components/ErrorScreen'
+import { AccountView } from './components/AccountView'
+import { ActivityView } from './components/ActivityView'
+import { useNavigate } from 'react-router-native'
 
 const UserSettings = () => {
+  const navigate = useNavigate()
+  const [menuSelected, setMenuSelected] = useState('Account')
   const { data, isLoading, isError } = useMe()
 
   if (isLoading) {
@@ -17,48 +29,52 @@ const UserSettings = () => {
       </View>
     )
   }
+  if (isError) return <ErrorScreen />
+
   return (
     <SafeAreaView style={styles.container}>
-      {isError ? (
-        <ErrorScreen />
-      ) : (
-        <ScrollView stickyHeaderIndices={[0]} style={styles.scrollView}>
-          <View style={styles.stickyHeader}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <ReturnButton />
-              <Text fontSize={'subheading'}>UserSettings</Text>
+      <ScrollView stickyHeaderIndices={[0]} style={styles.scrollView}>
+        <View style={styles.stickyHeader}>
+          <View style={styles.headerMenuContainer}>
+            <Pressable
+              style={{ position: 'absolute', left: 0 }}
+              onPress={() => navigate('/')}
+            >
+              <Ionicons name="chevron-back" size={24} color="black" />
+            </Pressable>
+            <View style={styles.headerMenu}>
+              <Pressable
+                onPress={() => setMenuSelected('Activity')}
+                style={[
+                  styles.headerItem,
+                  menuSelected === 'Activity' && styles.selectedHeaderItem,
+                ]}
+              >
+                <Text fontSize={'subheading'}>Activity</Text>
+              </Pressable>
+              <View style={styles.headerDivider} />
+              <Pressable
+                onPress={() => setMenuSelected('Account')}
+                style={[
+                  styles.headerItem,
+                  menuSelected === 'Account' && styles.selectedHeaderItem,
+                ]}
+              >
+                <Text fontSize={'subheading'}>Account</Text>
+              </Pressable>
             </View>
           </View>
-          <Text>Account is: {data.disabled ? 'Disabled' : 'Active'}</Text>
-          <Text>Email: {data.username || data.email}</Text>
-          <Text>Username: {data.username}</Text>
-          <Text>{data.disabled}</Text>
-          <Text>Account Id: {data.id}</Text>
-          <Text>Name: {data.name}</Text>
-          <Text fontSize="subheading" fontWeight="bold">
-            Roles
-          </Text>
-          {data?.roles?.map((role, index) => (
-            <Text key={index}>{role}</Text>
-          ))}
-          <Text style={{}}>Account Created: {data.createdAt}</Text>
-          <View style={styles.buttonContainer}>
-            <DeleteButton />
-            <LogoutButton />
-          </View>
-        </ScrollView>
-      )}
+        </View>
+        {menuSelected === 'Account' ? (
+          <AccountView data={data} />
+        ) : (
+          <ActivityView />
+        )}
+      </ScrollView>
     </SafeAreaView>
   )
 }
-const ErrorScreen = () => {
-  return (
-    <View>
-      <Text>Could not get your data</Text>
-      <LogoutButton />
-    </View>
-  )
-}
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -78,17 +94,39 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     padding: 10,
   },
+  headerMenuContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerMenu: {
+    flexDirection: 'row',
+    borderWidth: 1,
+    borderColor: 'black',
+    maxWidth: 250,
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  headerItem: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 2,
+  },
+  selectedHeaderItem: {
+    backgroundColor: theme.colors.complementary,
+  },
+  headerDivider: {
+    borderEndWidth: 1,
+    borderColor: 'black',
+  },
   separator: {
     height: 10,
   },
   scrollView: {
-    backgroundColor: 'pink',
+    backgroundColor: theme.colors.secondary,
     width: '100%',
     textAlign: 'center',
     display: 'flex',
-  },
-  buttonContainer: {
-    flexDirection: 'row',
   },
 })
 export default UserSettings

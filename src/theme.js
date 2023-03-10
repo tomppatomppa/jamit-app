@@ -8,6 +8,7 @@ const theme = {
     secondary: '#faf5ef',
     secondaryLight: '#fffefc',
     warning: '#d73a4a',
+    complementary: '#A8E8F9',
   },
   fontSizes: {
     small: 12,

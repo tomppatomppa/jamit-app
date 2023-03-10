@@ -43,7 +43,6 @@ const Text = ({ color, fontSize, fontWeight, style, ...props }) => {
     fontSize === 'small' && styles.fontSizeSmall,
     fontSize === 'subheading' && styles.fontSizeSubheading,
     fontWeight === 'bold' && styles.fontWeightBold,
-
     style,
   ]
 
