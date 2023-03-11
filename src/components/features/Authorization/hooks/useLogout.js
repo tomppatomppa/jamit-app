@@ -1,4 +1,4 @@
-import { QueryClient, useMutation } from '@tanstack/react-query'
+import { useQueryClient, useMutation } from '@tanstack/react-query'
 
 import { useContext } from 'react'
 import useAuthStorage from '../../../../hooks/useAuthStorage'
@@ -9,7 +9,7 @@ import { showToast } from '../../../../utils/helpers'
 import { BASE_URL } from '../../../../utils/constants'
 
 const useLogout = () => {
-  const queryClient = new QueryClient()
+  const queryClient = useQueryClient()
   const authStorage = useAuthStorage()
   const { currentUser, setCurrentUser } = useContext(CurrentUserContext)
 

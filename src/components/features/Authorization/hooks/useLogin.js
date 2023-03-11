@@ -1,4 +1,4 @@
-import { QueryClient, useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-native'
@@ -9,7 +9,7 @@ import { showToast } from '../../../../utils/helpers'
 
 const useLogin = () => {
   const navigate = useNavigate()
-  const queryClient = new QueryClient()
+  const queryClient = useQueryClient()
   const authStorage = useAuthStorage()
   const { setCurrentUser } = useContext(CurrentUserContext)
 
