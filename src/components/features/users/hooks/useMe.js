@@ -10,6 +10,7 @@ const getME = async (currentUser) => {
   })
   return response.data
 }
+
 const useMe = () => {
   const { currentUser } = useContext(CurrentUserContext)
 

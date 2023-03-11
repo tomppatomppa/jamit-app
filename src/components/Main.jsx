@@ -22,6 +22,7 @@ const Main = () => {
 
   const login = async () => {
     const userFromStorage = await authStorage.getCurrentUser()
+
     if (userFromStorage) {
       setCurrentUser(userFromStorage)
     }
