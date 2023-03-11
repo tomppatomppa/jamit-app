@@ -16,8 +16,6 @@ import { showToast } from './src/utils/helpers'
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error, query) => {
-      // 🎉 only show error toasts if we already have data in the cache
-      // which indicates a failed background update
       if (query.state.data !== undefined) {
         console.log(`Something went wrong: ${error.message}`)
       }
@@ -27,10 +25,13 @@ const queryClient = new QueryClient({
     onError: (error) => {
       showToast({ error: error.response.data.error })
     },
+    onSuccess: (response) => {
+      showToast({ type: 'success', text1: response })
+    },
   }),
 })
 
-const authStorage = new AuthStorage()
+const authStorage = new AuthStorage() //TODO: remove
 
 export default function App() {
   return (

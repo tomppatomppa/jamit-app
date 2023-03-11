@@ -1,15 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { client } from '../../../../utils/config'
-
-const update = async (values) => {
-  const response = await client.put(
-    `/api/me`,
-    { name: values },
-    { authorization: true }
-  )
-
-  return response.data
-}
+import { update } from '../../../../services/me'
 
 const useUpdate = () => {
   const queryClient = useQueryClient()

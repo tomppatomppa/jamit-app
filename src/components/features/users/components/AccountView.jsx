@@ -1,26 +1,27 @@
 import React from 'react'
-import { Button, Pressable, StyleSheet, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 
 import CustomButton from '../../../CustomButton'
 import Text from '../../../Text'
+
 import useLogout from '../../Authorization/hooks/useLogout'
 import useUpdate from '../hooks/useUpdate'
 import { DeleteAccountButton } from './DeleteAccountButton'
 
 export const AccountView = ({ data }) => {
-  const { mutate } = useUpdate()
   const navigate = useNavigate()
-  const logout = useLogout()
+  const { mutate } = useUpdate()
+  const { logout } = useLogout()
 
   const handleLogout = () => {
     logout()
     navigate('/')
   }
-
-  const handleUpdateMe = () => {
+  const handleUpdateName = () => {
+    //placeholder to test update function
     const name = Date.now()
-    mutate(name)
+    mutate({ name: name })
   }
 
   return (
@@ -35,16 +36,15 @@ export const AccountView = ({ data }) => {
         <Text style={styles.textStyle}>{data.username}</Text>
       </View>
       <View style={styles.divider}>
-        <Pressable onPress={() => console.log('dhe')}>
-          {/* <Text
+        <Pressable onPress={handleUpdateName}>
+          <Text
             style={{
               alignSelf: 'flex-end',
-              position: 'absolute',
+              position: 'relative',
             }}
           >
             edit
-          </Text> */}
-          <Button onPress={handleUpdateMe} title="Click" />
+          </Text>
         </Pressable>
         <Text fontSize="small" fontWeight="bold">
           Username

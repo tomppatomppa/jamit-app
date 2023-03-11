@@ -1,18 +1,11 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios'
 import AuthStorage from './AuthStorage'
-
 import { BASE_URL } from './constants'
-const authStorage = new AuthStorage() //TODO: remove duplicate context
 
-export function createAxiosClient({
-  options,
-  getCurrentAccessToken,
-  getCurrentRefreshToken,
-  refreshTokenUrl,
-  logout,
-  setRefreshedTokens,
-}) {
+const authStorage = new AuthStorage()
+
+export function createAxiosClient({ options, getCurrentAccessToken, logout }) {
   const client = axios.create(options)
 
   client.interceptors.request.use(
@@ -29,7 +22,26 @@ export function createAxiosClient({
       return Promise.reject(error)
     }
   )
+  client.interceptors.response.use(
+    async (response) => {
+      if (response.data.token && response.data.username) {
+        await setCurrentUser(response.data)
+      }
+      if (response.data.message === 'token revoken') {
+        await logout()
+      }
+      return response
+    },
+    (error) => {
+      const originalRequest = error.config
 
+      originalRequest.headers = JSON.parse(
+        JSON.stringify(originalRequest.headers || {})
+      )
+
+      return Promise.reject(error)
+    }
+  )
   return client
 }
 
@@ -37,17 +49,11 @@ async function getCurrentAccessToken() {
   const users = await authStorage.getCurrentUser()
   return users
 }
-
-function getCurrentRefreshToken() {
-  return null
+async function setCurrentUser(user) {
+  await authStorage.setCurrentUser(user)
 }
-
-function setRefreshedTokens(tokens) {
-  console.log('set tokens...')
-}
-
 async function logout() {
-  console.log('logout...')
+  await authStorage.removeCurrentUser()
 }
 
 export const client = createAxiosClient({
@@ -59,8 +65,5 @@ export const client = createAxiosClient({
     },
   },
   getCurrentAccessToken,
-  getCurrentRefreshToken,
-  refreshTokenUrl: '',
   logout,
-  setRefreshedTokens,
 })
