@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 
 import usePlaces from '../../../hooks/usePlaces'
-import Text from '../../Text'
+import { Text } from '../../common'
 
 const renderItem = ({ item }) => {
   return (
@@ -21,12 +21,15 @@ const renderItem = ({ item }) => {
     </View>
   )
 }
+
 const renderSectionHeader = ({ section: { name } }) => {
   return <Text style={styles.header}>{name}</Text>
 }
+
 const renderListEmptyComponent = () => {
   return <Text>Empty</Text>
 }
+
 const PlaceListView = () => {
   const { places, isLoading, isError } = usePlaces()
   if (isLoading) {

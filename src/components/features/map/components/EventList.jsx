@@ -1,17 +1,15 @@
 import React from 'react'
-import { FlatList, Pressable, StyleSheet, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 import theme from '../../../../theme'
-import Text from '../../../Text'
-
-import { AntDesign } from '@expo/vector-icons'
 
 import useEvent from '../../../../hooks/useEvent'
 import { EventListItem } from './EventListItem'
+import { Text } from '../../../common'
 
 const ItemSeparator = () => <View style={styles.separator} />
 const RenderEventItem = ({ item }) => <EventListItem item={item} />
 
-const EventList = ({ id, handleCloseDrawer }) => {
+const EventList = ({ id }) => {
   const { data, fetchNextPage } = useEvent(id)
 
   const allEvents = data?.pages?.flatMap((page) => page.rows) ?? []
@@ -26,16 +24,13 @@ const EventList = ({ id, handleCloseDrawer }) => {
   }
   return (
     <FlatList
-      stickyHeaderIndices={[0]}
-      ListHeaderComponent={
-        <View style={styles.stickyHeadercontainer}>
-          <Text>List header</Text>
-          <Pressable onPress={handleCloseDrawer}>
-            <AntDesign name="close" size={24} color="black" />
-          </Pressable>
-        </View>
-      }
-      contentContainerStyle={{ paddingBottom: 150 }}
+      contentContainerStyle={{
+        paddingBottom: 150,
+        alignItems: 'center',
+
+        minWidth: '100%',
+        backgroundColor: theme.colors.primary,
+      }}
       data={allEvents}
       renderItem={({ item }) => <RenderEventItem item={item} />}
       ItemSeparatorComponent={ItemSeparator}
@@ -47,37 +42,15 @@ const EventList = ({ id, handleCloseDrawer }) => {
 export default EventList
 
 const styles = StyleSheet.create({
-  container: {
-    margin: 12,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   stickyHeadercontainer: {
-    height: 50,
-    display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.colors.secondary,
-    borderTopEndRadius: 60 / 2,
-    borderTopLeftRadius: 60 / 2,
-    borderBottomWidth: 1,
-  },
-  listItemContainer: {
-    margin: 3,
-    padding: 15,
-    borderRadius: 60 / 2,
-    borderBottomWidth: 1,
-    borderColor: 'black',
+    justifyContent: 'center',
+    paddingVertical: 8,
+    width: '100%',
+    backgroundColor: 'red',
   },
   separator: {
     height: 10,
-  },
-  buttonInterested: {
-    backgroundColor: theme.colors.primary,
-    borderRadius: 3,
-    padding: 8,
-    marginLeft: 12,
   },
 })

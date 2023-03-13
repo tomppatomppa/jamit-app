@@ -1,66 +1,19 @@
+import React, { useState } from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import MapView from 'react-native-maps'
 import { PROVIDER_GOOGLE } from 'react-native-maps'
-// import { Picker } from '@react-native-picker/picker'
-
-const customMapStyle = [
-  {
-    featureType: 'administrative',
-    elementType: 'geometry',
-    stylers: [
-      {
-        visibility: 'off',
-      },
-    ],
-  },
-  {
-    featureType: 'poi',
-    stylers: [
-      {
-        visibility: 'off',
-      },
-    ],
-  },
-  {
-    featureType: 'road',
-    elementType: 'labels.icon',
-    stylers: [
-      {
-        visibility: 'off',
-      },
-    ],
-  },
-  {
-    featureType: 'transit',
-    stylers: [
-      {
-        visibility: 'off',
-      },
-    ],
-  },
-]
-import { createEnvelope } from '../../../utils/helpers'
-import React, { useState } from 'react'
-
-import theme from '../../../theme'
-
-import usePlaces from '../../../hooks/usePlaces'
-import Text from '../../Text'
-
 import { Entypo } from '@expo/vector-icons'
+
+import { customMapStyle, initialRegion } from './config'
+import { createEnvelope } from '../../../utils/helpers'
+import theme from '../../../theme'
+import usePlaces from '../../../hooks/usePlaces'
 
 import CustomMarker from './components/CustomMarker'
 import Drawer from './components/Drawer'
 import EventList from './components/EventList'
-import Navbar from '../../Navbar'
 import { useNavigate } from 'react-router-native'
-
-export const initialRegion = {
-  latitude: 60.16020639500048,
-  longitude: 24.944589799155526,
-  latitudeDelta: 0.0012,
-  longitudeDelta: 0.0112,
-}
+import { Navbar, Text } from '../../common'
 
 const Map = () => {
   const navigate = useNavigate()
@@ -121,9 +74,8 @@ const Map = () => {
           <Text style={{ marginLeft: 5 }}>Listview</Text>
         </View>
       </Pressable>
-
-      <Drawer showDrawer={showDrawer}>
-        <EventList id={selectedPlaceId} handleCloseDrawer={handleCloseDrawer} />
+      <Drawer showDrawer={showDrawer} handleCloseDrawer={handleCloseDrawer}>
+        <EventList id={selectedPlaceId} />
       </Drawer>
     </View>
   )
@@ -138,26 +90,8 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     backgroundColor: '#e1e4e8',
   },
-  containerPicker: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-  },
-  picker: {
-    backgroundColor: theme.colors.secondary,
-    flex: 1,
-  },
   map: {
     height: '100%',
-  },
-  topBarContainer: {
-    height: 80,
-    backgroundColor: theme.colors.primary,
-  },
-  selected: {
-    width: 20,
-    position: 'absolute',
-    bottom: 0,
   },
   buttonListview: {
     position: 'absolute',

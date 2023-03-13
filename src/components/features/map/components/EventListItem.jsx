@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { Image, Pressable, StyleSheet, View } from 'react-native'
 import theme from '../../../../theme'
-import Text from '../../../Text'
 
 import { EvilIcons } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
-import { Fontisto } from '@expo/vector-icons'
-import { AntDesign } from '@expo/vector-icons'
+
+import { CustomButton, Text } from '../../../common'
+import { defaultImageUri } from '../config'
 
 export const EventListItem = ({ item }) => {
   const [showText, setShowText] = useState(false)
@@ -15,85 +14,78 @@ export const EventListItem = ({ item }) => {
 
   return (
     <View style={styles.listItemContainer}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-around',
+      <Image
+        style={styles.backgroundImage}
+        source={{
+          uri: defaultImageUri,
         }}
-      >
-        <Fontisto
-          style={{
-            padding: 6,
-            alignSelf: 'center',
-            marginRight: 15,
-          }}
-          name="music-note"
-          size={24}
-          color="green"
-        />
-        <Text style={{ flex: 1 }}>{item.name}</Text>
-        <MaterialCommunityIcons name="dots-vertical" size={24} color="black" />
-        <Pressable
-          style={{ marginLeft: 12 }}
-          onPress={() => console.log('hide event')}
-        >
-          <AntDesign name="close" size={24} color="black" />
-        </Pressable>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
+        defaultSource={{
+          uri: defaultImageUri,
         }}
-      >
-        <View style={{ flex: 1 }}>
-          <Text fontWeight={'bold'}>
-            Date - {time.toUTCString().slice(0, 17)}
-          </Text>
-          <Text>Start Time - {`${time.getHours()}:${time.getMinutes()}`}</Text>
-          <Pressable onPress={() => console.log('click')}>
-            <Text>Open facebook - link</Text>
-          </Pressable>
-        </View>
+      ></Image>
+      <View style={{ padding: 6 }}>
         <View
           style={{
             flexDirection: 'row',
-            alignItems: 'center',
           }}
         >
-          <EvilIcons name="star" size={24} color="black" />
-          <Ionicons
-            onPress={() => console.log('Add to bookmarks')}
-            style={{ marginLeft: 24 }}
-            name="bookmark-outline"
-            size={24}
-            color="black"
-          />
+          <View style={{ flex: 1 }}>
+            <Text fontSize={'small'}>
+              {time.toUTCString().slice(0, 11)}
+              {'. klo '}
+              {`${time.getHours()}:${time.getMinutes()}`}
+            </Text>
+            <Text fontWeight="bold" style={{ flex: 1 }}>
+              {item.name}
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
+            <EvilIcons name="star" size={24} color="black" />
+            <Ionicons
+              onPress={() => console.log('Add to bookmarks')}
+              style={{ marginLeft: 24 }}
+              name="bookmark-outline"
+              size={24}
+              color="black"
+            />
+          </View>
         </View>
-      </View>
-      <Text fontSize={'subheading'} style={{ marginVertical: 6 }}>
-        Description
-      </Text>
-      <Text numberOfLines={showText ? 100 : 5} ellipsizeMode="tail">
-        {item.content}
-      </Text>
-      <Pressable onPress={() => setShowText(true)}>
-        <Text fontWeight={'bold'} title="show more">
-          {showText ? '' : 'lue lisää...'}
-        </Text>
-      </Pressable>
 
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-          alignItems: 'center',
-          marginVertical: 12,
-        }}
-      >
-        <Pressable style={styles.buttonShare}>
-          <Text color={'secondary'}>Share</Text>
+        <Text fontSize={'subheading'} style={{ marginVertical: 6 }}>
+          Description
+        </Text>
+        <Text numberOfLines={showText ? 100 : 3} ellipsizeMode="tail">
+          {item.content}
+        </Text>
+        <Pressable onPress={() => setShowText(true)}>
+          <Text fontWeight={'bold'} title="show more">
+            {showText ? '' : 'lue lisää...'}
+          </Text>
         </Pressable>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'flex-start',
+            alignItems: 'center',
+            marginVertical: 12,
+          }}
+        >
+          <CustomButton
+            style={{ flex: 1, marginRight: 6, flexDirection: 'row' }}
+          >
+            <EvilIcons name="star" size={20} color="black" />
+            <Text color={'black'}>Interested</Text>
+          </CustomButton>
+          <CustomButton>
+            <Text color={'black'}>Share</Text>
+          </CustomButton>
+        </View>
       </View>
     </View>
   )
@@ -101,13 +93,14 @@ export const EventListItem = ({ item }) => {
 
 const styles = StyleSheet.create({
   listItemContainer: {
-    margin: 3,
-    padding: 15,
-    borderRadius: 60 / 2,
-    borderBottomWidth: 1,
+    overflow: 'hidden',
+    borderRadius: 10,
+    borderWidth: 1,
+    marginHorizontal: 6,
     borderColor: 'black',
+    backgroundColor: theme.colors.secondary,
   },
-
+  backgroundImage: { resizeMode: 'cover', height: 170 },
   buttonShare: {
     backgroundColor: theme.colors.primary,
     borderRadius: 3,

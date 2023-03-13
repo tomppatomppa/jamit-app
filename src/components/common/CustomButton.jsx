@@ -1,13 +1,16 @@
 import React from 'react'
 import { Pressable, StyleSheet } from 'react-native'
+import theme from '../../theme'
 
-import theme from '../theme'
-
-const CustomButton = ({ warning = false, onPress, children }) => {
+const CustomButton = ({ warning = false, onPress, children, style }) => {
   return (
     <Pressable
       onPress={onPress}
-      style={[warning ? styles.buttonWarning : styles.button]}
+      style={[
+        warning
+          ? { ...styles.buttonWarning, ...style }
+          : { ...styles.button, ...style },
+      ]}
     >
       {children}
     </Pressable>
@@ -31,7 +34,6 @@ const styles = StyleSheet.create({
   buttonWarning: {
     backgroundColor: theme.colors.warning,
     borderWidth: 1,
-
     borderColor: 'black',
     padding: 7,
     borderRadius: 10,

@@ -5,13 +5,12 @@ import { useNavigate } from 'react-router-native'
 import * as yup from 'yup'
 
 import theme from '../../../theme'
-import Text from '../../Text'
 
 import useResetPassword from './hooks/useResetPassword'
 import { PasswordResetForm } from './components/PasswordResetForm'
 import { PasswordRecoveryForm } from './components/PasswordRecoveryForm'
 import useRecover from './hooks/useRecover'
-import CustomButton from '../../CustomButton'
+import { CustomButton, Text } from '../../common'
 
 const validationSchema = yup.object().shape({
   username: yup

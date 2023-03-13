@@ -2,8 +2,7 @@ import React from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 
-import CustomButton from '../../../CustomButton'
-import Text from '../../../Text'
+import { CustomButton, Text } from '../../../common'
 
 import useLogout from '../../Authorization/hooks/useLogout'
 import useUpdate from '../hooks/useUpdate'

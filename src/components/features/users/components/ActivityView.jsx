@@ -1,6 +1,5 @@
 import { View } from 'react-native'
-import Text from '../../../Text'
-
+import { Text } from '../../../common'
 export const ActivityView = () => {
   return (
     <View>

@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, View } from 'react-native'
 import theme from '../../../../theme'
-import Text from '../../../Text'
+import { Text } from '../../../common'
 import FormikTextInput from './FormikTextInput'
 
 export const PasswordResetForm = ({ onSubmit }) => {

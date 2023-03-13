@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 
-import CustomButton from '../../../CustomButton'
-import Text from '../../../Text'
+import { CustomButton, Text } from '../../../common'
+
 import FormikTextInput from './FormikTextInput'
 
 export const PasswordRecoveryForm = ({ onSubmit, onCancel }) => {

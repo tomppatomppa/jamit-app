@@ -2,9 +2,8 @@ import React from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
 import theme from '../../../../theme'
 import FormikTextInput from './FormikTextInput'
-import Text from '../../../Text'
-import CustomButton from '../../../CustomButton'
 
+import { CustomButton, Text } from '../../../common'
 export const LoginForm = ({ navigate, onSubmit, onCancel }) => {
   return (
     <View style={styles.loginFormContainer}>

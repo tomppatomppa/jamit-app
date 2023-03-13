@@ -1,8 +1,8 @@
 import { StyleSheet, View } from 'react-native'
 import theme from '../../../../theme'
 import FormikTextInput from './FormikTextInput'
-import Text from '../../../Text'
-import CustomButton from '../../../CustomButton'
+
+import { CustomButton, Text } from '../../../common'
 
 export const RegisterForm = ({ onSubmit, onCancel }) => {
   return (

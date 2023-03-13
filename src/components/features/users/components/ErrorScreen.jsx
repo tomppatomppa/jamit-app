@@ -1,8 +1,8 @@
 import React from 'react'
 import { Button, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
+import { Text } from '../../../common'
 
-import Text from '../../../Text'
 import useLogout from '../../Authorization/hooks/useLogout'
 
 const ErrorScreen = () => {

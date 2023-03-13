@@ -1,6 +1,6 @@
 import { Alert, Pressable, StyleSheet } from 'react-native'
 import theme from '../../../../theme'
-import Text from '../../../Text'
+import { Text } from '../../../common'
 
 export const DeleteAccountButton = () => {
   const handleDeleteAccount = () => {

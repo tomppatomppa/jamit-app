@@ -1,8 +1,9 @@
 import React from 'react'
 import { Pressable, StyleSheet, View } from 'react-native'
-import theme from '../theme'
+
 import { Ionicons } from '@expo/vector-icons'
 import { useNavigate } from 'react-router-native'
+import theme from '../../theme'
 
 const Navbar = ({ children }) => {
   const navigate = useNavigate()

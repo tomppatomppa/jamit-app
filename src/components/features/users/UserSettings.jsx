@@ -9,14 +9,13 @@ import {
 } from 'react-native'
 import theme from '../../../theme'
 
-import Text from '../../Text'
 import useMe from './hooks/useMe'
 
 import ErrorScreen from './components/ErrorScreen'
 import { AccountView } from './components/AccountView'
 import { ActivityView } from './components/ActivityView'
 
-import Navbar from '../../Navbar'
+import { Text, Navbar } from '../../common'
 
 const UserSettings = () => {
   const [menuSelected, setMenuSelected] = useState('Account')

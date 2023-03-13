@@ -9,13 +9,12 @@ import {
   View,
 } from 'react-native'
 import theme from '../theme'
-import Text from './Text'
+
 import { FontAwesome } from '@expo/vector-icons'
-
 import { useNavigate } from 'react-router-native'
-
 import CurrentUserContext from '../contexts/CurrentUserContext'
-import CustomButton from './CustomButton'
+
+import { CustomButton, Text } from './common'
 
 const menuCategories = [
   { title: 'Jamit', description: 'Löydä Jamit' },
