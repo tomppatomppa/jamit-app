@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Image, Pressable, StyleSheet, View } from 'react-native'
+import { Alert, Image, Pressable, StyleSheet, View } from 'react-native'
 import theme from '../../../../theme'
 
 import { EvilIcons } from '@expo/vector-icons'
@@ -11,6 +11,19 @@ import { defaultImageUri } from '../config'
 export const EventListItem = ({ item }) => {
   const [showText, setShowText] = useState(false)
   const time = new Date(item.start_date)
+
+  const handleAddBookmark = () => {
+    Alert.alert('Added to bookmarks')
+  }
+  const handleAddFavorite = () => {
+    Alert.alert('Place hosting the event added to favorites')
+  }
+  const handleShare = () => {
+    Alert.alert('Share with friend')
+  }
+  const handleInterested = () => {
+    Alert.alert('Interested')
+  }
 
   return (
     <View style={styles.listItemContainer}>
@@ -45,9 +58,14 @@ export const EventListItem = ({ item }) => {
               alignItems: 'center',
             }}
           >
-            <EvilIcons name="star" size={24} color="black" />
+            <EvilIcons
+              onPress={handleAddFavorite}
+              name="star"
+              size={24}
+              color="black"
+            />
             <Ionicons
-              onPress={() => console.log('Add to bookmarks')}
+              onPress={handleAddBookmark}
               style={{ marginLeft: 24 }}
               name="bookmark-outline"
               size={24}
@@ -55,7 +73,6 @@ export const EventListItem = ({ item }) => {
             />
           </View>
         </View>
-
         <Text fontSize={'subheading'} style={{ marginVertical: 6 }}>
           Description
         </Text>
@@ -77,12 +94,13 @@ export const EventListItem = ({ item }) => {
           }}
         >
           <CustomButton
+            onPress={handleInterested}
             style={{ flex: 1, marginRight: 6, flexDirection: 'row' }}
           >
             <EvilIcons name="star" size={20} color="black" />
             <Text color={'black'}>Interested</Text>
           </CustomButton>
-          <CustomButton>
+          <CustomButton onPress={handleShare}>
             <Text color={'black'}>Share</Text>
           </CustomButton>
         </View>

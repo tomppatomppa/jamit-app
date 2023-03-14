@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: 'flex-start',
     alignItems: 'center',
+    backgroundColor: theme.colors.primary,
   },
 })
 export default Drawer

@@ -5,8 +5,8 @@ import theme from '../../../../theme'
 import useEvent from '../../../../hooks/useEvent'
 import { EventListItem } from './EventListItem'
 import { Text } from '../../../common'
+import { ItemSeparator } from './ItemSeparator'
 
-const ItemSeparator = () => <View style={styles.separator} />
 const RenderEventItem = ({ item }) => <EventListItem item={item} />
 
 const EventList = ({ id }) => {
@@ -24,13 +24,7 @@ const EventList = ({ id }) => {
   }
   return (
     <FlatList
-      contentContainerStyle={{
-        paddingBottom: 150,
-        alignItems: 'center',
-
-        minWidth: '100%',
-        backgroundColor: theme.colors.primary,
-      }}
+      contentContainerStyle={styles.listContainer}
       data={allEvents}
       renderItem={({ item }) => <RenderEventItem item={item} />}
       ItemSeparatorComponent={ItemSeparator}
@@ -42,15 +36,10 @@ const EventList = ({ id }) => {
 export default EventList
 
 const styles = StyleSheet.create({
-  stickyHeadercontainer: {
-    flexDirection: 'row',
+  listContainer: {
+    paddingBottom: 150,
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 8,
-    width: '100%',
-    backgroundColor: 'red',
-  },
-  separator: {
-    height: 10,
+    minWidth: '100%',
+    backgroundColor: theme.colors.primary,
   },
 })

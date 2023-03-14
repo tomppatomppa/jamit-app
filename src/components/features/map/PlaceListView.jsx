@@ -9,29 +9,16 @@ import {
 
 import usePlaces from '../../../hooks/usePlaces'
 import { Text } from '../../common'
-
-const renderItem = ({ item }) => {
-  return (
-    <View style={styles.item}>
-      <Text style={styles.title}>{item.name}</Text>
-      <Text style={styles.title}>{item.start_date}</Text>
-      <Text numberOfLines={5} ellipsizeMode="tail">
-        {item.content}
-      </Text>
-    </View>
-  )
-}
+import { EventListItem } from './components/EventListItem'
+import { ItemSeparator } from './components/ItemSeparator'
 
 const renderSectionHeader = ({ section: { name } }) => {
   return <Text style={styles.header}>{name}</Text>
 }
 
-const renderListEmptyComponent = () => {
-  return <Text>Empty</Text>
-}
-
 const PlaceListView = () => {
   const { places, isLoading, isError } = usePlaces()
+
   if (isLoading) {
     return (
       <View style={styles.activityContainer}>
@@ -40,6 +27,7 @@ const PlaceListView = () => {
       </View>
     )
   }
+
   if (isError) {
     return (
       <View style={styles.activityContainer}>
@@ -47,15 +35,15 @@ const PlaceListView = () => {
       </View>
     )
   }
+
   return (
     <View style={styles.container}>
-      <Text>Show as list view</Text>
       <SectionList
         sections={places}
         keyExtractor={(item, index) => item + index}
-        renderItem={renderItem}
+        renderItem={EventListItem}
+        ItemSeparatorComponent={ItemSeparator}
         renderSectionHeader={renderSectionHeader}
-        ListEmptyComponent={renderListEmptyComponent}
       />
     </View>
   )
@@ -67,7 +55,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: StatusBar.currentHeight,
-    marginHorizontal: 16,
   },
   item: {
     backgroundColor: '#f9c2ff',
@@ -77,6 +64,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 32,
     backgroundColor: '#fff',
+    marginTop: 12,
   },
   title: {
     fontSize: 24,
