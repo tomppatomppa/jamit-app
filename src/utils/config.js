@@ -27,9 +27,7 @@ export function createAxiosClient({ options, getCurrentAccessToken, logout }) {
       if (response.data.token && response.data.username) {
         await setCurrentUser(response.data)
       }
-      if (response.data.message === 'token revoken') {
-        await logout()
-      }
+
       return response
     },
     (error) => {
@@ -52,9 +50,6 @@ async function getCurrentAccessToken() {
 async function setCurrentUser(user) {
   await authStorage.setCurrentUser(user)
 }
-async function logout() {
-  await authStorage.removeCurrentUser()
-}
 
 export const client = createAxiosClient({
   options: {
@@ -65,5 +60,4 @@ export const client = createAxiosClient({
     },
   },
   getCurrentAccessToken,
-  logout,
 })

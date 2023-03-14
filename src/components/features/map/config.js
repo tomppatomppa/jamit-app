@@ -44,3 +44,10 @@ export const initialRegion = {
 
 export const defaultImageUri =
   'https://scontent.fqlf1-2.fna.fbcdn.net/v/t39.30808-6/332000508_1634371787001640_2223681153366422458_n.jpg?stp=dst-jpg_s960x960&_nc_cat=106&ccb=1-7&_nc_sid=340051&_nc_ohc=hHXvTzug6uwAX_XIln_&_nc_ht=scontent.fqlf1-2.fna&oh=00_AfD7XCzKgEWLvoBIRVOyYBz-uqJvEO4_e3EOh8DKWlfWpw&oe=64132FE7'
+
+function getPinColor(eventCount) {
+  if (eventCount < 1) return 'red'
+  return 'green'
+}
+
+export { getPinColor }

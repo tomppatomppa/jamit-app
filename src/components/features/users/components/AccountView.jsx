@@ -1,5 +1,5 @@
-import React from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import React, { useState } from 'react'
+import { Pressable, StyleSheet, TextInput, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 
 import { CustomButton, Text } from '../../../common'
@@ -9,6 +9,8 @@ import useUpdate from '../hooks/useUpdate'
 import { DeleteAccountButton } from './DeleteAccountButton'
 
 export const AccountView = ({ data }) => {
+  const [edit, setEdit] = useState(false)
+  const [name, setName] = useState(data.name)
   const navigate = useNavigate()
   const { mutate } = useUpdate()
   const { logout } = useLogout()
@@ -18,9 +20,10 @@ export const AccountView = ({ data }) => {
     navigate('/')
   }
   const handleUpdateName = () => {
-    //placeholder to test update function
-    const name = Date.now()
-    mutate({ name: name })
+    if (name !== data.name) {
+      mutate({ name: name })
+    }
+    setEdit(false)
   }
 
   return (
@@ -35,20 +38,39 @@ export const AccountView = ({ data }) => {
         <Text style={styles.textStyle}>{data.username}</Text>
       </View>
       <View style={styles.divider}>
-        <Pressable onPress={handleUpdateName}>
-          <Text
-            style={{
-              alignSelf: 'flex-end',
-              position: 'relative',
-            }}
-          >
-            edit
-          </Text>
-        </Pressable>
+        {edit ? (
+          <Pressable onPress={handleUpdateName}>
+            <Text
+              style={{
+                alignSelf: 'flex-end',
+                position: 'relative',
+              }}
+            >
+              save
+            </Text>
+          </Pressable>
+        ) : (
+          <Pressable onPress={() => setEdit(true)}>
+            <Text
+              style={{
+                alignSelf: 'flex-end',
+                position: 'relative',
+              }}
+            >
+              edit
+            </Text>
+          </Pressable>
+        )}
         <Text fontSize="small" fontWeight="bold">
           Username
         </Text>
-        <Text style={styles.textStyle}> {data.name}</Text>
+        <TextInput
+          onBlur={handleUpdateName}
+          value={name}
+          onChangeText={(text) => setName(text)}
+          editable={edit}
+          style={[edit ? styles.textEditStyle : styles.textStyle]}
+        />
       </View>
       <View style={styles.divider}>
         <Text fontSize="small" fontWeight="bold">
@@ -109,6 +131,14 @@ const styles = StyleSheet.create({
   textStyle: {
     marginTop: 2,
     marginBottom: 20,
+    backgroundColor: '#f4f4f4',
+    color: 'black',
+  },
+  textEditStyle: {
+    marginTop: 2,
+    marginBottom: 20,
+    fontSize: 20,
+    color: 'green',
   },
   divider: {
     borderBottomWidth: 1,

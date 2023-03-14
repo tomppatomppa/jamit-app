@@ -1,18 +1,14 @@
+import { StyleSheet } from 'react-native'
 import { Marker } from 'react-native-maps'
+import { getPinColor } from '../config'
 
 const CustomMarker = ({ data }) => {
   const { name, id, location, eventCount } = data
 
-  const opacity = eventCount > 0 ? 1 : 0.3
-
-  const setPinColor = () => {
-    if (eventCount < 1) return 'red'
-    return 'green'
-  }
   return (
     <Marker
-      style={{ opacity: opacity }}
-      pinColor={setPinColor()}
+      style={[eventCount <= 0 ? styles.emptyPin : styles.normalPin]}
+      pinColor={getPinColor(eventCount)}
       title={name}
       identifier={id.toString()}
       coordinate={{
@@ -22,5 +18,14 @@ const CustomMarker = ({ data }) => {
     />
   )
 }
+
+const styles = StyleSheet.create({
+  normalPin: {
+    opacity: 1,
+  },
+  emptyPin: {
+    opacity: 0.3,
+  },
+})
 
 export default CustomMarker
