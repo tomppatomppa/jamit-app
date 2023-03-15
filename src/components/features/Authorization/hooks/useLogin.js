@@ -1,9 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { useContext } from 'react'
 import { useNavigate } from 'react-router-native'
-import CurrentUserContext from '../../../../contexts/CurrentUserContext'
 
+import useCurrentUser from '../../../../hooks/useCurrentUser'
 import { showToast } from '../../../../utils/helpers'
 import { login } from '../../../../services/login'
 
@@ -11,7 +10,7 @@ const useLogin = () => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
 
-  const { setCurrentUser } = useContext(CurrentUserContext)
+  const { setCurrentUser } = useCurrentUser()
 
   return useMutation((credentials) => login(credentials), {
     onSuccess: async (response) => {

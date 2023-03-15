@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import {
   Button,
   Image,
@@ -12,8 +12,7 @@ import theme from '../theme'
 
 import { FontAwesome } from '@expo/vector-icons'
 import { useNavigate } from 'react-router-native'
-import CurrentUserContext from '../contexts/CurrentUserContext'
-
+import useCurrentUser from '../hooks/useCurrentUser'
 import { CustomButton, Text } from './common'
 
 const menuCategories = [
@@ -22,7 +21,7 @@ const menuCategories = [
 ]
 
 const Home = () => {
-  const { currentUser } = useContext(CurrentUserContext)
+  const { currentUser } = useCurrentUser()
   const navigate = useNavigate()
 
   return (

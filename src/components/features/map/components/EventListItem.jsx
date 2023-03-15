@@ -36,6 +36,7 @@ export const EventListItem = ({ item }) => {
           uri: defaultImageUri,
         }}
       ></Image>
+
       <View style={{ padding: 6 }}>
         <View
           style={{

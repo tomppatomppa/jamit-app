@@ -31,7 +31,7 @@ const queryClient = new QueryClient({
   }),
 })
 
-const authStorage = new AuthStorage() //TODO: remove
+const authStorage = new AuthStorage()
 
 export default function App() {
   return (

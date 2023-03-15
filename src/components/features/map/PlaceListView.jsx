@@ -6,17 +6,47 @@ import {
   StatusBar,
   ActivityIndicator,
 } from 'react-native'
+import { useNavigate } from 'react-router-native'
+import { MaterialIcons } from '../../../assets/images/icons'
+import useCurrentLocation from '../../../hooks/useCurrentLocation'
 
 import usePlaces from '../../../hooks/usePlaces'
 import { Text } from '../../common'
 import { EventListItem } from './components/EventListItem'
 import { ItemSeparator } from './components/ItemSeparator'
 
-const renderSectionHeader = ({ section: { name } }) => {
-  return <Text style={styles.header}>{name}</Text>
+const RenderSectionHeader = ({ section: { name, location } }, extraData) => {
+  const { setCoordinates, navigate } = extraData
+
+  const handlePress = () => {
+    const coordinates = {
+      latitude: location.coordinates[0],
+      longitude: location.coordinates[1],
+      latitudeDelta: 0.1,
+      longitudeDelta: 0.0112,
+    }
+    setCoordinates(coordinates)
+    navigate('/map')
+  }
+
+  return (
+    <View>
+      <Text style={styles.header}>
+        {name}{' '}
+        <MaterialIcons
+          onPress={handlePress}
+          name="gps-fixed"
+          size={24}
+          color="black"
+        />
+      </Text>
+    </View>
+  )
 }
 
 const PlaceListView = () => {
+  const navigate = useNavigate()
+  const { setCoordinates } = useCurrentLocation()
   const { places, isLoading, isError } = usePlaces()
 
   if (isLoading) {
@@ -43,7 +73,9 @@ const PlaceListView = () => {
         keyExtractor={(item, index) => item + index}
         renderItem={EventListItem}
         ItemSeparatorComponent={ItemSeparator}
-        renderSectionHeader={renderSectionHeader}
+        renderSectionHeader={(section) =>
+          RenderSectionHeader(section, { setCoordinates, navigate })
+        }
       />
     </View>
   )

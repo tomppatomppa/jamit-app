@@ -4,7 +4,7 @@ import MapView from 'react-native-maps'
 import { PROVIDER_GOOGLE } from 'react-native-maps'
 import { Entypo } from '@expo/vector-icons'
 
-import { customMapStyle, initialRegion } from './config'
+import { customMapStyle } from './config'
 import { createEnvelope } from '../../../utils/helpers'
 import theme from '../../../theme'
 import usePlaces from '../../../hooks/usePlaces'
@@ -14,10 +14,12 @@ import Drawer from './components/Drawer'
 import EventList from './components/EventList'
 import { useNavigate } from 'react-router-native'
 import { Navbar, Text } from '../../common'
+import useCurrentLocation from '../../../hooks/useCurrentLocation'
 
 const Map = () => {
   const navigate = useNavigate()
-  const [envelope, setEnvelope] = useState(createEnvelope(initialRegion))
+  const { coordinates } = useCurrentLocation()
+  const [envelope, setEnvelope] = useState(createEnvelope(coordinates))
   const { places } = usePlaces({ envelope })
   const [selectedPlaceId, setSelectedPlaceId] = useState(null)
 
@@ -52,7 +54,7 @@ const Map = () => {
         onCalloutPress={handleOpenDrawer}
         showsUserLocation={true}
         customMapStyle={customMapStyle}
-        initialRegion={initialRegion}
+        initialRegion={coordinates}
         style={styles.map}
         onRegionChangeComplete={handleSetQuery}
       >
