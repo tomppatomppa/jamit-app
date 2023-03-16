@@ -1,3 +1,3 @@
 import { MaterialIcons } from '@expo/vector-icons'
-
-export { MaterialIcons }
+import { AntDesign } from '@expo/vector-icons'
+export { MaterialIcons, AntDesign }

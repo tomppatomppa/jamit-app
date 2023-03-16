@@ -1,14 +1,17 @@
 import React from 'react'
-import { Pressable, StyleSheet, View } from 'react-native'
+import { ActivityIndicator, Pressable, StyleSheet, View } from 'react-native'
 import { useNavigate } from 'react-router-native'
 
 import { CustomButton, Text } from '../../../common'
 
 import useLogout from '../../Authorization/hooks/useLogout'
+import useMe from '../hooks/useMe'
 import { DeleteAccountButton } from './DeleteAccountButton'
+import ErrorScreen from './ErrorScreen'
 import NameField from './NameField'
 
-export const AccountView = ({ data }) => {
+export const Account = () => {
+  const { data, isLoading, isError } = useMe()
   const navigate = useNavigate()
   const { logout } = useLogout()
 
@@ -16,7 +19,15 @@ export const AccountView = ({ data }) => {
     logout()
     navigate('/')
   }
-
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator />
+        <Text>loading....</Text>
+      </View>
+    )
+  }
+  if (isError) return <ErrorScreen />
   return (
     <View style={styles.container}>
       <Text style={{ alignSelf: 'center', marginBottom: 10, fontSize: 20 }}>

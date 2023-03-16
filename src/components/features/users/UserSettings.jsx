@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import {
-  ActivityIndicator,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -9,27 +8,12 @@ import {
 } from 'react-native'
 import theme from '../../../theme'
 
-import useMe from './hooks/useMe'
-
-import ErrorScreen from './components/ErrorScreen'
-import { AccountView } from './components/AccountView'
-import { ActivityView } from './components/ActivityView'
-
 import { Text, Navbar } from '../../common'
+import { Account } from './components/Account'
+import Bookmarks from './components/Bookmarks'
 
 const UserSettings = () => {
   const [menuSelected, setMenuSelected] = useState('Account')
-  const { data, isLoading, isError } = useMe()
-
-  if (isLoading) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator />
-        <Text>loading....</Text>
-      </View>
-    )
-  }
-  if (isError) return <ErrorScreen />
 
   return (
     <SafeAreaView style={styles.container}>
@@ -37,13 +21,13 @@ const UserSettings = () => {
         <Navbar>
           <View style={styles.headerMenu}>
             <Pressable
-              onPress={() => setMenuSelected('Activity')}
+              onPress={() => setMenuSelected('Bookmarks')}
               style={[
                 styles.headerItem,
-                menuSelected === 'Activity' && styles.selectedHeaderItem,
+                menuSelected === 'Bookmarks' && styles.selectedHeaderItem,
               ]}
             >
-              <Text fontSize={'subheading'}>Activity</Text>
+              <Text fontSize={'subheading'}>Bookmarks</Text>
             </Pressable>
             <View style={styles.headerDivider} />
             <Pressable
@@ -55,18 +39,18 @@ const UserSettings = () => {
             >
               <Text fontSize={'subheading'}>Account</Text>
             </Pressable>
+            <View style={styles.headerDivider} />
           </View>
         </Navbar>
-        {menuSelected === 'Account' ? (
-          <AccountView data={data} />
-        ) : (
-          <ActivityView />
-        )}
+        {MenuSwitch(menuSelected)}
       </ScrollView>
     </SafeAreaView>
   )
 }
-
+const MenuSwitch = (menuSelected) => {
+  if (menuSelected === 'Account') return <Account />
+  if (menuSelected === 'Bookmarks') return <Bookmarks />
+}
 const styles = StyleSheet.create({
   container: {
     flex: 1,
