@@ -2,15 +2,21 @@ import { useEffect, useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import Text from './Text'
 
-const Checkbox = ({ label, onChecked }) => {
+const Checkbox = ({ label, onChecked, isChecked }) => {
   const [checked, setChecked] = useState(false)
 
   const handlePress = () => {
     setChecked(!checked)
   }
   useEffect(() => {
-    onChecked(checked)
+    if (onChecked) {
+      onChecked(checked)
+    }
   }, [checked])
+
+  useEffect(() => {
+    setChecked(isChecked)
+  }, [isChecked])
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Text style={{ marginRight: 6 }}>{label}</Text>

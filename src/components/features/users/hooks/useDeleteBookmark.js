@@ -8,6 +8,7 @@ const useDeleteBookmark = () => {
       queryClient.refetchQueries(['bookmarks'])
     },
   })
+
   return { deleteBookmark: mutate }
 }
 

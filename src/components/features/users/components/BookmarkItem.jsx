@@ -2,11 +2,16 @@ import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { AntDesign } from '../../../../assets/images/icons'
 import { Text } from '../../../common'
+import Checkbox from '../../../common/CheckBox'
 
-const BookmarkItem = ({ bookmark, onDelete }) => {
+const BookmarkItem = ({ bookmark, onDelete, select }) => {
   const { bookmark_reference, table_reference } = bookmark
+
+  const isSelected = select?.includes(bookmark_reference)
+
   return (
     <View style={styles.container}>
+      <Checkbox isChecked={isSelected} />
       <View style={styles.bookmarkContainer}>
         <Text>type: {table_reference}</Text>
         <Text>{bookmark_reference}</Text>
@@ -21,9 +26,11 @@ const BookmarkItem = ({ bookmark, onDelete }) => {
     </View>
   )
 }
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    width: '100%',
   },
   bookmarkContainer: {
     justifyContent: 'center',
@@ -31,6 +38,7 @@ const styles = StyleSheet.create({
     padding: 2,
     borderWidth: 1,
     borderColor: 'black',
+    flex: 1,
   },
   deleteIcon: { alignSelf: 'center' },
 })

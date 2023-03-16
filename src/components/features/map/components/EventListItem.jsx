@@ -7,13 +7,24 @@ import { Ionicons } from '@expo/vector-icons'
 
 import { CustomButton, Text } from '../../../common'
 import { defaultImageUri } from '../config'
+import useCreateBookmark from '../../users/hooks/useCreateBookmark'
+import useBookmarks from '../../users/hooks/useBookmarks'
+import useDeleteBookmark from '../../users/hooks/useDeleteBookmark'
 
 export const EventListItem = ({ item }) => {
+  const { bookmarks } = useBookmarks()
+  const { addBookmark } = useCreateBookmark()
+  const { deleteBookmark } = useDeleteBookmark()
   const [showText, setShowText] = useState(false)
   const time = new Date(item.start_date)
 
-  const handleAddBookmark = () => {
-    Alert.alert('Added to bookmarks')
+  const isBookmarked = findBookmark(bookmarks, item)
+
+  const handleAddBookmark = (id, type) => {
+    addBookmark({ item_reference: id, table_reference: type })
+  }
+  const handleRemoveBookmark = () => {
+    deleteBookmark(isBookmarked.bookmark_reference)
   }
   const handleAddFavorite = () => {
     Alert.alert('Place hosting the event added to favorites')
@@ -65,13 +76,23 @@ export const EventListItem = ({ item }) => {
               size={24}
               color="black"
             />
-            <Ionicons
-              onPress={handleAddBookmark}
-              style={{ marginLeft: 24 }}
-              name="bookmark-outline"
-              size={24}
-              color="black"
-            />
+            {isBookmarked ? (
+              <Ionicons
+                onPress={handleRemoveBookmark}
+                style={styles.icon}
+                name="bookmark"
+                size={24}
+                color="black"
+              />
+            ) : (
+              <Ionicons
+                onPress={() => handleAddBookmark(item.id, 'Event')}
+                style={styles.icon}
+                name="bookmark-outline"
+                size={24}
+                color="black"
+              />
+            )}
           </View>
         </View>
         <Text fontSize={'subheading'} style={{ marginVertical: 6 }}>
@@ -109,7 +130,13 @@ export const EventListItem = ({ item }) => {
     </View>
   )
 }
+function findBookmark(bookmarks, item) {
+  const bookmark = bookmarks?.find(
+    (b) => b.item_reference === item.id && b.table_reference === 'Event'
+  )
 
+  return bookmark
+}
 const styles = StyleSheet.create({
   listItemContainer: {
     overflow: 'hidden',
@@ -125,5 +152,8 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     padding: 8,
     marginLeft: 12,
+  },
+  icon: {
+    marginLeft: 24,
   },
 })

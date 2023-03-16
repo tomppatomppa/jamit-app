@@ -1,3 +1,3 @@
-import { MaterialIcons } from '@expo/vector-icons'
-import { AntDesign } from '@expo/vector-icons'
-export { MaterialIcons, AntDesign }
+import { MaterialIcons, AntDesign, Entypo, Ionicons } from '@expo/vector-icons'
+
+export { MaterialIcons, AntDesign, Entypo, Ionicons }

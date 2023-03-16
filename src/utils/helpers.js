@@ -1,10 +1,10 @@
 import Toast from 'react-native-toast-message'
 
 export const createEnvelope = ({
-  latitude,
-  longitude,
-  latitudeDelta,
-  longitudeDelta,
+  latitude = 0,
+  longitude = 0,
+  latitudeDelta = 0,
+  longitudeDelta = 0,
 }) => {
   const bottomLeft = {
     latitude: latitude - latitudeDelta / 2,
