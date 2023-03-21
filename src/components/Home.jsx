@@ -1,6 +1,5 @@
 import React from 'react'
 import {
-  Button,
   Image,
   Pressable,
   SafeAreaView,
@@ -10,14 +9,14 @@ import {
 } from 'react-native'
 import theme from '../theme'
 
-import { FontAwesome } from '@expo/vector-icons'
+import { AntDesign, FontAwesome } from '@expo/vector-icons'
 import { useNavigate } from 'react-router-native'
 import useCurrentUser from '../hooks/useCurrentUser'
 import { CustomButton, Text } from './common'
 
 const menuCategories = [
-  { title: 'Jamit', description: 'Löydä Jamit' },
-  { title: 'Open Mic', description: 'Löydä Open Mic' },
+  { title: 'Jamit', description: 'Show Jamit' },
+  { title: 'Open Mic', description: 'Show Open Mic' },
 ]
 
 const Home = () => {
@@ -36,7 +35,7 @@ const Home = () => {
               JAMIT
             </Text>
             {currentUser ? (
-              <Button title="User" onPress={() => navigate('/settings')} />
+              <User />
             ) : (
               <CustomButton onPress={() => navigate('/login')}>
                 <Text>Login</Text>
@@ -50,8 +49,15 @@ const Home = () => {
             source={require('../assets/images/HomeBackground.jpg')}
           ></Image>
         </View>
+        <View style={styles.infoLabel}>
+          <Text>Find your next jam session</Text>
+        </View>
         <View style={{ padding: 12 }}>
-          <Text fontSize={'subheading'} fontWeight={'bold'}>
+          <Text
+            style={styles.sectionHeader}
+            fontSize={'subheading'}
+            fontWeight={'bold'}
+          >
             Tapahtumat
           </Text>
           <View
@@ -70,6 +76,14 @@ const Home = () => {
   )
 }
 
+const User = () => {
+  const navigate = useNavigate()
+  return (
+    <Pressable onPress={() => navigate('/settings')} style={styles.userButton}>
+      <AntDesign name="user" size={24} color="black" />
+    </Pressable>
+  )
+}
 const MenuItem = ({ item }) => {
   const navigate = useNavigate()
   return (
@@ -113,11 +127,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  sectionImage: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'blue',
-  },
+
   section: {
     display: 'flex',
     width: '100%',
@@ -150,6 +160,24 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderTopWidth: 1,
     width: '100%',
+  },
+  sectionHeader: { alignSelf: 'center' },
+  infoLabel: {
+    backgroundColor: theme.colors.secondaryLight,
+    width: '70%',
+    alignItems: 'center',
+    alignSelf: 'center',
+    padding: 12,
+    bottom: 40,
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  userButton: {
+    borderWidth: 1,
+    borderColor: 'black',
+    padding: 4,
+    borderRadius: 10,
+    backgroundColor: theme.colors.complementary,
   },
 })
 export default Home

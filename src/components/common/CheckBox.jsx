@@ -17,6 +17,7 @@ const Checkbox = ({ label, onChecked, isChecked }) => {
   useEffect(() => {
     setChecked(isChecked)
   }, [isChecked])
+
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Text style={{ marginRight: 6 }}>{label}</Text>
@@ -34,6 +35,7 @@ const Checkbox = ({ label, onChecked, isChecked }) => {
   )
 }
 export default Checkbox
+
 const styles = StyleSheet.create({
   checkbox: {
     width: 25,

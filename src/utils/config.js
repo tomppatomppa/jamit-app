@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
 import axios from 'axios'
 import AuthStorage from './AuthStorage'
 import { BASE_URL } from './constants'
 
 const authStorage = new AuthStorage()
 
-export function createAxiosClient({ options, getCurrentAccessToken, logout }) {
+export function createAxiosClient({ options, getCurrentAccessToken }) {
   const client = axios.create(options)
 
   client.interceptors.request.use(

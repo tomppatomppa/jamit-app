@@ -1,12 +1,18 @@
 import React, { useState } from 'react'
-import { Alert, Image, Pressable, StyleSheet, View } from 'react-native'
+import {
+  Alert,
+  Pressable,
+  StyleSheet,
+  View,
+  ImageBackground,
+} from 'react-native'
 import theme from '../../../../theme'
 
 import { EvilIcons } from '@expo/vector-icons'
 import { Ionicons } from '@expo/vector-icons'
 
 import { CustomButton, Text } from '../../../common'
-import { defaultImageUri } from '../config'
+
 import useCreateBookmark from '../../users/hooks/useCreateBookmark'
 import useBookmarks from '../../users/hooks/useBookmarks'
 import useDeleteBookmark from '../../users/hooks/useDeleteBookmark'
@@ -38,16 +44,12 @@ export const EventListItem = ({ item }) => {
 
   return (
     <View style={styles.listItemContainer}>
-      <Image
-        style={styles.backgroundImage}
-        source={{
-          uri: defaultImageUri,
-        }}
-        defaultSource={{
-          uri: defaultImageUri,
-        }}
-      ></Image>
-
+      <ImageBackground
+        style={styles.imageBackground}
+        resizeMode="cover"
+        source={require('../../../../assets/images/live.jpg')}
+        defaultSource={require('../../../../assets/images/live.jpg')}
+      />
       <View style={{ padding: 6 }}>
         <View
           style={{
@@ -146,7 +148,10 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     backgroundColor: theme.colors.secondary,
   },
-  backgroundImage: { resizeMode: 'cover', height: 170 },
+  imageBackground: {
+    width: '100%',
+    height: 200,
+  },
   buttonShare: {
     backgroundColor: theme.colors.primary,
     borderRadius: 3,
