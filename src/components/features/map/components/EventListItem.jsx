@@ -22,7 +22,6 @@ export const EventListItem = ({ item }) => {
   const { addBookmark } = useCreateBookmark()
   const { deleteBookmark } = useDeleteBookmark()
   const [showText, setShowText] = useState(false)
-  const time = new Date(item.start_date)
 
   const isBookmarked = findBookmark(bookmarks, item)
 
@@ -57,11 +56,7 @@ export const EventListItem = ({ item }) => {
           }}
         >
           <View style={{ flex: 1 }}>
-            <Text fontSize={'small'}>
-              {time.toUTCString().slice(0, 11)}
-              {'. klo '}
-              {`${time.getHours()}:${time.getMinutes()}`}
-            </Text>
+            <Text fontSize={'small'}>{formatDate(item.start_date)}</Text>
             <Text fontWeight="bold" style={{ flex: 1 }}>
               {item.name}
             </Text>
@@ -132,6 +127,7 @@ export const EventListItem = ({ item }) => {
     </View>
   )
 }
+
 function findBookmark(bookmarks, item) {
   const bookmark = bookmarks?.find(
     (b) => b.item_reference === item.id && b.table_reference === 'Event'
@@ -139,6 +135,16 @@ function findBookmark(bookmarks, item) {
 
   return bookmark
 }
+
+function formatDate(date) {
+  const time = new Date(date)
+  const parsed =
+    time.toUTCString().slice(0, 11) +
+    '. klo ' +
+    `${time.getHours()}:${time.getMinutes()}`
+  return parsed
+}
+
 const styles = StyleSheet.create({
   listItemContainer: {
     overflow: 'hidden',
